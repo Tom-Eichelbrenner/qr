@@ -15,7 +15,11 @@ class BasicTest extends WebTestCase
     public function testRootUrl()
     {
         $client = static::createClient();
-        $client->request('GET', '/');
-        $this->assertResponseIsSuccessful();
+        $crawler = $client->request('GET', '/');
+        $this->assertResponseIsSuccessful("bad code returned");
+    }
+
+    public function testSum()
+    {
     }
 }

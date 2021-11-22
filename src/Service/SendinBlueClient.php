@@ -24,7 +24,7 @@ class SendinBlueClient
      * @return User|null
      *
      */
-    public function getContact(string $token) : ?User
+    public function getContact(string $token): ?User
     {
         return null;
     }
@@ -35,15 +35,23 @@ class SendinBlueClient
      *
      * @param User $user
      *
+     * @throws Sendinblue\ApiException
+     *
      * @return User
      */
-    public function updateContact(User $user) : User
+    public function updateContact(User $user): User
     {
-
         return $user;
     }
 
-    private function mapAttributesToUser(array $attributes) : User
+    /**
+     * Map the array (sendinblue attributes) to a usable User entity
+     *
+     * @param array $attributes - sendinblue datas attributes
+     *
+     * @return \App\Entity\User
+     */
+    private function mapAttributesToUser(array $attributes): User
     {
         $user = new User();
 
