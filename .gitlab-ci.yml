@@ -59,17 +59,17 @@ unit-test-job:
     - echo "Running unit tests... This will take about 60 seconds."
     - vendor/bin/phpunit \
         --coverage-text \
-        --log-junit var/tests \
+        --log-junit var/tests/phpunit.xml \
         --whitelist src \
         --colors=never \
         tests  
   artifacts:
     when: always
     paths: 
-      - var/tests/junitreport.xml
+      - var/tests/phpunit.xml
     reports:
       junit:
-        - var/tests/junitreport.xml
+        - var/tests/phpunit.xml
     expire_in: 7 day
 
 # lint-test-job:   # This job also runs in the test stage.
