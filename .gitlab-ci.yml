@@ -30,8 +30,8 @@ before_script:
   - docker-php-ext-enable xdebug
   # Install and run Composer
   - curl -sS https://getcomposer.org/installer | php
-  - bin/composer.phar install -o -n
   - cp .env.example .env
+  - bin/composer.phar install -o -n
 
 # stages:          # List of stages for jobs, and their order of execution
 #   - build
