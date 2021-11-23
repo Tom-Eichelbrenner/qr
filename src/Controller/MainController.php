@@ -32,21 +32,21 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/je-ne-participe-pas", name="desistement", methods={"GET"})
+     * @Route("/je-ne-participe-pas", name="withdrawal", methods={"GET"})
      *
      * @return Response
      */
-    public function jeNeParticipePas()
+    public function withdrawal()
     {
         return $this->render('je-ne-participe-pas.html.twig');
     }
 
     /**
-     * @Route("/je-participe/2/{token}", name="formulaire", methods={"GET"})
+     * @Route("/je-participe/2/{token}", name="form", methods={"GET"})
      *
      * @return Response
      */
-    public function formulaire($token)
+    public function form($token)
     {
         return $this->render('formulaire.html.twig', [
             'token' => $token
@@ -54,11 +54,11 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/règles-sanitaires", name="règles-sanitaires", methods={"GET"})
+     * @Route("/règles-sanitaires", name="healthRules", methods={"GET"})
      *
      * @return Response
      */
-    public function reglesSanitaires()
+    public function healthRules()
     {
         return $this->render('règles-sanitaires.html.twig');
     }
@@ -76,11 +76,11 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/inscrit/{id}", name="inscrit", methods={"GET"})
+     * @Route("/inscrit/{id}", name="registered", methods={"GET"})
      *
      * @return Response
      */
-    public function inscrit($id)
+    public function registered($id)
     {
         return $this->render('inscrit.html.twig', [
             'id' => $id
