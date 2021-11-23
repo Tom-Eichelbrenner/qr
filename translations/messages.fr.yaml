@@ -1,0 +1,186 @@
+mail_voeux:
+  plénière:
+    plénière1: >
+      Un accueil café est prévu à partir de 12h30 au Théâtre Marigny,
+      Carré Marigny 75008 PARIS. La convention débutera à 14h00 précises.
+    plénière2: >
+      Nous vous accueillerons à partir de 16h30 au Théâtre Marigny,
+      Carré Marigny 75008 PARIS. La convention débutera à 14h00 précises.
+    diner: >
+      La réunion sera suivie d’une Soirée de Gala à la Cité de l’Architecture & du Patrimoine
+      1, place du Trocadéro et du 11 Novembre 75116 PARIS.
+      A l’issue de la plénière, vous disposerez d’un temps libre,
+      avant la Soirée de Gala qui débutera à 20h30.
+  diner: >
+    Nous vous accueillerons à partir de 20h30 a à la Cité de l’Architecture et du Patrimoine
+    1, place du Trocadéro et du 11 Novembre – 75116 Paris
+
+page_participation:
+  plénière:
+    default: >
+      Nous avons le plaisir de vous convier à la Convention annuelle Le Conservateur qui se déroulera à Paris, le mardi 18 Janvier 2022.
+    plénière1: >
+      Nous vous accueillerons à partir de 12h30 au Théâtre Marigny, Carré Marigny – 75008 Paris. La Convention débutera à 14h00 précises.
+    plénière2: >
+      Nous vous accueillerons à partir de 16h30 au Théâtre Marigny, Carré Marigny – 75008 Paris
+    diner: >
+      La réunion sera suivie d’une Soirée de Gala à la Cité de l’Architecture et du Patrimoine - 1, place du Trocadéro et du 11 Novembre – 75116 Paris
+  diner: >
+    Nous avons le plaisir de vous convier au dîner de Gala de la Convention annuelle Le Conservateur qui se déroulera à Paris le mardi 18 Janvier 2022.
+
+    Nous vous accueillerons à partir de 20h30 a à la Cité de l’Architecture et du Patrimoine
+    1, place du Trocadéro et du 11 Novembre – 75116 Paris
+
+
+page_formulaire:
+  hotel:
+    default: >
+      Votre hébergement est prévu à l’hôtel WESTIN / INTERCONTINENTAL
+      Nous vous remercions de nous confirmer que vous souhaitez bénéficier de cette réservation hôtelière* :
+      Bouton radio : oui / non, obligatoire
+      Les coordonnées et accès vous seront précisés dans le mail de confirmation.
+    is:
+      westin:
+        message:
+          "Votre hébergement est: Hôtel WESTIN
+           Vous avez la possibilité de réserver votre place sur les transferts proposés:"
+        plénière:
+          "18h30 : du Théâtre Marigny vers l’hôtel Westin :
+           Bouton radio : oui / non, obligatoire"
+        diner:
+          "20h15 : de l’hôtel Westin vers la Cité de l’Architecture & du Patrimoine :
+             Bouton radio : oui / non, obligatoire
+           Navettes de la Cité de l’Architecture & du Patrimoine vers l’Hôtel Westin
+           Un départ est prévu depuis la Cité de l’Architecture & du Patrimoine toutes les ½ heures, de minuit à 04h00. Un coordinateur sur place sera à votre disposition pour toutes précisions complémentaires.
+           Bouton radio : oui / non, obligatoire"
+      intercontinental:
+        message:
+          "Votre hébergement est: Hôtel INTERCONTINENTAL
+           Vous avez la possibilité de réserver votre place sur les transferts proposés:"
+        plénière:
+          "18h30 : du Théâtre Marigny vers l’hôtel Intercontinental :
+           Bouton radio : oui / non, obligatoire"
+        diner:
+          " 20h15 : de l’hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine :
+            Bouton radio : oui / non, obligatoire
+            Navettes de la Cité de l’Architecture & du Patrimoine vers l’Hôtel Intercontinental
+            Un départ est prévu depuis la Cité de l’Architecture & du Patrimoine toutes les ½ heures,   de minuit à 04h00. Un coordinateur sur place sera à votre disposition pour toutes précisions   complémentaires.
+            Bouton radio : oui / non, obligatoire"
+  taxi:
+    message:
+      "Taxi
+      En fin de soirée, vous avez la possibilité de réserver un taxi de la Cité de l’Architecture & du   Patrimoine à votre domicile. Souhaitez-vous en bénéficier ?
+      Bouton radio : oui / non, obligatoire
+      Un coordinateur sur place vous donnera les précisions complémentaires.
+
+      Merci de renseigner l’adresse de destination de votre course en taxi :
+      Champ texte : autocomplétion Gmap adress, obligatoire"
+  diner:
+    message:
+      "Dîner de Gala
+      Avez-vous un régime ou une intolérance alimentaire spécifique ?
+      Bouton radio: oui / non, obligatoire"
+    diet:
+      "si oui, veuillez nous le préciser
+        Champ texte : libre, obligatoire"
+
+page_confirmation:
+  plénière:
+    message:
+      plénière1:
+        Nous vous accueillerons à partir de 12h30 au Théâtre Marigny,
+        Carré Marigny – 75008 Paris
+        Accueil-café  -  Service Bagages
+      plénière2:
+        Nous vous accueillerons à partir de 16h30 au Théâtre Marigny,
+        Carré Marigny – 75008 Paris
+        Accueil-café  -  Service Bagages
+    hotel:
+      message:
+        "A l’issue de la Convention:
+        Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Westin (ou Intercontinental): OUI ou NON
+        Votre hébergement est prévu à l’Hôtel Westin (ou Intercontinental). Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé."
+  diner:
+    message:
+      "Nous vous accueillerons à partir de 20h30 a à la Cité de l’Architecture et du Patrimoine
+      1, place du Trocadéro et du 11 Novembre – 75116 Paris"
+  hotel+soiree:
+    message_yes:
+      "Soirée de Gala à la Cité de l’Architecture & du Patrimoine:
+      Vous avez réservé un transfert de l’Hôtel Westin (ou Intercontinental) vers la Cité de l’Architecture & du Patrimoine   :  OUI ou NON
+
+      A l’issue de la Soirée :
+      Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel WESTIN (ou Intercontinental)  :  OUI ou NON "
+    message_no:
+      "A l’issue de la Soirée :
+      Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile (selon l'adresse mentionnée lors de l’inscription).  OUI ou NON "
+  coordonées:
+    plénière:
+      "Photo théâtre
+      Convention
+      Convention – THÉ TRE MARIGNY -  Carré Marigny 75008 Paris
+
+      En Métro  :
+      icons stations / lignes
+      Station Champs-Elysées Clémenceau
+      Station Franklin Roosevelt
+      Station Champs-Elysées Clémenceau
+
+      En Bus :
+      Parkings : Parking Indigo du Rond-Point des Champs Elysées ; visiter le site
+      VOIR LE PLAN"
+    diner:
+      "Photo cité
+      Soirée
+      Soirée  – CITÉ DE L’ARCHITECTURE & DU PATRIMOINE -  1 place du Trocadéro et du 11 Novembre 75116 Paris
+
+      En Métro  :
+      icons stations / lignes
+      Station Trocadéro
+      Station Iéna / Trocadéro
+
+      En Bus :
+      B  22, 30, 32, 63 Station Trocadéro
+      B  82 Station Iéna
+
+      EN RER  RER Champ de Mars – Tour Eiffel
+
+      Parkings : Parking Kléber-Trocadéro; visiter le site
+
+      VOIR LE PLAN"
+    hotel:
+      is:
+        westin:
+          "Photo Westin
+          Hôtel
+          Hôtel WESTIN -  3, rue de Castiglione 75001 Paris
+
+          Métro :
+          Concorde (lignes 1, 8, 12)
+          Palais Royal (lignes 1 et 7)
+          RER A : station AUBER
+
+          Bus : 72, arrêt Castiglione
+
+          Parkings :
+          Indigo Vendôme
+          Indigo Marché St-Honoré"
+        intercontinental:
+          "Photo intercontinental
+          Hôtel
+          Hôtel INTERCONTINENTAL PARIS LE GRAND -  2, rue Scribe 75009 Paris
+
+          Métro :
+          Stations Opéra et Havre-Caumartin (ligne 3)
+          Stations Opéra, Chaussée d’Antin La Fayette et Havre-Caumartin (ligne 7)
+          Station Opéra (ligne 8)
+
+          Bus :
+          lignes 42 et 52 arrêt Capucines-Caumartin
+          lignes 20, 29; 81, 95, N15, N16 arrêt Opéra
+
+          RER A : station AUBER
+
+          Parkings :
+          Edouard VII, en face du 23 rue Caumartin
+          Vendôme, place Vendôme"
