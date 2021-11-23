@@ -26,4 +26,4 @@ services:
 
     App\Service\SendinBlueClient:
         arguments:
-            - sendinBlueApiKey: "%env(string:SENDINBLUE_API_KEY)%"
+          $sendinblueApiKey: "%env(string:SENDINBLUE_API_KEY)%"
