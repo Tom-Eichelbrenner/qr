@@ -33,6 +33,21 @@ class SendinBlueClientTest extends KernelTestCase
         $user = $sendinBlueClient->getContact(self::TEST_CONTACT);
         $this->assertNotNull($user, "The contact " . self::TEST_CONTACT . " should return a valud User");
 
+        $initialValue = $user->getParticipation();
+        $inversedValue = $user->getParticipation() === true ? false : true;
+        $user->setParticipation(! $user->getParticipation());
+
+        $sendinBlueClient->updateContact($user);
+
+        // check if the user has really been updated with
+        $controlUser = $sendinBlueClient->getContact(self::TEST_CONTACT);
+
+        // reset the user
+        $user->setParticipation($initialValue);
+        $sendinBlueClient->updateContact($user);
+
+
         // TODO perform an update without change to check that works, update the contact and reset it
+        $this->assertEquals($inversedValue, $controlUser->getParticipation());
     }
 }
