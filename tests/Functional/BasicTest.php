@@ -18,8 +18,4 @@ class BasicTest extends WebTestCase
         $crawler = $client->request('GET', '/');
         $this->assertResponseIsSuccessful("bad code returned");
     }
-
-    public function testSum()
-    {
-    }
 }
