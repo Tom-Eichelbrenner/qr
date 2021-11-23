@@ -21,6 +21,7 @@ class SendinBlueClient
         $this->config = SendinBlue\Client\Configuration::getDefaultConfiguration()
             ->setApiKey('api-key', $sendinBlueApiKey);
 
+        dump($sendinBlueListId);
         $this->sendinBlueListId = $sendinBlueListId;
     }
 
