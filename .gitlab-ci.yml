@@ -18,7 +18,7 @@ default:
 
 cache:
     paths:
-      vendor/
+      - vendor/
 
 before_script:
   - apt-get update -yqq
