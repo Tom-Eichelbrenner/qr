@@ -8,10 +8,20 @@ use Sendinblue\Client\ApiException;
 
 class SendinBlueClient
 {
-    public function __construct(string $sendinblueApiKey)
+    /**
+     * The id of the list the client can work with
+     *
+     * @var $sendinBlueApiKey
+     * @var $sendinBlueListId
+     */
+    private $sendinBlueListId;
+
+    public function __construct(string $sendinBlueApiKey, int $sendinBlueListId)
     {
         $this->config = SendinBlue\Client\Configuration::getDefaultConfiguration()
-            ->setApiKey('api-key', $sendinblueApiKey);
+            ->setApiKey('api-key', $sendinBlueApiKey);
+
+        $this->sendinBlueListId = $sendinBlueListId;
     }
 
     /**

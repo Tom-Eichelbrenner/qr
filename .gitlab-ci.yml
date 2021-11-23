@@ -53,7 +53,7 @@ unit-test-job:
   only:
     - dev # Limit this job to the develop branch
     - master
-    - merge_requests
+  # - merge_requests
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Running unit tests... This will take about 60 seconds."
