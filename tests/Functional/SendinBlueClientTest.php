@@ -46,8 +46,6 @@ class SendinBlueClientTest extends KernelTestCase
         $user->setParticipation($initialValue);
         $sendinBlueClient->updateContact($user);
 
-
-        // TODO perform an update without change to check that works, update the contact and reset it
         $this->assertEquals($inversedValue, $controlUser->getParticipation());
     }
 }
