@@ -24,7 +24,7 @@ class SendinBlueClientTest extends KernelTestCase
         $this->assertNotNull($user, "The contact " . self::TEST_CONTACT . " should return a valud User");
     }
 
-    public function updateContact()
+    public function testUpdateContact()
     {
         /**
          * @var SendinBlueClient
