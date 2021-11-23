@@ -20,6 +20,9 @@ cache:
     paths:
       - vendor/
 
+variables:
+  XDEBUG_MODE: "coverage"
+
 before_script:
   - apt-get update -yqq
   - apt-get install -yqq git libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev libonig-dev libzip-dev
@@ -50,10 +53,24 @@ unit-test-job:
   only:
     - dev # Limit this job to the develop branch
     - master
+    - merge_requests
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Running unit tests... This will take about 60 seconds."
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit \
+        --coverage-text \
+        --log-junit var/tests/phpunit.xml \
+        --whitelist src \
+        --colors=never \
+        tests  
+  artifacts:
+    when: always
+    paths: 
+      - var/tests/junitreport.xml
+    reports:
+      junit:
+        - var/tests/junitreport.xml
+    expire_in: 7 day
 
 # lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
