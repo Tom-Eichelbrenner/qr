@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class SendinBlueClientTest extends KernelTestCase
 {
-    public const TEST_CONTACT = "test_1234567890_token";
-
     protected function setUp(): void
     {
         self::bootKernel();
