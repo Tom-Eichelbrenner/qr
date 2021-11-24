@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Service\SendinBlueClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,9 +15,14 @@ class MainController extends AbstractController
      * @Route("/", name="index", methods={"GET"})
      *
      * @return Response
+     * @throws \Exception
      */
-    public function index()
+    public function index(SendinBlueClient $client)
     {
+        $user = $client->getContact("test_1234567890_token");
+        $user->setParticipation(!$user->getParticipation());
+        $client->updateContact($user);
+        $client->getContact("test_1234567890_token");
         return $this->render('index.html.twig');
     }
 

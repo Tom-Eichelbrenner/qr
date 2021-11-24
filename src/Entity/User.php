@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints\Date;
+use DateTime;
+use Exception;
 
 class User
 {
@@ -15,12 +16,35 @@ class User
         2 => 'Mme',
     ];
 
+    const ATTRIBUTES = [
+        "PRENOM" => "firstName",
+        "NOM" => "lastName",
+        "CIVILITE" => "civility",
+        "SMS" => "phone",
+        "PARTICIPATION" => "participation",
+        "DATE_PARTICIPATION" => "dateParticipation",
+        "DROIT_IMAGE" => "imageRight",
+        "HOTEL" => "hotel",
+        "NOM_HOTEL" => "hotelName",
+        "PLENIERE" => "pleniere1",
+        "PLENIERE2" => "pleniere2",
+        "DINER" => "dinner",
+        "RESTRICTION_ALIMENTAIRE" => "diet",
+        "CHECKIN1" => "check1",
+        "CHECKIN2" => "check2",
+        "TOKEN_2022" => "token"
+    ];
     /**
      * Id in sendmail
      *
      * @var string
      */
     private $token;
+
+    /**
+     * @var string
+     */
+    private $email;
 
     /**
      * @var bool
@@ -53,25 +77,44 @@ class User
     private $dinner;
 
     /**
-     * @var Date
+     * @var DateTime
      */
     private $date_participation;
 
     /**
-     * @var Date
+     * @var DateTime
      */
     private $check1;
 
     /**
-     * @var Date
+     * @var DateTime
      */
     private $check2;
 
     /**
-     * @var int
+     * @var string
      */
     private $civility;
 
+    /**
+     * @return string
+     */
+    public function getHotelName(): ?string
+    {
+        return $this->hotel_name;
+    }
+
+    /**
+     * @param string $hotel_name
+     */
+    public function setHotelName(string $hotel_name): void
+    {
+        $this->hotel_name = $hotel_name;
+    }
+    /**
+     * @var string
+     */
+    private $hotel_name;
     /**
      * @var string
      */
@@ -98,7 +141,7 @@ class User
         $this->token = $token;
     }
 
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -106,7 +149,7 @@ class User
     /**
      * @return bool
      */
-    public function getParticipation(): bool
+    public function getParticipation(): ?bool
     {
         return $this->participation;
     }
@@ -122,7 +165,7 @@ class User
     /**
      * @return bool
      */
-    public function getImageRight(): bool
+    public function getImageRight(): ?bool
     {
         return $this->image_right;
     }
@@ -138,7 +181,7 @@ class User
     /**
      * @return bool
      */
-    public function getHotel(): bool
+    public function getHotel(): ?bool
     {
         return $this->hotel;
     }
@@ -154,7 +197,7 @@ class User
     /**
      * @return bool
      */
-    public function getPleniere1(): bool
+    public function getPleniere1(): ?bool
     {
         return $this->pleniere_1;
     }
@@ -170,7 +213,7 @@ class User
     /**
      * @return bool
      */
-    public function getPleniere2(): bool
+    public function getPleniere2(): ?bool
     {
         return $this->pleniere_2;
     }
@@ -186,7 +229,7 @@ class User
     /**
      * @return bool
      */
-    public function getDinner(): bool
+    public function getDinner(): ?bool
     {
         return $this->dinner;
     }
@@ -200,65 +243,78 @@ class User
     }
 
     /**
-     * @return Date
+     * @return DateTime
      */
-    public function getDateParticipation(): Date
+    public function getDateParticipation(): ?DateTime
     {
         return $this->date_participation;
     }
 
     /**
-     * @param Date $date_participation
+     * @param DateTime $date_participation
+     *
+     * @throws Exception
      */
-    public function setDateParticipation(Date $date_participation): void
+    public function setDateParticipation(DateTime $date_participation): void
     {
+        if (is_string($date_participation)) {
+            $date_participation = new DateTime($date_participation);
+        }
         $this->date_participation = $date_participation;
     }
 
     /**
-     * @return Date
+     * @return DateTime
      */
-    public function getCheck1(): Date
+    public function getCheck1(): ?DateTime
     {
         return $this->check1;
     }
 
     /**
-     * @param Date $check1
+     * @param DateTime $check1
+     *
+     * @throws Exception
      */
-    public function setCheck1(Date $check1): void
+    public function setCheck1(DateTime $check1): void
     {
+        if (is_string($check1)) {
+            $check1 = new DateTime($check1);
+        }
         $this->check1 = $check1;
     }
 
     /**
-     * @return Date
+     * @return DateTime|null
      */
-    public function getCheck2(): Date
+    public function getCheck2(): ?DateTime
     {
         return $this->check2;
     }
 
     /**
-     * @param Date $check2
+     * @param DateTime $check2
      */
-    public function setCheck2(Date $check2): void
+    public function setCheck2(DateTime $check2): void
     {
+        if (is_string($check2)) {
+            $check2 = new DateTime($check2);
+        }
         $this->check2 = $check2;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCivility(): int
+    public function getCivility(): ?string
     {
         return $this->civility;
     }
 
     /**
-     * @param int $civility
+     * @param string $civility
      */
-    public function setCivility(int $civility): void
+    public function setCivility(string $civility): void
     {
         $this->civility = $civility;
     }
@@ -266,7 +322,7 @@ class User
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->first_name;
     }
@@ -282,7 +338,7 @@ class User
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->last_name;
     }
@@ -298,7 +354,7 @@ class User
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -314,7 +370,7 @@ class User
     /**
      * @return string
      */
-    public function getDiet(): string
+    public function getDiet(): ?string
     {
         return $this->diet;
     }
@@ -326,4 +382,18 @@ class User
     {
         $this->diet = $diet;
     }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
 }
