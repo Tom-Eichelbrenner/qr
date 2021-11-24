@@ -6,14 +6,15 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class User
 {
-    const HOTEL_NAME = [
+    public const HOTEL_NAME = [
         1 => 'WESTIN',
         2 => 'INTERCONTINENTAL',
     ];
-    const CIVILITY = [
+    public const CIVILITY = [
         1 => 'M.',
         2 => 'Mme',
     ];
+
     /**
      * Id in sendmail
      *
@@ -325,5 +326,4 @@ class User
     {
         $this->diet = $diet;
     }
-
 }

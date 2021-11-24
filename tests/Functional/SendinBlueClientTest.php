@@ -35,7 +35,7 @@ class SendinBlueClientTest extends KernelTestCase
 
         $initialValue = $user->getParticipation();
         $inversedValue = $user->getParticipation() === true ? false : true;
-        $user->setParticipation(! $user->getParticipation());
+        $user->setParticipation($inversedValue);
 
         $sendinBlueClient->updateContact($user);
 
@@ -46,6 +46,6 @@ class SendinBlueClientTest extends KernelTestCase
         $user->setParticipation($initialValue);
         $sendinBlueClient->updateContact($user);
 
-        $this->assertEquals($inversedValue, $controlUser->getParticipation());
+        $this->assertEquals($inversedValue, $controlUser->getParticipation(), "The value of attributes PARTICIPATION should be $inversedValue : {$controlUser->getParticipation()} was found");
     }
 }
