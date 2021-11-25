@@ -39,13 +39,15 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/je-ne-participe-pas", name="withdrawal", methods={"GET"})
+     * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
      *
      * @return Response
      */
-    public function withdrawal()
+    public function withdrawal($token)
     {
-        return $this->render('je-ne-participe-pas.html.twig');
+        return $this->render('je-ne-participe-pas.html.twig', [
+            'token' => $token
+        ]);
     }
 
     /**
