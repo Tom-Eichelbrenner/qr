@@ -4,8 +4,9 @@ namespace App\Entity;
 
 use DateTime;
 use Exception;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class User
+class User implements UserInterface
 {
     public const HOTEL_NAME = [
         1 => 'WESTIN',
@@ -395,5 +396,28 @@ class User
     {
         $this->email = $email;
     }
-
+    public function getUserIdentifier(): string
+    {
+        return $this->getToken();
+    }
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+    public function getPassword()
+    {
+        // TODO: Implement getPassword() method.
+    }
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
 }
