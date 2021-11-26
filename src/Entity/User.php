@@ -8,10 +8,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
+
     public const HOTEL_NAME = [
         1 => 'WESTIN',
         2 => 'INTERCONTINENTAL',
     ];
+
     public const CIVILITY = [
         1 => 'M.',
         2 => 'Mme',
@@ -33,7 +35,16 @@ class User implements UserInterface
         "RESTRICTION_ALIMENTAIRE" => "diet",
         "CHECKIN1" => "check1",
         "CHECKIN2" => "check2",
-        "TOKEN_2022" => "token"
+        "TOKEN_2022" => "token",
+        "TRANSFERT_WESTIN_DINER" => "transfertWestinDinner",
+        "TRANSFERT_INTER_DINER" => "transfertInterDinner",
+        "TRANSFERT_PLENIERE_WESTIN" => "transfertPleniereWestin",
+        "TRANSFERT_PLENIERE_INTER" => "transfertPleniereInter",
+        "TRANSFERT_DINER_WESTIN" => "transfertDinnerWestin",
+        "TRANSFERT_DINER_INTER" => "transfertDinnerInter",
+        "TRANSFERT_TAXI" => "transfertTaxi",
+        "TAXI_ADRESSE" => "taxiAdress",
+
     ];
     /**
      * Id in sendmail
@@ -98,6 +109,167 @@ class User implements UserInterface
     private $civility;
 
     /**
+     * @var boolean
+     */
+    private $transfert_westin_dinner;
+    /**
+     * @var boolean
+     */
+    private $transfert_inter_dinner;
+    /**
+     * @var boolean
+     */
+    private $transfert_pleniere_westin;
+    /**
+     * @var boolean
+     */
+    private $transfert_pleniere_inter;
+    /**
+     * @var boolean
+     */
+    private $transfert_dinner_westin;
+    /**
+     * @var boolean
+     */
+    private $transfert_dinner_inter;
+    /**
+     * @var boolean
+     */
+    private $transfert_taxi;
+
+    /**
+     * @return bool
+     */
+    public function getTransfertWestinDinner(): ?bool
+    {
+        return $this->transfert_westin_dinner;
+    }
+
+    /**
+     * @param bool $transfert_westin_dinner
+     */
+    public function setTransfertWestinDinner(?bool $transfert_westin_dinner = null): void
+    {
+        $this->transfert_westin_dinner = $transfert_westin_dinner;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTransfertInterDinner(): ?bool
+    {
+        return $this->transfert_inter_dinner;
+    }
+
+    /**
+     * @param bool $transfert_inter_dinner
+     */
+    public function setTransfertInterDinner(?bool $transfert_inter_dinner = null): void
+    {
+        $this->transfert_inter_dinner = $transfert_inter_dinner;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTransfertPleniereWestin(): ?bool
+    {
+        return $this->transfert_pleniere_westin;
+    }
+
+    /**
+     * @param bool $transfert_pleniere_westin
+     */
+    public function setTransfertPleniereWestin(?bool $transfert_pleniere_westin=null): void
+    {
+        $this->transfert_pleniere_westin = $transfert_pleniere_westin;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTransfertPleniereInter(): ?bool
+    {
+        return $this->transfert_pleniere_inter;
+    }
+
+    /**
+     * @param bool $transfert_pleniere_inter
+     */
+    public function setTransfertPleniereInter(?bool $transfert_pleniere_inter = null): void
+    {
+        $this->transfert_pleniere_inter = $transfert_pleniere_inter;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTransfertDinnerWestin(): ?bool
+    {
+        return $this->transfert_dinner_westin;
+    }
+
+    /**
+     * @param bool $transfert_dinner_westin
+     */
+    public function setTransfertDinnerWestin(?bool $transfert_dinner_westin = null): void
+    {
+        $this->transfert_dinner_westin = $transfert_dinner_westin;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTransfertDinnerInter(): ?bool
+    {
+        return $this->transfert_dinner_inter;
+    }
+
+    /**
+     * @param bool $transfert_dinner_inter
+     */
+    public function setTransfertDinnerInter(?bool $transfert_dinner_inter = null): void
+    {
+        $this->transfert_dinner_inter = $transfert_dinner_inter;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTransfertTaxi(): ?bool
+    {
+        return $this->transfert_taxi;
+    }
+
+    /**
+     * @param bool $transfert_taxi
+     */
+    public function setTransfertTaxi(?bool $transfert_taxi = null): void
+    {
+        $this->transfert_taxi = $transfert_taxi;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaxiAdress(): ?string
+    {
+        return $this->taxi_adress;
+    }
+
+    /**
+     * @param string $taxi_adress
+     */
+    public function setTaxiAdress(?string $taxi_adress = null): void
+    {
+        $this->taxi_adress = $taxi_adress;
+    }
+    /**
+     * @var string
+     */
+    private $taxi_adress;
+
+    /**
      * @return string
      */
     public function getHotelName(): ?string
@@ -108,10 +280,11 @@ class User implements UserInterface
     /**
      * @param string $hotel_name
      */
-    public function setHotelName(string $hotel_name): void
+    public function setHotelName(?string $hotel_name = null): void
     {
         $this->hotel_name = $hotel_name;
     }
+
     /**
      * @var string
      */
@@ -137,11 +310,17 @@ class User implements UserInterface
     private $diet;
 
 
+    /**
+     * @param string $token
+     */
     public function setToken(string $token)
     {
         $this->token = $token;
     }
 
+    /**
+     * @return string|null
+     */
     public function getToken(): ?string
     {
         return $this->token;
@@ -158,7 +337,7 @@ class User implements UserInterface
     /**
      * @param bool $participation
      */
-    public function setParticipation(bool $participation): void
+    public function setParticipation(?bool $participation = null): void
     {
         $this->participation = $participation;
     }
@@ -174,7 +353,7 @@ class User implements UserInterface
     /**
      * @param bool $image_right
      */
-    public function setImageRight(bool $image_right): void
+    public function setImageRight(?bool $image_right=null): void
     {
         $this->image_right = $image_right;
     }
@@ -190,7 +369,7 @@ class User implements UserInterface
     /**
      * @param bool $hotel
      */
-    public function setHotel(bool $hotel): void
+    public function setHotel(?bool $hotel = null): void
     {
         $this->hotel = $hotel;
     }
@@ -206,7 +385,7 @@ class User implements UserInterface
     /**
      * @param bool $pleniere_1
      */
-    public function setPleniere1(bool $pleniere_1): void
+    public function setPleniere1(?bool $pleniere_1 = null): void
     {
         $this->pleniere_1 = $pleniere_1;
     }
@@ -222,7 +401,7 @@ class User implements UserInterface
     /**
      * @param bool $pleniere_2
      */
-    public function setPleniere2(bool $pleniere_2): void
+    public function setPleniere2(?bool $pleniere_2 = null): void
     {
         $this->pleniere_2 = $pleniere_2;
     }
@@ -238,7 +417,7 @@ class User implements UserInterface
     /**
      * @param bool $dinner
      */
-    public function setDinner(bool $dinner): void
+    public function setDinner(?bool $dinner = null): void
     {
         $this->dinner = $dinner;
     }
@@ -256,7 +435,7 @@ class User implements UserInterface
      *
      * @throws Exception
      */
-    public function setDateParticipation(DateTime $date_participation): void
+    public function setDateParticipation(?DateTime $date_participation = null): void
     {
         if (is_string($date_participation)) {
             $date_participation = new DateTime($date_participation);
@@ -277,7 +456,7 @@ class User implements UserInterface
      *
      * @throws Exception
      */
-    public function setCheck1(DateTime $check1): void
+    public function setCheck1(?DateTime $check1 = null): void
     {
         if (is_string($check1)) {
             $check1 = new DateTime($check1);
@@ -296,7 +475,7 @@ class User implements UserInterface
     /**
      * @param DateTime $check2
      */
-    public function setCheck2(DateTime $check2): void
+    public function setCheck2(?DateTime $check2 = null): void
     {
         if (is_string($check2)) {
             $check2 = new DateTime($check2);
@@ -315,7 +494,7 @@ class User implements UserInterface
     /**
      * @param string $civility
      */
-    public function setCivility(string $civility): void
+    public function setCivility(?string $civility = null): void
     {
         $this->civility = $civility;
     }
@@ -331,7 +510,7 @@ class User implements UserInterface
     /**
      * @param string $first_name
      */
-    public function setFirstName(string $first_name): void
+    public function setFirstName(?string $first_name = null): void
     {
         $this->first_name = $first_name;
     }
@@ -347,7 +526,7 @@ class User implements UserInterface
     /**
      * @param string $last_name
      */
-    public function setLastName(string $last_name): void
+    public function setLastName(?string $last_name = null): void
     {
         $this->last_name = $last_name;
     }
@@ -387,7 +566,7 @@ class User implements UserInterface
     /**
      * @param string $phone
      */
-    public function setPhone(string $phone): void
+    public function setPhone(?string $phone=null): void
     {
         $this->phone = $phone;
     }
@@ -403,11 +582,14 @@ class User implements UserInterface
     /**
      * @param string $diet
      */
-    public function setDiet(string $diet): void
+    public function setDiet(?string $diet = null): void
     {
         $this->diet = $diet;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -416,30 +598,54 @@ class User implements UserInterface
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email = null): void
     {
         $this->email = $email;
     }
-    public function getUserIdentifier(): string
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): ?string
     {
         return $this->getToken();
     }
+
+    /**
+     *
+     */
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    /**
+     * @return string|void|null
+     */
     public function getPassword()
     {
         // TODO: Implement getPassword() method.
     }
+
+    /**
+     * @return string[]
+     */
     public function getRoles()
     {
         return ['ROLE_USER'];
     }
+
+    /**
+     * @return string|void|null
+     */
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
     }
+
+    /**
+     * @return string|null
+     */
     public function getUsername()
     {
         return $this->getEmail();

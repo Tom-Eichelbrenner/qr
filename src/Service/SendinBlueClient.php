@@ -70,14 +70,16 @@ class SendinBlueClient
             $result = $apiInstance->getContactsFromList($listId, $modifiedSince, $limit, $offset);
             $result = json_decode($result, true);
 
+
             // find the contact with the token
             foreach ($result['contacts'] as $contact) {
+
                 if ($contact['attributes']['TOKEN_2022'] === $token) {
                     return $this->createUserFromContact($contact);
                 }
             }
         } catch (Exception $e) {
-            echo 'Exception when calling ContactsApi->getContactsFromList: ', $e->getMessage(), PHP_EOL;
+            Throw new Exception($e->getMessage());
         }
 
         return null;
@@ -169,12 +171,11 @@ class SendinBlueClient
         foreach ($attributes as $key => $value) {
             $method = 'set' . ucfirst($value);
             if ($method === "setDateParticipation" || $method === "setCheck1" || $method === "setCheck2") {
-                $user->$method(new \DateTime($contact['attributes'][$key]));
+                $user->$method(new \DateTime($contact['attributes'][$key] ?? null));
             } else {
-                $user->$method($contact['attributes'][$key]);
+                $user->$method($contact['attributes'][$key] ?? null);
             }
         }
-
         return $user;
     }
 
