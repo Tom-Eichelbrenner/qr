@@ -192,7 +192,6 @@ class SendinBlueClient
             $attributes = array_filter(User::ATTRIBUTES, function ($key) use ($restrict) {
                 return in_array($key, $restrict);
             });
-            dump("restricted", $restrict);
         } else {
             $attributes = User::ATTRIBUTES;
         }
@@ -206,7 +205,6 @@ class SendinBlueClient
             }
         }
 
-        dump($contact);
         return $contact;
     }
 

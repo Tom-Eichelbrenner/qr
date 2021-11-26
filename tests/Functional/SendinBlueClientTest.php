@@ -4,10 +4,13 @@ namespace App\Tests\Functional;
 
 use App\Service\SendinBlueClient;
 use App\Tests\Support\ConstantsClass;
+use App\Tests\Support\SendinBlueClientTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class SendinBlueClientTest extends KernelTestCase
 {
+    use SendinBlueClientTrait;
+
     protected function setUp(): void
     {
         self::bootKernel();
@@ -57,10 +60,5 @@ class SendinBlueClientTest extends KernelTestCase
         $response = $sendinBlueClient->sendTransactionnalEmail($user, SendinBlueClient::TEMPLATE_INVITATION);
 
         $this->assertTrue($response === true, "Response should be true");
-    }
-
-    private function getSendinBlueClientService(): SendinBlueClient
-    {
-        return static::getContainer()->get("test.App\Service\SendinBlueClient");
     }
 }
