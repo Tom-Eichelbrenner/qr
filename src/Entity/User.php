@@ -18,8 +18,8 @@ class User implements UserInterface
         1 => 'M.',
         2 => 'Mme',
     ];
-    
-    const ATTRIBUTES = [
+
+    public const ATTRIBUTES = [
         "PRENOM" => "firstName",
         "NOM" => "lastName",
         "CIVILITE" => "civility",
@@ -529,6 +529,30 @@ class User implements UserInterface
     public function setLastName(?string $last_name = null): void
     {
         $this->last_name = $last_name;
+    }
+
+    /**
+     * @param bool|null $withCivility
+     *
+     * @return string
+     */
+    public function getFullName(?bool $withCivility = false): string
+    {
+        $fullName = "{$this->getFirstName()} {$this->getLastName()}";
+
+        if ($withCivility) {
+            $fullName = "{$this->getCivilityAsString()} $fullName";
+        }
+
+        return $fullName ?? "";
+    }
+
+    /**
+     * @return string
+     */
+    public function getCivilityAsString(): string
+    {
+        return array_flip(self::CIVILITY)[$this->getCivility()];
     }
 
     /**

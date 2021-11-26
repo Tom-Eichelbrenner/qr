@@ -18,7 +18,7 @@ class SendinBlueClientTest extends KernelTestCase
         /**
          * @var SendinBlueClient
          */
-        $sendinBlueClient = static::getContainer()->get("test.App\Service\SendinBlueClient");
+        $sendinBlueClient = $this->getSendinBlueClientService();
         $user = $sendinBlueClient->getContact(ConstantsClass::TEST_CONTACT);
         $this->assertNotNull($user, "The contact " . ConstantsClass::TEST_CONTACT . " should return a valud User");
     }
@@ -28,7 +28,7 @@ class SendinBlueClientTest extends KernelTestCase
         /**
          * @var SendinBlueClient
          */
-        $sendinBlueClient = static::getContainer()->get("test.App\Service\SendinBlueClient");
+        $sendinBlueClient = $this->getSendinBlueClientService();
         $user = $sendinBlueClient->getContact(ConstantsClass::TEST_CONTACT);
         $this->assertNotNull($user, "The contact " . ConstantsClass::TEST_CONTACT . " should return a valud User");
 
@@ -46,5 +46,21 @@ class SendinBlueClientTest extends KernelTestCase
         $sendinBlueClient->updateContact($user);
 
         $this->assertEquals($inversedValue, $controlUser->getParticipation(), "The value of attributes PARTICIPATION should be $inversedValue : {$controlUser->getParticipation()} was found");
+    }
+
+    public function testTransacEmail()
+    {
+        $sendinBlueClient = $this->getSendinBlueClientService();
+
+        $user = $sendinBlueClient->getContact(ConstantsClass::TEST_CONTACT);
+
+        $response = $sendinBlueClient->sendTransactionnalEmail($user, SendinBlueClient::TEMPLATE_INVITATION);
+
+        $this->assertTrue($response === true, "Response should be true");
+    }
+
+    private function getSendinBlueClientService(): SendinBlueClient
+    {
+        return static::getContainer()->get("test.App\Service\SendinBlueClient");
     }
 }
