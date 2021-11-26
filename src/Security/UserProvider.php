@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-
 /**
  * @method UserInterface loadUserByIdentifier(string $identifier)
  */
@@ -57,10 +56,9 @@ class UserProvider implements UserProviderInterface
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
         $user = $this->sendinblueClient->getContact($identifier);
-        if ($user){
+        if ($user) {
             return $user;
         }
         throw new UserNotFoundException("User with identifier $identifier doesnt exist");
-
     }
 }

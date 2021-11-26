@@ -108,55 +108,53 @@ class MainController extends AbstractController
         }
     }
 
-        /**
-         * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
-         *
-         * @return Response
-         */
-        public function withdrawal($token, SendinBlueClient $client)
-        {
-            $user = $client->getContact($token);
-            $user->setParticipation(false);
-            $client->updateContact($user);
-            return $this->render('je-ne-participe-pas.html.twig', [
-                'token' => $token
-            ]);
-        }
-
-
-        /**
-         * @Route("/règles-sanitaires", name="healthRules", methods={"GET"})
-         *
-         * @return Response
-         */
-        public
-        function healthRules()
-        {
-            return $this->render('règles-sanitaires.html.twig');
-        }
-
-        /**
-         * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
-         *
-         * @return Response
-         */
-        public function confirmation($token)
-        {
-            return $this->render('confirmation.html.twig', [
-                'token' => $token
-            ]);
-        }
-
-        /**
-         * @Route("/inscrit/{id}", name="registered", methods={"GET"})
-         *
-         * @return Response
-         */
-        public
-        function registered($id)
-        {
-            return $this->render('inscrit.html.twig', [
-                'id' => $id
-            ]);
-        }
+    /**
+     * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function withdrawal($token, SendinBlueClient $client)
+    {
+        $user = $client->getContact($token);
+        $user->setParticipation(false);
+        $client->updateContact($user);
+        return $this->render('je-ne-participe-pas.html.twig', [
+            'token' => $token
+        ]);
     }
+
+
+    /**
+     * @Route("/règles-sanitaires", name="healthRules", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function healthRules()
+    {
+        return $this->render('règles-sanitaires.html.twig');
+    }
+
+    /**
+     * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function confirmation($token)
+    {
+        return $this->render('confirmation.html.twig', [
+            'token' => $token
+        ]);
+    }
+
+    /**
+     * @Route("/inscrit/{id}", name="registered", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function registered($id)
+    {
+        return $this->render('inscrit.html.twig', [
+            'id' => $id
+        ]);
+    }
+}
