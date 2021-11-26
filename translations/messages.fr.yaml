@@ -184,3 +184,50 @@ page_confirmation:
           Parkings :
           Edouard VII, en face du 23 rue Caumartin
           Vendôme, place Vendôme"
+
+form_part_1:
+  civilite:
+    label: "Civilité *"
+  nom:
+    label: "Nom *"
+  prenom:
+    label: "Prénom *"
+  email:
+    label: "Email *"
+  phone:
+    label: "Téléphone *"
+    help: "Ce numéro sera utilisé uniquement pour vous envoyer des informations sur l'événement en cas de besoin."
+  image_right:
+    label: "Droit a l'image"
+  submit:
+    label: "Etape suivante"
+
+form_part_2:
+  hotel:
+    label: "Je confirme souhaiter bénéficier de cette réservation hôtelière."
+    help : "Les coordonnées et accès vous seront précisés dans le mail de confirmation"
+  transfert:
+    pleniere_westin:
+      label: "Transfert de la plénière au Westin"
+    westin_dinner:
+      label: "Transfert du westin au restaurant"
+    dinner_westin:
+      label: "Transfert du restaurant au westin"
+    planiere_inter:
+      label: "Transfert de la plénière à l'inter"
+    inter_dinner:
+      label: "Transfert de l'inter au restaurant"
+    dinner_inter:
+      label: "Transfert du restaurant à l'inter"
+    taxi:
+      label: "Transfert en taxi"
+    taxi_adress:
+      label: "Adresse pour le taxi"
+
+
+  dinner:
+    label: "J'ai un régime ou une intolérance alimentaire spécifique"
+  diet:
+    label: "Si oui, veuillez nous le préciser"
+  submit:
+    label: "Valider"
