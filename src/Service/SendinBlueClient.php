@@ -7,8 +7,6 @@ use Exception;
 use GuzzleHttp\Client;
 use SendinBlue;
 use Sendinblue\Client\ApiException;
-use Symfony\Component\Validator\Constraints\Date;
-use function PHPUnit\Framework\isNull;
 
 class SendinBlueClient
 {
@@ -19,6 +17,24 @@ class SendinBlueClient
      * @var $sendinBlueListId
      */
     private $sendinBlueListId;
+
+    /**
+     * @var \Sendinblue\Client\Configuration
+     */
+    private $config;
+
+    public const TEMPLATE_PARAMS = [
+        'CIVILITE',
+        'PRENOM',
+        'NOM',
+        'TOKEN_2022',
+    ];
+
+    public const TEMPLATE_INVITATION = 51;
+
+    public const TEMPLATE_CONFIRMATION = 53;
+
+    public const TEMPLATE_WITHDRAWAL = 54;
 
     public function __construct(string $sendinBlueApiKey, int $sendinBlueListId)
     {
@@ -35,7 +51,7 @@ class SendinBlueClient
      *
      * @return User|null
      *
-     * @throws Sendinblue\ApiException
+     * @throws ApiException
      *
      */
     public function getContact(string $token): ?User
@@ -74,7 +90,7 @@ class SendinBlueClient
      * @param User $user
      *
      * @return User
-     * @throws Sendinblue\ApiException
+     * @throws ApiException
      *
      */
     public function updateContact(User $user): User
@@ -94,6 +110,50 @@ class SendinBlueClient
         }
 
         return $user;
+    }
+
+
+    /**
+     * Undocumented function
+     *
+     * @param \App\Entity\User $user
+     * @param int $templateId
+     * @param array $attachment|null
+     *
+     * @throws ApiException
+     *
+     * @return bool
+     */
+    public function sendTransactionnalEmail(User $user, int $templateId, ?array $params = null, ?array $attachment = null): bool
+    {
+        $apiInstance = new \SendinBlue\Client\Api\TransactionalEmailsApi(
+            new \GuzzleHttp\Client(),
+            $this->config
+        );
+        $email = new \SendinBlue\Client\Model\SendSmtpEmail();
+
+        $email['templateId'] = $templateId;
+        $email['params'] = $this->createContactFromUser($user, $params ?? $this->getTemplateAttributes($params));
+        dump($email['params']);
+        $email['to'] = [
+            ['email' => $user->getEmail(), 'name' => $user->getFullName()]
+        ];
+
+        if ($attachment) {
+            $email['attachment'] = [
+                'content' => $attachment['content'],
+                'name' => $attachment['name']
+            ];
+        }
+
+        try {
+            $response = $apiInstance->sendTransacEmail($email);
+        } catch (ApiException $e) {
+            dump($e->getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -116,20 +176,27 @@ class SendinBlueClient
         }
 
         return $user;
-
     }
 
     /**
      * Create a contact from a user
      *
      * @param User $user
+     * @param array $restrict - allow to retreive only specifics keys in the array
      *
      * @return array
      */
-    private function createContactFromUser(User $user): array
+    private function createContactFromUser(User $user, ?array $restrict = null): array
     {
-        $attributes = User::ATTRIBUTES;
-        $contact = [];
+        if ($restrict) {
+            $attributes = array_filter(User::ATTRIBUTES, function ($key) use ($restrict) {
+                return in_array($key, $restrict);
+            });
+            dump("restricted", $restrict);
+        } else {
+            $attributes = User::ATTRIBUTES;
+        }
+        $contact = [] ;
         foreach ($attributes as $key => $value) {
             $method = 'get' . ucfirst($value);
             if ($method === "getDateParticipation" || $method === "getCheck1" || $method === "getCheck2") {
@@ -139,7 +206,15 @@ class SendinBlueClient
             }
         }
 
+        dump($contact);
         return $contact;
     }
-}
 
+    private function getTemplateAttributes(?array $additionnalParams = [])
+    {
+        $allowedParams = array_merge($additionnalParams ?? [], self::TEMPLATE_PARAMS);
+        return array_filter(User::ATTRIBUTES, function ($key) use ($allowedParams) {
+            return in_array($key, $allowedParams);
+        });
+    }
+}
