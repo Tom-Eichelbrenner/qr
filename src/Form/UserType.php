@@ -82,6 +82,9 @@ class UserType extends AbstractType
         }
         // get user data
 
+        /**
+         * @var User $user
+         */
         $user = $this->security->getUser();
         if ($options['step'] === self::STEP2) {
             $builder
