@@ -14,6 +14,8 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -105,6 +107,8 @@ class UserType extends AbstractType
                             'attr' => [
                                 'class' => 'switch-custom',
                             ],
+                            'empty_data' => false, // add this to handle unchecked checkbox
+                            'false_values' => [0, '0', 'false'] // add this to handle unchecked checkbox
                         ]);
                     if ($user->getDinner()) {
                         $builder
@@ -186,6 +190,30 @@ class UserType extends AbstractType
                 ->add('submit', SubmitType::class, [
                     'label' => $this->getTranslation('form_part_2.submit.label'),
                 ]);
+
+            $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+
+                /**
+                 * @var FormInterface - form with current state
+                 */
+                $form = $event->getForm();
+
+                /**
+                 * Ensure that assocaited data is set to false if no hotel checked
+                 */
+                if (! $form->get('hotel')->getData() === false) {
+                    $form->get('transfertPleniereWestin')->setData(false);
+                }
+            });
+
+            $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                /**
+                 * @var User
+                 */
+                $data = $event->getData();
+
+                dump($data);
+            });
         }
     }
 

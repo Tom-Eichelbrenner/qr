@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use Exception;
 use GuzzleHttp\Client;
+use Psr\Log\LoggerInterface;
 use SendinBlue;
 use Sendinblue\Client\ApiException;
 
@@ -23,6 +24,11 @@ class SendinBlueClient
      */
     private $config;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $sendinBlueLogger;
+
     public const TEMPLATE_PARAMS = [
         'CIVILITE',
         'PRENOM',
@@ -36,12 +42,14 @@ class SendinBlueClient
 
     public const TEMPLATE_WITHDRAWAL = 54;
 
-    public function __construct(string $sendinBlueApiKey, int $sendinBlueListId)
+    public function __construct(string $sendinBlueApiKey, LoggerInterface $sendinblueLogger, int $sendinBlueListId)
     {
         $this->config = SendinBlue\Client\Configuration::getDefaultConfiguration()
             ->setApiKey('api-key', $sendinBlueApiKey);
 
         $this->sendinBlueListId = $sendinBlueListId;
+
+        $this->sendinBlueLogger = $sendinblueLogger;
     }
 
     /**
@@ -73,13 +81,13 @@ class SendinBlueClient
 
             // find the contact with the token
             foreach ($result['contacts'] as $contact) {
-
                 if ($contact['attributes']['TOKEN_2022'] === $token) {
                     return $this->createUserFromContact($contact);
                 }
             }
-        } catch (Exception $e) {
-            Throw new Exception($e->getMessage());
+        } catch (ApiException $e) {
+            $this->sendinBlueLogger->critical($e->getMessage(), $e->getTrace());
+            return null;
         }
 
         return null;
@@ -108,6 +116,7 @@ class SendinBlueClient
         try {
             $apiInstance->updateContact($identifier, $updateContact);
         } catch (ApiException $e) {
+            $this->sendinBlueLogger->critical($e->getMessage(), $e->getTrace());
             return null;
         }
 
