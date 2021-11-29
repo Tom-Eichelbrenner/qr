@@ -138,7 +138,7 @@ class MainController extends AbstractController
                 /** @var User $user */
                 $user = $this->getUser();
                 $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                $client->sendTransactionnalEmail($user, $client::TEMPLATE_INVITATION, [], $file);
 
                 return $this->redirectToRoute('confirmation', ['token' => $token]);
             }
@@ -161,12 +161,18 @@ class MainController extends AbstractController
      */
     public function withdrawal($token, SendinBlueClient $client): Response
     {
-        $user = $client->getContact($token);
-        $user->setParticipation(false);
-        $client->updateContact($user);
-        return $this->render('je-ne-participe-pas.html.twig', [
-            'token' => $token
-        ]);
+        /** @var User $user */
+        $user = $this->getUser();
+        if ($user->getParticipation() == false) {
+            return $this->render('je-ne-participe-pas.html.twig', [
+                'token' => $token
+            ]);
+        } else {
+            $user->setParticipation(false);
+            $client->updateContact($user);
+            $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+            $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
+        }
     }
 
 
@@ -187,8 +193,20 @@ class MainController extends AbstractController
      *
      * @return Response
      */
-    public function confirmation($token): Response
+    public function confirmation($token, SendinBlueClient $client, PDFCreator $creator): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        if ($user->getParticipation() == true) {
+            return $this->render('confirmation.html.twig', [
+                'token' => $token
+            ]);
+        } else {
+            $user->setParticipation(true);
+            $client->updateContact($user);
+            $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+            $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+        }
         return $this->render('confirmation.html.twig', [
             'token' => $token
         ]);
