@@ -213,7 +213,7 @@ form_part_2:
       label: "Transfert du westin au restaurant"
     dinner_westin:
       label: "Transfert du restaurant au westin"
-    planiere_inter:
+    pleniere_inter:
       label: "Transfert de la plénière à l'inter"
     inter_dinner:
       label: "Transfert de l'inter au restaurant"

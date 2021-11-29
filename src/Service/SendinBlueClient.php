@@ -95,7 +95,7 @@ class SendinBlueClient
      * @throws ApiException
      *
      */
-    public function updateContact(User $user): User
+    public function updateContact(User $user): ?User
     {
         $apiInstance = new Sendinblue\Client\Api\ContactsApi(
             new Client(),
@@ -108,7 +108,7 @@ class SendinBlueClient
         try {
             $apiInstance->updateContact($identifier, $updateContact);
         } catch (ApiException $e) {
-            echo 'Exception when calling ContactsApi->updateContact: ', $e->getMessage(), PHP_EOL;
+            return null;
         }
 
         return $user;
