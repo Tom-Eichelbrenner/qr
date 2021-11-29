@@ -50,8 +50,7 @@ class MainController extends AbstractController
      */
     public function participationPost($token, Request $request, SendinblueClient $client)
     {
-        $token = $this->getUser()->getUserIdentifier();
-        $user = $client->getContact($token);
+        $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP1,
@@ -91,8 +90,7 @@ class MainController extends AbstractController
      */
     public function participation2Post($token, Request $request, SendinBlueClient $client)
     {
-        $token = $this->getUser()->getUserIdentifier();
-        $user = $client->getContact($token);
+        $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP2,
@@ -138,6 +136,7 @@ class MainController extends AbstractController
      */
     public function confirmation($token)
     {
+        dump($this->getUser());
         return $this->render('confirmation.html.twig', [
             'token' => $token
         ]);
