@@ -7,7 +7,9 @@ use Exception;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use SendinBlue;
+use SendinBlue\Client\Api\TransactionalEmailsApi;
 use Sendinblue\Client\ApiException;
+use SendinBlue\Client\Model\SendSmtpEmail;
 
 class SendinBlueClient
 {
@@ -100,7 +102,6 @@ class SendinBlueClient
      * @param User $user
      *
      * @return User
-     * @throws ApiException
      *
      */
     public function updateContact(User $user): ?User
@@ -127,33 +128,33 @@ class SendinBlueClient
     /**
      * Undocumented function
      *
-     * @param \App\Entity\User $user
-     * @param int $templateId
-     * @param array $attachment|null
-     *
-     * @throws ApiException
+     * @param User          $user
+     * @param int           $templateId
+     * @param array|null    $params
+     * @param FileTo64|null $attachment |null
      *
      * @return bool
      */
-    public function sendTransactionnalEmail(User $user, int $templateId, ?array $params = null, ?array $attachment = null): bool
+    public function sendTransactionnalEmail(User $user, int $templateId, ?array $params = null, ?FileTo64 $attachment = null): bool
     {
-        $apiInstance = new \SendinBlue\Client\Api\TransactionalEmailsApi(
-            new \GuzzleHttp\Client(),
+        $apiInstance = new TransactionalEmailsApi(
+            new Client(),
             $this->config
         );
-        $email = new \SendinBlue\Client\Model\SendSmtpEmail();
+        $email = new SendSmtpEmail();
 
         $email['templateId'] = $templateId;
         $email['params'] = $this->createContactFromUser($user, $params ?? $this->getTemplateAttributes($params));
-        dump($email['params']);
         $email['to'] = [
             ['email' => $user->getEmail(), 'name' => $user->getFullName()]
         ];
 
         if ($attachment) {
             $email['attachment'] = [
-                'content' => $attachment['content'],
-                'name' => $attachment['name']
+                [
+                    'content' => $attachment->getBase64(),
+                    'name' => $attachment->getFilename(),
+                ]
             ];
         }
 
@@ -191,8 +192,8 @@ class SendinBlueClient
     /**
      * Create a contact from a user
      *
-     * @param User $user
-     * @param array $restrict - allow to retreive only specifics keys in the array
+     * @param User       $user
+     * @param array|null $restrict - allow to retreive only specifics keys in the array
      *
      * @return array
      */
@@ -205,7 +206,7 @@ class SendinBlueClient
         } else {
             $attributes = User::ATTRIBUTES;
         }
-        $contact = [] ;
+        $contact = [];
         foreach ($attributes as $key => $value) {
             $method = 'get' . ucfirst($value);
             if ($method === "getDateParticipation" || $method === "getCheck1" || $method === "getCheck2") {

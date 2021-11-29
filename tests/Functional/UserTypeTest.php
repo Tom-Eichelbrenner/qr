@@ -76,7 +76,7 @@ class UserTypeTest extends KernelTestCase
         string $hotelName,
         bool $pleniere1,
         bool $pleniere2,
-        bool $diner,
+        bool $diner
     ): array {
         $fields = [];
 
