@@ -30,3 +30,6 @@ services:
         arguments:
           $sendinBlueApiKey: "%sendinBlueApiKey%"
           $sendinBlueListId: "%sendinBlueListId%"
+    App\Service\PDFCreator:
+        arguments:
+          $projectDir: "%kernel.project_dir%"

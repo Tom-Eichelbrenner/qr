@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Service\PDFCreator;
 use App\Service\SendinBlueClient;
 use Exception;
 use Sendinblue\Client\ApiException;
@@ -12,6 +13,9 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MainController extends AbstractController
 {
@@ -55,7 +59,6 @@ class MainController extends AbstractController
      * @param SendinBlueClient $client
      *
      * @return Response
-     * @throws ApiException
      * @throws Exception
      */
     public function participation1Post($token, Request $request, SendinblueClient $client): Response
@@ -116,7 +119,7 @@ class MainController extends AbstractController
      * @throws ApiException
      * @throws Exception
      */
-    public function participation2Post($token, Request $request, SendinBlueClient $client): Response
+    public function participation2Post($token, Request $request, SendinBlueClient $client, PDFCreator $creator): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -132,6 +135,11 @@ class MainController extends AbstractController
         if ($form->isSubmitted()) {
             $result = $client->updateContact($user);
             if ($result instanceof User) {
+                /** @var User $user */
+                $user = $this->getUser();
+                $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+
                 return $this->redirectToRoute('confirmation', ['token' => $token]);
             }
             $form->addError(new FormError('Une erreur est survenue, veuillez réessayer'));
@@ -181,7 +189,6 @@ class MainController extends AbstractController
      */
     public function confirmation($token): Response
     {
-        dump($this->getUser());
         return $this->render('confirmation.html.twig', [
             'token' => $token
         ]);
