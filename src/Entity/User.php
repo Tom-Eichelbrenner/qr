@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTime;
 use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface
 {
@@ -301,6 +302,8 @@ class User implements UserInterface
 
     /**
      * @var string
+     *
+     * @Assert\Regex("/\+\d{11}/", message="Le numéro de téléphone doit commencer par un +")
      */
     private $phone;
 
