@@ -27,28 +27,28 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/je-participe/{token}", name="participation", methods={"GET"})
+     * @Route("/je-participe/{token}", name="participation_1_get", methods={"GET"})
      *
      * @param $token
      *
      * @return Response
      */
-    public function participation($token): Response
+    public function participation1Get($token): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP1,
-            'action' => $this->generateUrl('participation_post', ['token' => $token]),
+            'action' => $this->generateUrl('participation_1_post', ['token' => $token]),
         ]);
 
-        return $this->render('je-participe.html.twig', [
+        return $this->render('form_1.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/je-participe/{token}", name="participation_post", methods={"POST"})
+     * @Route("/je-participe/{token}", name="participation_1_post", methods={"POST"})
      *
      * @param                  $token
      * @param Request          $request
@@ -58,14 +58,14 @@ class MainController extends AbstractController
      * @throws ApiException
      * @throws Exception
      */
-    public function participationPost($token, Request $request, SendinblueClient $client): Response
+    public function participation1Post($token, Request $request, SendinblueClient $client): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP1,
-            'action' => $this->generateUrl('participation_post', ['token' => $token]),
+            'action' => $this->generateUrl('participation_1_post', ['token' => $token]),
         ]);
 
         $data = $request->request->all('user') ?? [];
@@ -74,31 +74,31 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $client->updateContact($user);
             if ($result instanceof User) {
-                return $this->redirectToRoute('form', ['token' => $token]);
+                return $this->redirectToRoute('participation_2_get', ['token' => $token]);
             }
             $form->addError(new FormError('Une erreur est survenue, veuillez réessayer.'));
         }
-        return $this->render('je-participe.html.twig', [
+        return $this->render('form_1.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/je-participe/2/{token}", name="form", methods={"GET"})
+     * @Route("/je-participe/2/{token}", name="participation_2_get", methods={"GET"})
      *
      * @param $token
      *
      * @return Response
      */
-    public function form($token): Response
+    public function participation2Get($token): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP2,
             'action' => $this->generateUrl('participation_2_post', ['token' => $token]),
         ]);
-        return $this->render('formulaire.html.twig', [
+        return $this->render('form_2.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
@@ -136,7 +136,7 @@ class MainController extends AbstractController
             }
             $form->addError(new FormError('Une erreur est survenue, veuillez réessayer'));
         }
-        return $this->render('formulaire.html.twig', [
+        return $this->render('form_2.twig', [
             'token' => $token,
             'form' => $form->createView(),
         ]);
