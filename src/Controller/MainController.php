@@ -21,9 +21,6 @@ class MainController extends AbstractController
      */
     public function index(SendinBlueClient $client)
     {
-        $user = $client->getContact("test_1234567890_token");
-        $user->setDinner(true);
-        $client->updateContact($user);
         return $this->render('index.html.twig');
     }
 
