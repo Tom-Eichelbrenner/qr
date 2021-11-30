@@ -3,14 +3,11 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -98,7 +95,7 @@ class UserType extends AbstractType
                         'class' => 'switch-custom',
                     ],
                 ]);
-            if ($user->getHotel()) {
+            if ($user->getHotel() === true) {
                 if ($user->getHotelName() === "1") {
                     $builder
                         ->add('transfertPleniereWestin', CheckboxType::class, [
@@ -198,12 +195,23 @@ class UserType extends AbstractType
                  */
                 $form = $event->getForm();
 
+                $data = $form->getData();
+
                 /**
                  * Ensure that assocaited data is set to false if no hotel checked
                  */
-                if (! $form->get('hotel')->getData() === false) {
-                    $form->get('transfertPleniereWestin')->setData(false);
+                if ($data->getHotel() == false) {
+                    $data->setTransfertWestinDinner(false);
+                    $data->setTransfertInterDinner(false);
+                    $data->setTransfertPleniereWestin(false);
+                    $data->setTransfertPleniereInter(false);
+                    $data->setTransfertDinnerWestin(false);
+                    $data->setTransfertDinnerInter(false);
+                    if ($data->getDinner() == false) {
+                        $data->setDiet("null");
+                    }
                 }
+                $event->setData($data);
             });
 
             $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
@@ -211,8 +219,6 @@ class UserType extends AbstractType
                  * @var User
                  */
                 $data = $event->getData();
-
-                dump($data);
             });
         }
     }
