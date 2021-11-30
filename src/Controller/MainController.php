@@ -13,9 +13,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class MainController extends AbstractController
 {
@@ -116,8 +113,6 @@ class MainController extends AbstractController
      *
      *
      * @return Response
-     * @throws ApiException
-     * @throws Exception
      */
     public function participation2Post($token, Request $request, SendinBlueClient $client, PDFCreator $creator): Response
     {
@@ -157,9 +152,8 @@ class MainController extends AbstractController
      * @param SendinBlueClient $client
      *
      * @return Response
-     * @throws ApiException
      */
-    public function withdrawal($token, SendinBlueClient $client): Response
+    public function withdrawal($token, SendinBlueClient $client, PDFCreator $creator): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -197,6 +191,7 @@ class MainController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        dump($user);
         if ($user->getParticipation() == true) {
             return $this->render('confirmation.html.twig', [
                 'token' => $token
