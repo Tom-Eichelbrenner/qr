@@ -218,7 +218,6 @@ class UserType extends AbstractType
                 /**
                  * @var User
                  */
-                $data = $event->getData();
             });
         }
     }

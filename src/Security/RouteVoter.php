@@ -3,9 +3,9 @@
 namespace App\Security;
 
 use App\Entity\User;
-use App\Service\CheckRoute;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -39,7 +39,13 @@ class RouteVoter extends Voter
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    protected function supports(string $attribute, $subject)
+    /**
+     * @param string $attribute
+     * @param mixed  $subject
+     *
+     * @return bool
+     */
+    protected function supports(string $attribute, $subject): bool
     {
         return (in_array($this->request->attributes->get('_route'), array_keys(self::ROUTES)));
     }
@@ -52,7 +58,7 @@ class RouteVoter extends Voter
      *
      * @return bool
      */
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         /** @var User $user */
         $user = $token->getUser();
@@ -60,7 +66,7 @@ class RouteVoter extends Voter
 
         $routename = $this->request->attributes->get('_route');
 
-        $url = $this->router->generate(self::ROUTES[$routename], ['token' => $user->getToken()], Router::ABSOLUTE_URL);
+        $url = $this->router->generate(self::ROUTES[$routename], ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
         return $url === $referer;
     }
 }
