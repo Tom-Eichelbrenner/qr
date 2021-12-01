@@ -4,7 +4,6 @@ namespace App\Security;
 
 use App\Entity\User;
 use App\Service\SendinBlueClient;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -25,7 +24,7 @@ class UserProvider implements UserProviderInterface
      *
      * @return UserInterface
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         return $user;
     }
@@ -35,7 +34,7 @@ class UserProvider implements UserProviderInterface
      *
      * @return bool
      */
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
         return User::class === $class;
     }
@@ -45,7 +44,7 @@ class UserProvider implements UserProviderInterface
      *
      * @return UserInterface
      */
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername(string $username): UserInterface
     {
     }
 

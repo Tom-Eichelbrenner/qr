@@ -26,6 +26,11 @@ class SendinBlueAuthenticator extends AbstractAuthenticator
         $this->userProvider = $userProvider;
     }
 
+    public function checkCredentials($credentials, UserInterface $user)
+    {
+        return true;
+    }
+
     /**
      * Does the authenticator support the given Request?
      *

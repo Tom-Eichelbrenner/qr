@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Service\PDFCreator;
 use App\Service\SendinBlueClient;
 use Exception;
-use Sendinblue\Client\ApiException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class MainController extends AbstractController
 {
@@ -26,6 +27,28 @@ class MainController extends AbstractController
     {
         return $this->render('index.html.twig');
     }
+
+    /**
+     * @Route("/error", name="error", methods={"GET"})
+     *
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function error(Request $request): Response
+    {
+        if ($this->get('session')->get('message')){
+            $message = $this->get('session')->get('message');
+            $this->get('session')->remove('message');
+        } else {
+            $message = 'Une erreur est survenue';
+        }
+        return $this->render('error.html.twig', [
+            'message' => $message
+        ]);
+    }
+
 
     /**
      * @Route("/je-participe/{token}", name="participation_1_get", methods={"GET"})
@@ -50,7 +73,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/{token}", name="participation_1_post", methods={"POST"})
-     *
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      * @param                  $token
      * @param Request          $request
      * @param SendinBlueClient $client
@@ -60,6 +83,7 @@ class MainController extends AbstractController
      */
     public function participation1Post($token, Request $request, SendinblueClient $client): Response
     {
+
         /** @var User $user */
         $user = $this->getUser();
 
@@ -86,12 +110,13 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/2/{token}", name="participation_2_get", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param $token
      *
      * @return Response
      */
-    public function participation2Get($token): Response
+    public function participation2Get($token, Request $request): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user, [
@@ -106,7 +131,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/2/{token}", name="participation_2_post", methods={"POST"})
-     *
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      * @param                  $token
      * @param Request          $request
      * @param SendinBlueClient $client
@@ -132,8 +157,10 @@ class MainController extends AbstractController
             if ($result instanceof User) {
                 /** @var User $user */
                 $user = $this->getUser();
+                $user->setParticipation(true);
+                $client->updateContact($user);
                 $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                $client->sendTransactionnalEmail($user, $client::TEMPLATE_INVITATION, [], $file);
+                $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
 
                 return $this->redirectToRoute('confirmation', ['token' => $token]);
             }
@@ -182,26 +209,14 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
-     *
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      * @param $token
      *
      * @return Response
      */
-    public function confirmation($token, SendinBlueClient $client, PDFCreator $creator): Response
+    public function confirmation($token, SendinBlueClient $client, PDFCreator $creator, Request $request): Response
     {
         /** @var User $user */
-        $user = $this->getUser();
-        dump($user);
-        if ($user->getParticipation() == true) {
-            return $this->render('confirmation.html.twig', [
-                'token' => $token
-            ]);
-        } else {
-            $user->setParticipation(true);
-            $client->updateContact($user);
-            $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-            $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
-        }
         return $this->render('confirmation.html.twig', [
             'token' => $token
         ]);
