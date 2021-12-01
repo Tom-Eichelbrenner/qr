@@ -10,8 +10,11 @@ use App\Service\SendinBlueClient;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -20,6 +23,16 @@ use Twig\Error\SyntaxError;
 
 class MainController extends AbstractController
 {
+    /**
+     * @var string
+     */
+    private $projectDir;
+
+    public function __construct(string $projectDir)
+    {
+        $this->projectDir = $projectDir;
+    }
+
     /**
      * @Route("/", name="index", methods={"GET"})
      *
@@ -159,7 +172,7 @@ class MainController extends AbstractController
                     $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
                     $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                 } catch (LoaderError | RuntimeError | SyntaxError $e) {
-                    dump("Erreur lors de la génération du PDF");
+                    dump("Erreur : $e");
                 }
 
                 return $this->redirectToRoute('confirmation', ['token' => $token]);
@@ -192,7 +205,7 @@ class MainController extends AbstractController
                 $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
                 $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
             } catch (LoaderError | RuntimeError | SyntaxError $e) {
-                dump("Erreur lors de la génération du PDF");
+                dump("Erreur : $e");
             }
         }
         return $this->render('je-ne-participe-pas.html.twig', [
@@ -238,5 +251,31 @@ class MainController extends AbstractController
         return $this->render('inscrit.html.twig', [
             'id' => $id
         ]);
+    }
+
+
+    /**
+     * @Route("/download/{token}", name="pdf", methods={"GET"})
+     *
+     * @param            $token
+     * @param PDFCreator $creator
+     *
+     * @return BinaryFileResponse
+     */
+    public function download($token, PDFCreator $creator): BinaryFileResponse
+    {
+        $user = $this->getUser();
+        $uniqueId = uniqid();
+        try {
+            $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . $uniqueId . ".pdf");
+        } catch (LoaderError | RuntimeError | SyntaxError $e) {
+            dump("Erreur : $e");
+        }
+        $file = new BinaryFileResponse("$this->projectDir/var/files/pdf/participation" . $uniqueId . ".pdf");
+        $file->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            "participation" . $uniqueId . ".pdf"
+        );
+        return $file;
     }
 }

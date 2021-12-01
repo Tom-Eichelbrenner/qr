@@ -25,6 +25,7 @@ class SendinBlueClient
     private $sendinBlueListId;
 
     /**
+     * @var \SendinBlue\Client\Configuration
      * @var Configuration
      */
     private $config;
@@ -49,7 +50,7 @@ class SendinBlueClient
 
     public function __construct(string $sendinBlueApiKey, LoggerInterface $sendinblueLogger, int $sendinBlueListId)
     {
-        $this->config = Configuration::getDefaultConfiguration()
+        $this->config = SendinBlue\Client\Configuration::getDefaultConfiguration()
             ->setApiKey('api-key', $sendinBlueApiKey);
 
         $this->sendinBlueListId = $sendinBlueListId;
