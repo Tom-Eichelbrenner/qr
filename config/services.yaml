@@ -33,3 +33,6 @@ services:
     App\Service\PDFCreator:
         arguments:
           $projectDir: "%kernel.project_dir%"
+    App\EventListener\AccessDeniedListener:
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception }
