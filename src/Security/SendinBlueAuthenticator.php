@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Service\SendinBlueClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,21 +11,22 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
-use function PHPUnit\Framework\isEmpty;
 
 class SendinBlueAuthenticator extends AbstractAuthenticator
 {
 
-    private $sendinBlueClient;
     private $userProvider;
 
-    public function __construct(SendinBlueClient $sendinBlueClient, UserProvider $userProvider)
+    public function __construct(UserProvider $userProvider)
     {
-        $this->sendinBlueClient = $sendinBlueClient;
         $this->userProvider = $userProvider;
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    /**
+     *
+     * @return bool
+     */
+    public function checkCredentials(): bool
     {
         return true;
     }
