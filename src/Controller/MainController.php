@@ -32,11 +32,9 @@ class MainController extends AbstractController
      * @Route("/error", name="error", methods={"GET"})
      *
      *
-     * @param Request $request
-     *
      * @return Response
      */
-    public function error(Request $request): Response
+    public function error(): Response
     {
         if ($this->get('session')->get('message')){
             $message = $this->get('session')->get('message');
@@ -112,11 +110,11 @@ class MainController extends AbstractController
      * @Route("/je-participe/2/{token}", name="participation_2_get", methods={"GET"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
-     * @param $token
+     * @param         $token
      *
      * @return Response
      */
-    public function participation2Get($token, Request $request): Response
+    public function participation2Get($token): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user, [
@@ -132,12 +130,7 @@ class MainController extends AbstractController
     /**
      * @Route("/je-participe/2/{token}", name="participation_2_post", methods={"POST"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
-     * @param                  $token
-     * @param Request          $request
-     * @param SendinBlueClient $client
      *
-     *
-     * @return Response
      */
     public function participation2Post($token, Request $request, SendinBlueClient $client, PDFCreator $creator): Response
     {
@@ -210,11 +203,11 @@ class MainController extends AbstractController
     /**
      * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
-     * @param $token
+     * @param                  $token
      *
      * @return Response
      */
-    public function confirmation($token, SendinBlueClient $client, PDFCreator $creator, Request $request): Response
+    public function confirmation($token): Response
     {
         /** @var User $user */
         return $this->render('confirmation.html.twig', [
