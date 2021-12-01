@@ -3,13 +3,16 @@
 namespace App\Service;
 
 use App\Entity\User;
+use DateTime;
 use Exception;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use SendinBlue;
 use SendinBlue\Client\Api\TransactionalEmailsApi;
 use Sendinblue\Client\ApiException;
+use Sendinblue\Client\Configuration;
 use SendinBlue\Client\Model\SendSmtpEmail;
+use SendinBlue\Client\Model\UpdateContact;
 
 class SendinBlueClient
 {
@@ -22,7 +25,7 @@ class SendinBlueClient
     private $sendinBlueListId;
 
     /**
-     * @var \Sendinblue\Client\Configuration
+     * @var Configuration
      */
     private $config;
 
@@ -46,7 +49,7 @@ class SendinBlueClient
 
     public function __construct(string $sendinBlueApiKey, LoggerInterface $sendinblueLogger, int $sendinBlueListId)
     {
-        $this->config = SendinBlue\Client\Configuration::getDefaultConfiguration()
+        $this->config = Configuration::getDefaultConfiguration()
             ->setApiKey('api-key', $sendinBlueApiKey);
 
         $this->sendinBlueListId = $sendinBlueListId;
@@ -61,7 +64,7 @@ class SendinBlueClient
      *
      * @return User|null
      *
-     * @throws ApiException
+     * @throws Exception
      *
      */
     public function getContact(string $token): ?User
@@ -71,7 +74,7 @@ class SendinBlueClient
             $this->config
         );
         $listId = $this->sendinBlueListId;
-        $modifiedSince = new \DateTime("2015-10-20T19:20:30+01:00");
+        $modifiedSince = new DateTime("2015-10-20T19:20:30+01:00");
         $limit = 50;
         $offset = 0;
 
@@ -111,7 +114,7 @@ class SendinBlueClient
             $this->config
         );
         $identifier = $user->getEmail();
-        $updateContact = new \SendinBlue\Client\Model\UpdateContact();
+        $updateContact = new UpdateContact();
 
         $updateContact['attributes'] = $this->createContactFromUser($user);
         try {
@@ -159,7 +162,7 @@ class SendinBlueClient
         }
 
         try {
-            $response = $apiInstance->sendTransacEmail($email);
+            $apiInstance->sendTransacEmail($email);
         } catch (ApiException $e) {
             dump($e->getMessage());
             return false;
@@ -181,7 +184,7 @@ class SendinBlueClient
         foreach ($attributes as $key => $value) {
             $method = 'set' . ucfirst($value);
             if ($method === "setDateParticipation" || $method === "setCheck1" || $method === "setCheck2") {
-                $user->$method(new \DateTime($contact['attributes'][$key] ?? null));
+                $user->$method(new DateTime($contact['attributes'][$key] ?? null));
             } else {
                 $user->$method($contact['attributes'][$key] ?? null);
             }
@@ -219,7 +222,7 @@ class SendinBlueClient
         return $contact;
     }
 
-    private function getTemplateAttributes(?array $additionnalParams = [])
+    private function getTemplateAttributes(?array $additionnalParams = []): array
     {
         $allowedParams = array_merge($additionnalParams ?? [], self::TEMPLATE_PARAMS);
         return array_filter(User::ATTRIBUTES, function ($key) use ($allowedParams) {

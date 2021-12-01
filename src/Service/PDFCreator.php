@@ -45,6 +45,7 @@ class PDFCreator
      * @param $data
      * @param $filename
      *
+     * @return FileTo64
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
