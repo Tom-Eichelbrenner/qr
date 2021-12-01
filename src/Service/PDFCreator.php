@@ -49,14 +49,14 @@ class PDFCreator
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function generatePdf($template, $data, $filename)
+    public function generatePdf($template, $data, $filename): FileTo64
     {
         if (!is_dir("$this->projectDir/var/files")){
             mkdir("$this->projectDir/var/files");
         }
         $filename = "$this->projectDir/var/files/$filename";
         if (!$this->pdfTemplateExists($template)) {
-            throw new LoaderError('Template not found');
+            throw new LoaderError('Le template n\'existe pas');
         }
         $html = $this->twig->render($template,
             [

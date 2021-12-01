@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 
 class MainController extends AbstractController
@@ -152,8 +155,12 @@ class MainController extends AbstractController
                 $user = $this->getUser();
                 $user->setParticipation(true);
                 $client->updateContact($user);
-                $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                try {
+                    $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                    $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                } catch (LoaderError | RuntimeError | SyntaxError $e) {
+                    dump("Erreur lors de la génération du PDF");
+                }
 
                 return $this->redirectToRoute('confirmation', ['token' => $token]);
             }
@@ -170,6 +177,7 @@ class MainController extends AbstractController
      *
      * @param                  $token
      * @param SendinBlueClient $client
+     * @param PDFCreator       $creator
      *
      * @return Response
      */
@@ -177,16 +185,19 @@ class MainController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user->getParticipation() == false) {
-            return $this->render('je-ne-participe-pas.html.twig', [
-                'token' => $token
-            ]);
-        } else {
+        if ($user->getParticipation() != false) {
             $user->setParticipation(false);
             $client->updateContact($user);
-            $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-            $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
+            try {
+                $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
+            } catch (LoaderError | RuntimeError | SyntaxError $e) {
+                dump("Erreur lors de la génération du PDF");
+            }
         }
+        return $this->render('je-ne-participe-pas.html.twig', [
+            'token' => $token
+        ]);
     }
 
 
