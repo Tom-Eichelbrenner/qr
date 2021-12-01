@@ -56,6 +56,8 @@ class User implements UserInterface
 
     /**
      * @var string
+     * @Assert\NotBlank()
+     *
      */
     private $email;
 
@@ -66,11 +68,13 @@ class User implements UserInterface
 
     /**
      * @var bool
+     * @Assert\NotBlank()
      */
     private $image_right;
 
     /**
      * @var bool
+     * @Assert\NotBlank()
      */
     private $hotel;
 
@@ -106,6 +110,7 @@ class User implements UserInterface
 
     /**
      * @var string
+     * @Assert\NotBlank()
      */
     private $civility;
 
@@ -181,7 +186,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_pleniere_westin
      */
-    public function setTransfertPleniereWestin(?bool $transfert_pleniere_westin=null): void
+    public function setTransfertPleniereWestin(?bool $transfert_pleniere_westin = null): void
     {
         $this->transfert_pleniere_westin = $transfert_pleniere_westin;
     }
@@ -259,12 +264,13 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $taxi_adress
+     * @param string|null $taxi_adress
      */
     public function setTaxiAdress(?string $taxi_adress = null): void
     {
         $this->taxi_adress = $taxi_adress;
     }
+
     /**
      * @var string
      */
@@ -279,7 +285,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $hotel_name
+     * @param string|null $hotel_name
      */
     public function setHotelName(?string $hotel_name = null): void
     {
@@ -356,7 +362,7 @@ class User implements UserInterface
     /**
      * @param bool $image_right
      */
-    public function setImageRight(?bool $image_right=null): void
+    public function setImageRight(?bool $image_right = null): void
     {
         $this->image_right = $image_right;
     }
@@ -434,7 +440,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param DateTime $date_participation
+     * @param DateTime|null $date_participation
      *
      * @throws Exception
      */
@@ -455,7 +461,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param DateTime $check1
+     * @param DateTime|null $check1
      *
      * @throws Exception
      */
@@ -476,7 +482,9 @@ class User implements UserInterface
     }
 
     /**
-     * @param DateTime $check2
+     * @param DateTime|null $check2
+     *
+     * @throws Exception
      */
     public function setCheck2(?DateTime $check2 = null): void
     {
@@ -495,7 +503,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $civility
+     * @param string|null $civility
      */
     public function setCivility(?string $civility = null): void
     {
@@ -511,7 +519,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $first_name
+     * @param string|null $first_name
      */
     public function setFirstName(?string $first_name = null): void
     {
@@ -527,7 +535,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $last_name
+     * @param string|null $last_name
      */
     public function setLastName(?string $last_name = null): void
     {
@@ -567,9 +575,9 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $phone
+     * @param string|null $phone
      */
-    public function setPhone(?string $phone=null): void
+    public function setPhone(?string $phone = null): void
     {
         $this->phone = $phone;
     }
@@ -583,7 +591,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $diet
+     * @param string|null $diet
      */
     public function setDiet(?string $diet = null): void
     {
@@ -649,7 +657,7 @@ class User implements UserInterface
     /**
      * @return string|null
      */
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->getEmail();
     }
