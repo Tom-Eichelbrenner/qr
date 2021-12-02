@@ -83,15 +83,6 @@ class UserType extends AbstractType
                 ->add('submit', SubmitType::class, [
                     'label' => $this->getTranslation('form_part_1.submit.label'),
                 ]);
-
-            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $data = $event->getData();
-
-                if (! isset($data['imageRight'])) {
-                    $data['imageRight'] = false;
-                }
-                $event->setData($data);
-            });
         }
         // get user data
 
@@ -244,13 +235,37 @@ class UserType extends AbstractType
                 }
                 $event->setData($data);
             });
-
-            $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-                /**
-                 * @var User
-                 */
-            });
         }
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            /**
+             * @var User
+             */
+            $checkboxInputs = [
+                'imageRight',
+                'hotel',
+                'transfertPleniereWestin',
+                'transfertWestinDinner',
+                'transfertDinnerWestin',
+                'transfertPleniereInter',
+                'transfertInterDinner',
+                'transfertDinnerInter',
+                'transfertTaxi',
+                'dinner',
+            ];
+
+            foreach ($checkboxInputs as $checkboxInput) {
+                if ($form->has($checkboxInput) && ! isset($data[$checkboxInput])) {
+                    $data[$checkboxInput] = false;
+                }
+            }
+
+
+            $event->setData($data);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
