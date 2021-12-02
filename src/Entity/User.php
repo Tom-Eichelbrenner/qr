@@ -56,40 +56,45 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"group_1"})
+     *
      *
      */
     private $email;
 
     /**
      * @var bool
+     * @Assert\Type("bool")
      */
     private $participation;
 
     /**
      * @var bool
-     * @Assert\NotBlank()
+     * @Assert\Type("bool", groups={"group_1"})
      */
     private $image_right;
 
     /**
      * @var bool
-     * @Assert\NotBlank()
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $hotel;
 
     /**
      * @var bool
+     * @Assert\Type("bool")
      */
     private $pleniere_1;
 
     /**
      * @var bool
+     * @Assert\Type("bool")
      */
     private $pleniere_2;
 
     /**
      * @var bool
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $dinner;
 
@@ -110,36 +115,43 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"group_1"})
      */
     private $civility;
 
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_westin_dinner;
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_inter_dinner;
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_pleniere_westin;
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_pleniere_inter;
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_dinner_westin;
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_dinner_inter;
     /**
      * @var boolean
+     * @Assert\Type("bool", groups={"group_2"})
      */
     private $transfert_taxi;
 
@@ -188,6 +200,7 @@ class User implements UserInterface
      */
     public function setTransfertPleniereWestin(?bool $transfert_pleniere_westin = null): void
     {
+        dump($transfert_pleniere_westin);
         $this->transfert_pleniere_westin = $transfert_pleniere_westin;
     }
 
@@ -298,23 +311,27 @@ class User implements UserInterface
     private $hotel_name;
     /**
      * @var string
+     * @Assert\NotBlank(groups={"group_1"})
      */
     private $first_name;
 
     /**
      * @var string
+     * @Assert\NotBlank(groups={"group_1"})
      */
     private $last_name;
 
     /**
      * @var string
      *
-     * @Assert\Regex("/\+\d{11}/", message="Le numéro de téléphone doit commencer par un +")
+     *
+     * @Assert\Regex("/^\+\d{2}\d{9,}$/", message="Le numéro de téléphone doit commencer par un + et doit contenir l'identifiant international suivi d'au moins 9 chiffres", groups={"group_1"})
      */
     private $phone;
 
     /**
-     * @var string
+     * @var string|null
+     *
      */
     private $diet;
 

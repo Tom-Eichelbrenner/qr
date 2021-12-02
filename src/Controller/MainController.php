@@ -155,6 +155,7 @@ class MainController extends AbstractController
 
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP2,
+            'validation_groups' => [UserType::VALIDATION_GROUP_2],
             'action' => $this->generateUrl('participation_2_post', ['token' => $token]),
         ]);
 
