@@ -120,6 +120,7 @@ class SendinBlueClient
         $updateContact['attributes'] = $this->createContactFromUser($user);
         try {
             $apiInstance->updateContact($identifier, $updateContact);
+            $this->sendinBlueLogger->info("Request sent  for {$user->getToken()}:" . json_encode($updateContact['attributes']));
         } catch (ApiException $e) {
             $this->sendinBlueLogger->critical($e->getMessage(), $e->getTrace());
             return null;

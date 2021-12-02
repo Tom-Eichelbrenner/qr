@@ -20,7 +20,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-
 class MainController extends AbstractController
 {
     /**
@@ -52,7 +51,7 @@ class MainController extends AbstractController
      */
     public function error(): Response
     {
-        if ($this->get('session')->get('message')){
+        if ($this->get('session')->get('message')) {
             $message = $this->get('session')->get('message');
             $this->get('session')->remove('message');
         } else {
@@ -107,7 +106,7 @@ class MainController extends AbstractController
         ]);
 
         $data = $request->request->all('user') ?? [];
-        $form->submit($data);
+        $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $client->updateContact($user);
@@ -159,14 +158,13 @@ class MainController extends AbstractController
         ]);
 
         $data = $request->request->all('user') ?? [];
-        $form->submit($data);
+        $form->submit($data, false);
 
         if ($form->isSubmitted()) {
             $result = $client->updateContact($user);
             if ($result instanceof User) {
                 /** @var User $user */
                 $user = $this->getUser();
-                $user->setParticipation(true);
                 $client->updateContact($user);
                 try {
                     $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");

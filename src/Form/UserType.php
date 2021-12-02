@@ -73,11 +73,22 @@ class UserType extends AbstractType
                     'attr' => [
                         'class' => 'switch-custom',
                     ],
-                    'required' => true,
+                    'required' => false,
+                    'empty_data' => false,
+                    'false_values' => ['false', 0, null, "0", false]
                 ])
                 ->add('submit', SubmitType::class, [
                     'label' => $this->getTranslation('form_part_1.submit.label'),
                 ]);
+
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $data = $event->getData();
+
+                if (! isset($data['imageRight'])) {
+                    $data['imageRight'] = false;
+                }
+                $event->setData($data);
+            });
         }
         // get user data
 
