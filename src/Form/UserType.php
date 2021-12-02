@@ -22,6 +22,9 @@ class UserType extends AbstractType
 
     public const STEP1 = 1;
     public const STEP2 = 2;
+
+    public const VALIDATION_GROUP_1 = "group_1";
+    public const VALIDATION_GROUP_2 = "group_2";
     /**
      * @var Security
      */
@@ -105,6 +108,8 @@ class UserType extends AbstractType
                     'attr' => [
                         'class' => 'switch-custom',
                     ],
+                    'empty_data' => false,
+                    'false_values' => [0, '0', 'false']
                 ]);
             if ($user->getHotel() === true) {
                 if ($user->getHotelName() === "1") {
@@ -115,8 +120,8 @@ class UserType extends AbstractType
                             'attr' => [
                                 'class' => 'switch-custom',
                             ],
-                            'empty_data' => false, // add this to handle unchecked checkbox
-                            'false_values' => [0, '0', 'false'] // add this to handle unchecked checkbox
+                            'empty_data' => false,
+                            'false_values' => [0, '0', 'false', null]
                         ]);
                     if ($user->getDinner()) {
                         $builder
@@ -126,6 +131,8 @@ class UserType extends AbstractType
                                 'attr' => [
                                     'class' => 'switch-custom',
                                 ],
+                                'empty_data' => false,
+                                'false_values' => [0, '0', 'false']
                             ])
                             ->add('transfertDinnerWestin', CheckboxType::class, [
                                 'label' => $this->getTranslation('form_part_2.transfert.dinner_westin.label'),
@@ -133,6 +140,8 @@ class UserType extends AbstractType
                                 'attr' => [
                                     'class' => 'switch-custom',
                                 ],
+                                'empty_data' => false,
+                                'false_values' => [0, '0', 'false']
                             ]);
                     }
                 }
@@ -144,6 +153,8 @@ class UserType extends AbstractType
                             'attr' => [
                                 'class' => 'switch-custom',
                             ],
+                            'empty_data' => false,
+                            'false_values' => [0, '0', 'false']
                         ]);
                     if ($user->getDinner()) {
                         $builder
@@ -153,6 +164,8 @@ class UserType extends AbstractType
                                 'attr' => [
                                     'class' => 'switch-custom',
                                 ],
+                                'empty_data' => false,
+                                'false_values' => [0, '0', 'false']
                             ])
                             ->add('transfertDinnerInter', CheckboxType::class, [
                                 'label' => $this->getTranslation('form_part_2.transfert.dinner_inter.label'),
@@ -160,6 +173,8 @@ class UserType extends AbstractType
                                 'attr' => [
                                     'class' => 'switch-custom',
                                 ],
+                                'empty_data' => false,
+                                'false_values' => [0, '0', 'false']
                             ]);
                     }
                 }
@@ -172,6 +187,8 @@ class UserType extends AbstractType
                         'attr' => [
                             'class' => 'switch-custom',
                         ],
+                        'empty_data' => false,
+                        'false_values' => [0, '0', 'false']
                     ]);
                 if ($user->getTransfertTaxi()) {
                     $builder
@@ -188,6 +205,8 @@ class UserType extends AbstractType
                         'attr' => [
                             'class' => 'switch-custom',
                         ],
+                        'empty_data' => false,
+                        'false_values' => [0, '0', 'false']
                     ])
                     ->add('diet', null, [
                         'required' => false,
@@ -212,6 +231,7 @@ class UserType extends AbstractType
                  * Ensure that assocaited data is set to false if no hotel checked
                  */
                 if ($data->getHotel() == false) {
+                    dump("breakpoint");
                     $data->setTransfertWestinDinner(false);
                     $data->setTransfertInterDinner(false);
                     $data->setTransfertPleniereWestin(false);
@@ -239,6 +259,7 @@ class UserType extends AbstractType
             // Configure your form options here
             'data_class' => User::class,
             'step' => self::STEP1,
+            'validation_groups' => self::VALIDATION_GROUP_1
         ]);
         $resolver->setRequired(['step']);
     }

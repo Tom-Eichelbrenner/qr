@@ -213,6 +213,9 @@ class SendinBlueClient
         }
         $contact = [];
         foreach ($attributes as $key => $value) {
+            dump($key);
+            dump($value);
+
             $method = 'get' . ucfirst($value);
             if ($method === "getDateParticipation" || $method === "getCheck1" || $method === "getCheck2") {
                 $contact[$key] = $user->$method()->format('Y-m-d');
@@ -220,6 +223,7 @@ class SendinBlueClient
                 $contact[$key] = $user->$method();
             }
         }
+        dump($contact);
 
         return $contact;
     }
