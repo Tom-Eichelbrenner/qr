@@ -24,3 +24,6 @@
 .vscode
 .idea
 ###< specifics ###
+
+_integrations/.sass-cache
+_integrations/package/img/_ratp
