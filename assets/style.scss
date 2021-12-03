@@ -274,6 +274,9 @@ label{
         }
     }
 }
+.hidden{
+    display:none;
+}
 select{
     -webkit-appearance: none;
     background:url(img/icons/drop.svg) no-repeat;

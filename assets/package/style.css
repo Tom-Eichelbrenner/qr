@@ -229,6 +229,9 @@ label small {
 [type=text]:disabled:hover, [type=email]:disabled:hover, [type=tel]:disabled:hover, select:disabled:hover, textarea:disabled:hover {
   box-shadow: 0px 0 0; }
 
+.hidden {
+  display: none; }
+
 select {
   -webkit-appearance: none;
   background: url(img/icons/drop.svg) no-repeat;
