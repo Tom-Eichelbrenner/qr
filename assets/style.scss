@@ -125,7 +125,7 @@ h4{
     font-size:1.6rem;
     line-height:2.24rem;
     color:#95928E;
-    margin: 0;
+    margin:26px 0 10px;
     text-transform: uppercase;
     &~p{
         margin: 10px 0 24px;
@@ -514,7 +514,7 @@ select{
             margin-right:3px;
         }
         &.big{
-            width:30px;
+            width:27px;
         }
     }
 }
@@ -570,6 +570,14 @@ select{
         a{
             color:$or;
             display:block;
+        }
+        li{
+            a{
+                display: inline-block;
+                &:before{
+                    content:'- ';
+                }
+            }
         }
     }
 }

@@ -25,5 +25,4 @@
 .idea
 ###< specifics ###
 
-_integrations/.sass-cache
-public/img/_ratp
+assets/.sass-cache
