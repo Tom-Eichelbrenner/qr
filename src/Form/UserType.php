@@ -96,8 +96,8 @@ class UserType extends AbstractType
          */
         $user = $this->security->getUser();
         if ($options['step'] === self::STEP2) {
-            $builder
-                ->add('hotel', CustomCheckboxType::class, [
+            if ($user->getHotel() === true) {
+                $builder->add('hotelUser', CustomCheckboxType::class, [
                     'help' => $this->getTranslation('form_part_2.hotel.help'),
                     'required' => false,
                     'empty_data' => false,
@@ -105,7 +105,7 @@ class UserType extends AbstractType
                     'ko' => $this->getTranslation('form_part_2.hotel.label.ko'),
                     'false_values' => [0, '0', 'false']
                 ]);
-            if ($user->getHotel() === true) {
+
                 if ($user->getHotelName() === "1") {
                     $builder
                         ->add('transfertPleniereWestin', CustomCheckboxType::class, [
@@ -218,7 +218,7 @@ class UserType extends AbstractType
             }
             if ($user->getDinner()) {
                 $builder
-                    ->add('dinner', CustomCheckboxType::class, [
+                    ->add('dinnerUser', CustomCheckboxType::class, [
                         'required' => false,
                         'attr' => [
                             'class' => 'switch-custom',
@@ -230,9 +230,7 @@ class UserType extends AbstractType
                     ])
                     ->add('dietbool', CustomCheckboxType::class, [
                         'required' => false,
-                        'attr' => [
-                            'class' => 'switch-custom',
-                        ],
+                        'label_attr' => ['class' => 'check-options'],
                         'empty_data' => false,
                         'ok' => $this->getTranslation('form_part_2.diet.label.ok'),
                         'ko' => $this->getTranslation('form_part_2.diet.label.ko'),
@@ -242,6 +240,7 @@ class UserType extends AbstractType
                     ->add('diet', null, [
                         'required' => false,
                         'label' => $this->getTranslation('form_part_2.diet.label.message'),
+                        'label_attr' => ['class' => 'options']
                     ]);
             }
             $builder
@@ -264,21 +263,33 @@ class UserType extends AbstractType
                 /**
                  * Ensure that assocaited data is set to false if no hotel checked
                  */
-                if ($data->getHotel() == false) {
-                    dump("breakpoint");
+                if ($data->getHotelUser() == false) {
                     $data->setTransfertWestinDinner(false);
                     $data->setTransfertInterDinner(false);
                     $data->setTransfertPleniereWestin(false);
                     $data->setTransfertPleniereInter(false);
                     $data->setTransfertDinnerWestin(false);
                     $data->setTransfertDinnerInter(false);
-                    if ($data->getDinner() == false) {
+                    if ($data->getDinnerUser() == false) {
                         $data->setDiet("null");
                     }
                 }
                 $event->setData($data);
             });
         }
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            /**
+             * @var User
+             */
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            if ($form->has('diet')) {
+                dump($data->getDiet());
+                $form->get('booldiet')->setData($data->getDiet() ?? null);
+            }
+        });
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
@@ -289,7 +300,7 @@ class UserType extends AbstractType
              */
             $checkboxInputs = [
                 'imageRight',
-                'hotel',
+                'hotelUser',
                 'transfertPleniereWestin',
                 'transfertWestinDinner',
                 'transfertDinnerWestin',
@@ -297,7 +308,8 @@ class UserType extends AbstractType
                 'transfertInterDinner',
                 'transfertDinnerInter',
                 'transfertTaxi',
-                'dinner',
+                'dinnerUser',
+                'hotelUser'
             ];
 
             foreach ($checkboxInputs as $checkboxInput) {

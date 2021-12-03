@@ -44,7 +44,16 @@ class User implements UserInterface
         "TRANSFERT_DINER_INTER" => "transfertDinnerInter",
         "TRANSFERT_TAXI" => "transfertTaxi",
         "TAXI_ADRESSE" => "taxiAdress",
+        "HOTEL_USER" => "hotelUser",
+        "DINER_USER" => "dinnerUser"
+    ];
 
+    /**
+     * @var array - static attributes that should not be updated
+     */
+    public const STATIC_ATTRIBUTES = [
+        'hotelUSer',
+        'dinnerUser',
     ];
     /**
      * Id in sendmail
@@ -81,6 +90,12 @@ class User implements UserInterface
 
     /**
      * @var bool
+     * @Assert\Type("bool", groups={"group_2"})
+     */
+    private $hotel_user;
+
+    /**
+     * @var bool
      * @Assert\Type("bool")
      */
     private $pleniere_1;
@@ -96,6 +111,12 @@ class User implements UserInterface
      * @Assert\Type("bool", groups={"group_2"})
      */
     private $dinner;
+
+    /**
+     * @var bool
+     * @Assert\Type("bool", groups={"group_2"})
+     */
+    private $dinner_user;
 
     /**
      * @var DateTime
@@ -401,6 +422,22 @@ class User implements UserInterface
     /**
      * @return bool
      */
+    public function getHotelUser(): ?bool
+    {
+        return $this->hotel_user;
+    }
+
+    /**
+     * @param bool $hotel
+     */
+    public function setHotelUser(?bool $hotel_user = null): void
+    {
+        $this->hotel_user = $hotel_user;
+    }
+
+    /**
+     * @return bool
+     */
     public function getPleniere1(): ?bool
     {
         return $this->pleniere_1;
@@ -444,6 +481,22 @@ class User implements UserInterface
     public function setDinner(?bool $dinner = null): void
     {
         $this->dinner = $dinner;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDinnerUser(): ?bool
+    {
+        return $this->dinner_user;
+    }
+
+    /**
+     * @param bool $dinner
+     */
+    public function setDinnerUser(?bool $dinner_user = null): void
+    {
+        $this->dinner_user = $dinner_user;
     }
 
     /**

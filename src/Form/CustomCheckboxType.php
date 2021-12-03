@@ -29,9 +29,12 @@ class CustomCheckboxType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (! isset($view->vars['label_attr']['class'])|| ! preg_match("/check/", $view->vars['label_attr']['class'])) {
-            $view->vars['label_attr']['class'] = 'check';
+        $classes = explode(' ', $view->vars['label_attr']['class'] ?? '');
+        if (!in_array('check', $classes)) {
+            $classes[] = 'check';
         }
+
+        $view->vars['label_attr']['class'] = implode(' ', $classes);
         $view->vars['ok'] = $options['ok'];
         $view->vars['ok_html'] = $options['ok_html'];
         $view->vars['ko'] = $options['ko'];

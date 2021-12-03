@@ -117,7 +117,7 @@ class SendinBlueClient
         $identifier = $user->getEmail();
         $updateContact = new UpdateContact();
 
-        $updateContact['attributes'] = $this->createContactFromUser($user);
+        $updateContact['attributes'] = $this->createContactFromUser($user, null, true);
         try {
             $apiInstance->updateContact($identifier, $updateContact);
             $this->sendinBlueLogger->info("Request sent  for {$user->getToken()}:" . json_encode($updateContact['attributes']));
@@ -166,7 +166,7 @@ class SendinBlueClient
         try {
             $apiInstance->sendTransacEmail($email);
         } catch (ApiException $e) {
-            dump($e->getMessage());
+            $this->sendinBlueLogger->critical($e->getMessage(), $e->getTrace());
             return false;
         }
 
@@ -202,20 +202,25 @@ class SendinBlueClient
      *
      * @return array
      */
-    private function createContactFromUser(User $user, ?array $restrict = null): array
+    private function createContactFromUser(User $user, ?array $restrict = null, ?bool $skipStatic = false): array
     {
         if ($restrict) {
-            $attributes = array_filter(User::ATTRIBUTES, function ($key) use ($restrict) {
-                return in_array($key, $restrict);
+            $attributes = array_filter(User::ATTRIBUTES, function ($key) use ($restrict, $skipStatic) {
+                if (! in_array($key, $restrict)) {
+                    return false;
+                }
+
+                if ($skipStatic && in_array($key, User::STATIC_ATTRIBUTES)) {
+                    return false;
+                }
+
+                return true;
             });
         } else {
             $attributes = User::ATTRIBUTES;
         }
         $contact = [];
         foreach ($attributes as $key => $value) {
-            dump($key);
-            dump($value);
-
             $method = 'get' . ucfirst($value);
             if ($method === "getDateParticipation" || $method === "getCheck1" || $method === "getCheck2") {
                 $contact[$key] = $user->$method()->format('Y-m-d');
