@@ -1,7 +1,104 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    Convention Le Conservateur 2022
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-
-    {{ form_end(form) }}
+    {{ dump(app.user) }}
+    {% include 'header.html.twig' %}
+    <main class="main-step step-form step-form2">
+        <nav class="form-nav">
+            <a href="#" class="inactive"><span>1</span>Informations personnelles</a>
+            <a href="#" class="current"><span>2</span>Hébergement & transferts</a>
+        </nav>
+        <section class="content">
+            <p class="subtitle">Etape 2/2</p>
+            <h1>Hébergement & transferts</h1>
+            {{ form_start(form) }}
+            {% if app.user.hotel %}
+                <h4>Hébergement</h4>
+                {% if app.user.hotelName == 2 %}
+                    <p>Votre hébergement est prévu à <strong><span>l’hôtel INTERCONTINENTAL</span></strong>.</p>
+                {% endif %}
+                {% if app.user.hotelName == 1 %}
+                {% endif %}
+            {% endif %}
+            {{ form_row(form.hotel) }}
+            {% if app.user.hotel %}
+                <h4>Transferts</h4>
+                <p>Vous avez la possibilité de réserver votre place sur les transferts proposés :</p>
+                {% if app.user.hotelName == 2 %}
+                    {{ form_row(form.transfertPleniereInter) }}
+                    <br><strong>18h30</strong> : du Théâtre Marigny vers l’hôtel Intercontinental
+                    {% if app.user.dinner %}
+                        {{ form_row(form.transfertInterDinner) }}
+                        <br>De l’hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                        {{ form_row(form.transfertDinnerInter) }}
+                        <p><br><strong>De 00h00 à 04h00 :</strong> Navettes de la Cité de l’Architecture & du Patrimoine
+                            vers l’Hôtel Intercontinental
+                            <br><small>Un départ est prévu depuis la Cité de l’Architecture & du Patrimoine toutes les ½
+                                heures, de 00h00 à 04h00. Un coordinateur sur place sera à votre disposition pour toutes
+                                précisions complémentaires.
+                        </p>
+                    {% endif %}
+                {% endif %}
+                {% if app.user.hotelName == 1 %}
+                    {{ form_row(form.transfertPleniereWestin) }}
+                    {% if app.user.dinner %}
+                        {{ form_row(form.transfertWestinDinner) }}
+                        <br>De l’hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                        {{ form_row(form.transfertDinnerWestin) }}
+                        <p><br><strong>De 00h00 à 04h00 :</strong> Navettes de la Cité de l’Architecture & du Patrimoine
+                            vers l’Hôtel Westin
+                            <br><small>Un départ est prévu depuis la Cité de l’Architecture & du Patrimoine toutes les ½
+                                heures, de 00h00 à 04h00. Un coordinateur sur place sera à votre disposition pour toutes
+                                précisions complémentaires.
+                        </p>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {# <!-- -- (si NON hôtel OU NON hotel_user) ET diner -- --> #}
+            {% if not app.user.hotel and app.user.dinner %}
+                <h4>Taxi</h4>
+                <p>En fin de soirée, vous avez la possibilité de réserver un taxi de la Cité de l’Architecture & du
+                    Patrimoine à votre domicile.</p>
+                {{ form_row(form.transfertTaxi) }}
+                {{ form_row(form.taxiAdress) }}
+            {% endif %}
+            {% if app.user.dinner %}
+                <h4>Dîner</h4>
+                <p>Un dîner de gala est organisé à la Cité de l'architecture.</p>
+                {{ form_row(form.dinner) }}
+                {{ form_row(form.diet) }}
+            {% endif %}
+            {# <!-- -- si diner_user -- --> #}
+            {# <label class="check check-options" for="regime"> #}
+            {# <input type="checkbox" id="regime" name="regime" checked> #}
+            {# <span class="switch"></span> #}
+            {# <span class="ok"> #}
+            {# J’ai un régime ou une intolérance alimentaire spécifique #}
+            {# </span> #}
+            {# <span class="ko">Je n'ai pas de régime ou d'intolérance alimentaire spécifique</span> #}
+            {# </label> #}
+            {# <!-- -- si regime -- --> #}
+            {# <label class="options" for="regimedetail"> #}
+            {# <span>Si oui, veuillez nous le préciser :</span> #}
+            {# <input type="text" id="regimedetail" name="regimedetail"> #}
+            {# </label> #}
+            {# <!-- -- fin si regime -- --> #}
+            {# <!-- -- fin si diner_user -- --> #}
+            {# <!-- -- si diner -- --> #}
+            {# <p class="text-right form-validation"> #}
+            {# <button type="submit" class="button button-primary" href="confirmation.html">Valider mon inscription</button> #}
+            {# </p> #}
+            {# </form> #}
+            {{ form_end(form) }}
+            <p class="text-right">
+                <small>Pour toute information, veuillez contacter notre équipe organisation <a
+                            href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
+            </p>
+        </section>
+    </main>
 {% endblock %}

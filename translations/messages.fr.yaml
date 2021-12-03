@@ -206,29 +206,54 @@ form_part_1:
 
 form_part_2:
   hotel:
-    label: "Je confirme souhaiter bénéficier de cette réservation hôtelière."
+    label:
+      ok: "Je confirme souhaiter bénéficier de cette réservation hôtelière."
+      ko: "Je ne souhaite pas bénéficier de cette réservation hôtelière."
     help : "Les coordonnées et accès vous seront précisés dans le mail de confirmation"
   transfert:
     pleniere_westin:
-      label: "Transfert de la plénière au Westin"
+      label:
+        ok: |
+          "Je confirme souhaiter bénéficier du transfert.
+
+          18h30 : du Théâtre Marigny vers l'hôtel Westin"
+        ko: |
+          Je ne souhaite pas bénéficier du transfert.
+
+          18h30 : du Théâtre Marigny vers l'hôtel Westin
     westin_dinner:
-      label: "Transfert du westin au restaurant"
+      label:
+        ok: "Je confirme souhaiter bénéficier du transfert."
+        ko: "Je ne souhaite pas bénéficier du transfert."
     dinner_westin:
-      label: "Transfert du restaurant au westin"
+      label:
+        ok: "Je confirme souhaiter bénéficier du transfert."
+        ko: "Je ne souhaite pas bénéficier du transfert."
     pleniere_inter:
-      label: "Transfert de la plénière à l'inter"
+      label:
+        ok: "Je confirme souhaiter bénéficier du transfert"
+        ko: "Je ne souhaite pas bénéficier du transfert"
     inter_dinner:
-      label: "Transfert de l'inter au restaurant"
+      label:
+        ok: "Je confirme souhaiter bénéficier du transfert"
+        ko: "Je ne souhaite pas bénéficier du transfert"
     dinner_inter:
-      label: "Transfert du restaurant à l'inter"
+      label:
+        ok: "Je souhaite bénéficier du transfert"
+        ko: "Je ne souhaite pas bénéficier du transfert"
     taxi:
-      label: "Transfert en taxi"
+      label:
+        ok: "Je confirme souhaiter bénéficier du transfert"
+        ko: "Je ne souhaite pas bénéficier du transfert"
+        help: "Un coordinateur sur place vous donnera les précisions complémentaires."
     taxi_adress:
-      label: "Adresse pour le taxi"
+      label: "Merci de renseigner l’adresse de destination de votre course en taxi :"
 
 
   dinner:
-    label: "J'ai un régime ou une intolérance alimentaire spécifique"
+    label:
+      ok: "Je confirme souhaiter bénéficier de ce diner de Gala."
+      ko: "Je ne souhaite pas bénéficier de ce diner de Gala."
   diet:
     label: "Si oui, veuillez nous le préciser"
   submit:

@@ -200,7 +200,6 @@ class User implements UserInterface
      */
     public function setTransfertPleniereWestin(?bool $transfert_pleniere_westin = null): void
     {
-        dump($transfert_pleniere_westin);
         $this->transfert_pleniere_westin = $transfert_pleniere_westin;
     }
 
