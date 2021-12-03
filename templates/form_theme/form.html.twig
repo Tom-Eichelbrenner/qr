@@ -1,3 +1,9 @@
+{% block custom_submit %}
+    <p class="text-right form-validation">
+        {{ form_widget(form) }}
+    </p>
+{% endblock %}
+
 {% block form_row %}
     {{ form_label(form)}}
 {% endblock %}

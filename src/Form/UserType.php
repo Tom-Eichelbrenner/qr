@@ -130,6 +130,8 @@ class UserType extends AbstractType
                                 'empty_data' => false,
                                 'ok' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ok'),
                                 'ko' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ko'),
+                                'ok_html' => true,
+                                'ko_html' => true,
                                 'false_values' => [0, '0', 'false']
                             ])
                             ->add('transfertDinnerWestin', CustomCheckboxType::class, [
@@ -140,6 +142,9 @@ class UserType extends AbstractType
                                 'empty_data' => false,
                                 'ok' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ok'),
                                 'ko' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ko'),
+                                'ok_html' => true,
+                                'ko_html' => true,
+                                'help' => $this->getTranslation('form_part_2.transfert.dinner_westin.help'),
                                 'false_values' => [0, '0', 'false']
                             ]);
                     }
@@ -154,6 +159,8 @@ class UserType extends AbstractType
                             'empty_data' => false,
                             'ok' => $this->getTranslation('form_part_2.transfert.pleniere_inter.label.ok'),
                             'ko' => $this->getTranslation('form_part_2.transfert.pleniere_inter.label.ko'),
+                            'ok_html' => true,
+                            'ko_html' => true,
                             'false_values' => [0, '0', 'false'],
 
                         ]);
@@ -167,6 +174,8 @@ class UserType extends AbstractType
                                 'empty_data' => false,
                                 'ok' => $this->getTranslation('form_part_2.transfert.inter_dinner.label.ok'),
                                 'ko' => $this->getTranslation('form_part_2.transfert.inter_dinner.label.ko'),
+                                'ok_html' => true,
+                                'ko_html' => true,
                                 'false_values' => [0, '0', 'false']
                             ])
                             ->add('transfertDinnerInter', CustomCheckboxType::class, [
@@ -177,6 +186,8 @@ class UserType extends AbstractType
                                 'empty_data' => false,
                                 'ok' => $this->getTranslation('form_part_2.transfert.dinner_inter.label.ok'),
                                 'ko' => $this->getTranslation('form_part_2.transfert.dinner_inter.label.ko'),
+                                'ok_html' => true,
+                                'ko_html' => true,
                                 'false_values' => [0, '0', 'false']
                             ]);
                     }
@@ -199,6 +210,9 @@ class UserType extends AbstractType
                     $builder
                         ->add('taxiAdress', null, [
                             'label' => $this->getTranslation('form_part_2.transfert.taxi_adress.label'),
+                            'attr' => [
+                                'class' => 'options'
+                            ],
                         ]);
                 }
             }
@@ -214,14 +228,28 @@ class UserType extends AbstractType
                         'ko' => $this->getTranslation('form_part_2.dinner.label.ko'),
                         'false_values' => [0, '0', 'false']
                     ])
+                    ->add('dietbool', CustomCheckboxType::class, [
+                        'required' => false,
+                        'attr' => [
+                            'class' => 'switch-custom',
+                        ],
+                        'empty_data' => false,
+                        'ok' => $this->getTranslation('form_part_2.diet.label.ok'),
+                        'ko' => $this->getTranslation('form_part_2.diet.label.ko'),
+                        'false_values' => [0, '0', 'false'],
+                        'mapped' => false,
+                    ])
                     ->add('diet', null, [
                         'required' => false,
-                        'label' => $this->getTranslation('form_part_2.diet.label'),
+                        'label' => $this->getTranslation('form_part_2.diet.label.message'),
                     ]);
             }
             $builder
                 ->add('submit', SubmitType::class, [
                     'label' => $this->getTranslation('form_part_2.submit.label'),
+                    'attr' => [
+                        'class' => 'button button-primary'
+                    ],
                 ]);
 
             $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {

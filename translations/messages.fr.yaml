@@ -205,11 +205,14 @@ form_part_1:
     label: "Etape suivante"
 
 form_part_2:
+  hebergement:
+    inter: <p>Votre hébergement est prévu à <strong><span>l’hôtel INTERCONTINENTAL</span></strong>.</p>
+    westin: <p>Votre hébergement est prévu à <strong><span>l’hôtel WESTIN</span></strong>.</p>
   hotel:
     label:
       ok: "Je confirme souhaiter bénéficier de cette réservation hôtelière."
       ko: "Je ne souhaite pas bénéficier de cette réservation hôtelière."
-    help : "Les coordonnées et accès vous seront précisés dans le mail de confirmation"
+    help: "Les coordonnées et accès vous seront précisés dans le mail de confirmation"
   transfert:
     pleniere_westin:
       label:
@@ -219,25 +222,38 @@ form_part_2:
           <strong>18h30</strong> : du Théâtre Marigny vers l'hôtel Westin"
     westin_dinner:
       label:
-        ok: "Je confirme souhaiter bénéficier du transfert."
-        ko: "Je ne souhaite pas bénéficier du transfert."
+        ok: "Je confirme souhaiter bénéficier du transfert.<br />
+          De l'hôtel Westin vers la Cité de l'Architecture & du Patrimoine."
+        ko: "Je ne souhaite pas bénéficier du transfert.<br />
+          De l'hôtel Westin vers la Cité de l'Architecture & du Patrimoine."
     dinner_westin:
+      help: "Un départ est prévu depuis la Cité de l’Architecture & du Patrimoine toutes les ½ heures, de 00h00 à 04h00. Un coordinateur sur place sera à votre disposition pour toutes précisions complémentaires."
       label:
-        ok: "Je confirme souhaiter bénéficier du transfert."
-        ko: "Je ne souhaite pas bénéficier du transfert."
+        ok: "Je confirme souhaiter bénéficier du transfert. <br />
+          <strong>De 00h00 à 04:00 : </strong> Navettes de la Cité de l'Architecture & du Patrimoine vers l'hôtel Westin"
+        ko: "Je ne souhaite pas bénéficier du transfert. <br />
+          <strong>De 00h00 à 04:00 : </strong> Navettes de la Cité de l'Architecture & du Patrimoine vers l'hôtel Westin"
     pleniere_inter:
       label:
-        ok: "Je confirme souhaiter bénéficier du transfert"
-        ko: "Je ne souhaite pas bénéficier du transfert"
+        ok: "Je confirme souhaiter bénéficier du transfert.<br />
+            <strong>18h30</strong> : du Théâtre Marigny vers l'hôtel Intercontinental"
+        ko: "Je ne souhaite pas bénéficier du transfert.<br />
+            <strong>18h30</strong> : du Théâtre Marigny vers l'hôtel Intercontinental"
     inter_dinner:
       label:
-        ok: "Je confirme souhaiter bénéficier du transfert"
-        ko: "Je ne souhaite pas bénéficier du transfert"
+        ok: "Je confirme souhaiter bénéficier du transfert. <br/>
+            De l'hôtel Intercontinental vers la Cité de l'Architecture & du Patrimoine."
+        ko: "Je ne souhaite pas bénéficier du transfert. <br/>
+            De l'hôtel Intercontinental vers la Cité de l'Architecture & du Patrimoine."
     dinner_inter:
+      help: "Un départ est prévu depuis la Cité de l’Architecture & du Patrimoine toutes les ½ heures, de 00h00 à 04h00. Un coordinateur sur place sera à votre disposition pour toutes précisions complémentaires."
       label:
-        ok: "Je souhaite bénéficier du transfert"
-        ko: "Je ne souhaite pas bénéficier du transfert"
+        ok: "Je souhaite bénéficier du transfert. <br />
+          <strong>De 00h00 à 04:00 : </strong> Navettes de la Cité de l'Architecture & du Patrimoine vers l'hôtel Intercontinental"
+        ko: "Je ne souhaite pas bénéficier du transfert. <br />
+          <strong>De 00h00 à 04:00 : </strong> Navettes de la Cité de l'Architecture & du Patrimoine vers l'hôtel Intercontinenta"
     taxi:
+      default: "En fin de soirée, vous avez la possibilité de réserver un taxi de la Cité de l’Architecture & du   Patrimoine à votre domicile."
       label:
         ok: "Je confirme souhaiter bénéficier du transfert"
         ko: "Je ne souhaite pas bénéficier du transfert"
@@ -251,6 +267,9 @@ form_part_2:
       ok: "Je confirme souhaiter bénéficier de ce diner de Gala."
       ko: "Je ne souhaite pas bénéficier de ce diner de Gala."
   diet:
-    label: "Si oui, veuillez nous le préciser"
+    label:
+      ok: "J'ai un régime ou une intolérance alimentaire spécifique"
+      ko: "Je n'ai pas de régime ou d'intolérance alimentaire spécifique"
+      message: "Si oui, veuillez nous le préciser"
   submit:
-    label: "Valider"
+    label: "Valider mon inscription"
