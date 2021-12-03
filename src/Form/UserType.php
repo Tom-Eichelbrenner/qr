@@ -45,7 +45,7 @@ class UserType extends AbstractType
      */
     public function getTranslation($message): string
     {
-        return $this->translator->trans($message);
+        return nl2br($this->translator->trans($message));
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -75,7 +75,6 @@ class UserType extends AbstractType
                     'help' => $this->getTranslation('form_part_1.phone.help'),
                 ])
                 ->add('imageRight', CustomCheckboxType::class, [
-                    'label' => $this->getTranslation('form_part_1.image_right.label'),
                     'label_attr' => ['class' => 'check'],
                     'required' => false,
                     'empty_data' => false,
@@ -117,6 +116,8 @@ class UserType extends AbstractType
                             'empty_data' => false,
                             'ok' => $this->getTranslation('form_part_2.transfert.pleniere_westin.label.ok'),
                             'ko' => $this->getTranslation('form_part_2.transfert.pleniere_westin.label.ko'),
+                            'ok_html' => true,
+                            'ko_html' => true,
                             'false_values' => [0, '0', 'false', null]
                         ]);
                     if ($user->getDinner()) {

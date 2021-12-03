@@ -213,14 +213,10 @@ form_part_2:
   transfert:
     pleniere_westin:
       label:
-        ok: |
-          "Je confirme souhaiter bénéficier du transfert.
-
-          18h30 : du Théâtre Marigny vers l'hôtel Westin"
-        ko: |
-          Je ne souhaite pas bénéficier du transfert.
-
-          18h30 : du Théâtre Marigny vers l'hôtel Westin
+        ok: "Je confirme souhaiter bénéficier du transfert.<br />
+          <strong>18h30</strong> : du Théâtre Marigny vers l'hôtel Westin"
+        ko: "Je ne souhaite pas bénéficier du transfert.<br />
+          <strong>18h30</strong> : du Théâtre Marigny vers l'hôtel Westin"
     westin_dinner:
       label:
         ok: "Je confirme souhaiter bénéficier du transfert."

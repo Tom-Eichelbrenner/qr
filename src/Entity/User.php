@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface
 {
-
     public const HOTEL_NAME = [
         1 => 'WESTIN',
         2 => 'INTERCONTINENTAL',
@@ -324,7 +323,7 @@ class User implements UserInterface
      * @var string
      *
      *
-     * @Assert\Regex("/^\+\d{2}\d{9,}$/", message="Le numéro de téléphone doit commencer par un + et doit contenir l'identifiant international suivi d'au moins 9 chiffres", groups={"group_1"})
+     * @Assert\Regex("/^\d{11,}$/", message="Le numéro de téléphone doit comprendre le code international suivi du numéro sans le 0 initial", groups={"group_1"})
      */
     private $phone;
 

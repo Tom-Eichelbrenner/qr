@@ -2,23 +2,46 @@
     {{ form_label(form)}}
 {% endblock %}
 
-
+{% block form_errors %}
+    {% if form.vars.errors | length > 0 %}
+        <ul>
+        {% for error in form.vars.errors %}
+            <li><small>{{ error.message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
 
 {% block form_label %}
-    <label for="{{ form.vars.id }}" {% for attr , value in form.vars.attr %} {{attr}}="{{ value }}" {% endfor %}>{{ form.vars.label }}
+    <label for="{{ form.vars.id }}" {% for attr , value in form.vars.label_attr %} {{attr}}="{{ value }}" {% endfor %}>{{ form.vars.label }}
         {{ form_widget(form) }}
         {{ form_help(form)}}
     </label>
+    {{ form_errors(form)}}
 {% endblock %}
 
 {% block form_help %}
-    {# {{ dump(form)}} #}
-    <small>{{ form.vars.help }}</small>
+    {% if form.vars.help is defined and form.vars.help is not null %}
+        <small>{{ form.vars.help }}</small>
+    {% endif %}
+{% endblock %}
+
+{% block custom_checkbox_label %}
+    <label for="{{ form.vars.id }}" {% for attr , value in form.vars.label_attr %} {{attr}}="{{ value }}" {% endfor %}>{{ form.vars.label }}
+        {{ form_widget(form) }}
+    </label>
+    {{ form_errors(form)}}
 {% endblock %}
 
 {% block custom_checkbox_widget %}
     <input type="checkbox" id="{{ form.vars.id }}" value="{{ form.vars.value }}">
     <span class="switch"></span>
-    <span class="ok">{{ form.vars.ok }}</span>
-    <span class="ko">{{ form.vars.ko }}</span>
+    <span class="ok">
+        {% if form.vars.ok_html == true %}{{ form.vars.ok | raw }}{% else %}{{ form.vars.ok}}{% endif %}
+        {{ form_help(form) }}
+    </span>
+    <span class="ko">
+    {% if form.vars.ko_html == true %}{{ form.vars.ko | raw }}{% else %}{{ form.vars.ko}}{% endif %}
+        {{ form_help(form) }}
+    </span>
 {% endblock %}

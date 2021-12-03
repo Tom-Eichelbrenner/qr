@@ -14,14 +14,28 @@ class CustomCheckboxType extends AbstractType
     {
         $resolver->setRequired([
             'ok',
-            'ko'
+            'ko',
+            'ok_html',
+            'ko_html'
+        ]);
+
+
+
+        $resolver->setDefaults([
+            'ok_html' => false,
+            'ko_html' => false
         ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        if (! isset($view->vars['label_attr']['class'])|| ! preg_match("/check/", $view->vars['label_attr']['class'])) {
+            $view->vars['label_attr']['class'] = 'check';
+        }
         $view->vars['ok'] = $options['ok'];
+        $view->vars['ok_html'] = $options['ok_html'];
         $view->vars['ko'] = $options['ko'];
+        $view->vars['ko_html'] = $options['ko_html'];
     }
 
     public function getParent()
