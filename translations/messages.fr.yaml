@@ -199,6 +199,8 @@ form_part_1:
     help: "Ce numéro sera utilisé uniquement pour vous envoyer des informations sur l'événement en cas de besoin."
   image_right:
     label: "Droit a l'image"
+    ok: J’accepte d’être pris(e) en photo et/ou vidéo lors de cet événement et autorise le groupe Le Conservateur à utiliser, diffuser et/ou exploiter mon image à des fins publicitaires, à titre gratuit, sur tout support (communications internes, presse écrite, médias numériques) pendant la durée de mon mandat ou de mon contrat de travail.
+    ko: Je n'accepte pas d’être pris.e en photo et/ou vidéo lors de cet événement et autorise le groupe Le Conservateur à utiliser, diffuser et/ou exploiter mon image à des fins publicitaires, à titre gratuit, sur tout support (communications internes, presse écrite, médias numériques) pendant la durée de mon mandat ou de mon contrat de travail.
   submit:
     label: "Etape suivante"
 

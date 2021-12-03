@@ -17,22 +17,23 @@ Convention Le Conservateur 2022
             <h1>Informations personnelles</h1>
             {{ form_start(form) }}
                 <p class="form-cols">
-                    <label for="civilite"><span>{{ form_label(form.civility) }}</span>{{ form_widget(form.civility) }}</label>
+                    {{ form_row(form.civility) }}
                 </p>
                 <p class="form-cols">
-                    <label for="nom"><span>{{ form_label(form.firstName) }}</span>{{ form_widget(form.firstName) }}</label>
-                    <label for="prenom"><span>{{form_label(form.lastName)}}</span>{{ form_widget(form.lastName) }}</label>
+                    {{ form_row(form.firstName)}}
+                    {{ form_row(form.lastName)}}
                 </p>
-                <div class="form-cols">
+                <p class="form-cols">
                     {{ form_row(form.email) }}
                     {{form_row(form.phone)}}
-                </div>
-                <label class="check" for="image">
+                </p>    
+                {{ form_row(form.imageRight) }}
+                {# <label class="check" for="image">
                     <input type="checkbox" id="image" name="image" checked>
                     <span class="switch"></span>
                     <span class="ok">J’accepte d’être pris(e) en photo et/ou vidéo lors de cet événement et autorise le groupe Le&nbsp;Conservateur à utiliser, diffuser et/ou exploiter mon image à des fins publicitaires, à titre gratuit, sur tout support (communications internes, presse écrite, médias numériques) pendant la durée de mon mandat ou de mon contrat de travail.</span>
                     <span class="ko">Je n'accepte pas d’être pris.e en photo et/ou vidéo lors de cet événement et autorise le groupe Le&nbsp;Conservateur à utiliser, diffuser et/ou exploiter mon image à des fins publicitaires, à titre gratuit, sur tout support (communications internes, presse écrite, médias numériques) pendant la durée de mon mandat ou de mon contrat de travail.</span>
-                </label>
+                </label> #}
                 <p><small>* Champs obligatoires</small></p>
                 <p class="text-right form-validation">
                     <button type="submit" class="button button-primary" href="form2.html">Etape suivante</button>

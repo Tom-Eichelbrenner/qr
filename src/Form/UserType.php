@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use App\Form\CustomCheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -59,25 +60,27 @@ class UserType extends AbstractType
                 ])
                 ->add('lastName', null, [
                     'label' => $this->getTranslation('form_part_1.nom.label'),
+                    'attr' => ['disabled' => true],
                 ])
                 ->add('firstName', null, [
                     'label' => $this->getTranslation('form_part_1.prenom.label'),
+                    'attr' => ['disabled' => true],
                 ])
                 ->add('email', null, [
                     'label' => $this->getTranslation('form_part_1.email.label'),
-                    'disabled' => true,
+                    'attr' => ['disabled' => true]
                 ])
                 ->add('phone', TelType::class, [
                     'label' => $this->getTranslation('form_part_1.phone.label'),
                     'help' => $this->getTranslation('form_part_1.phone.help'),
                 ])
-                ->add('imageRight', CheckboxType::class, [
+                ->add('imageRight', CustomCheckboxType::class, [
                     'label' => $this->getTranslation('form_part_1.image_right.label'),
-                    'attr' => [
-                        'class' => 'switch-custom',
-                    ],
+                    'label_attr' => ['class' => 'check'],
                     'required' => false,
                     'empty_data' => false,
+                    'ok' => $this->getTranslation('form_part_1.image_right.ok'),
+                    'ko' => $this->getTranslation('form_part_1.image_right.ko'),
                     'false_values' => ['false', 0, null, "0", false]
                 ])
                 ->add('submit', SubmitType::class, [

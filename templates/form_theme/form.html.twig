@@ -1,0 +1,24 @@
+{% block form_row %}
+    {{ form_label(form)}}
+{% endblock %}
+
+{% block form_label %}
+    {# {{ dump(form) }} #}
+    <label for="{{ form.vars.id }}" {% for attr , value in form.vars.attr %} {{attr}}="{{ value }}" {% endfor %}>{{ form.vars.label }}
+        {{ form_widget(form) }}
+        {{ form_help(form)}}
+    </label>
+{% endblock %}
+
+{% block form_help %}
+    {# {{ dump(form)}} #}
+    <small>{{ form.vars.help }}</small>
+{% endblock %}
+
+{% block custom_checkbox_widget %}
+    {{ dump(form) }}
+    <input type="checkbox" id="{{ form.vars.id }}" value="{{ form.vars.value }}">
+    <span class="switch"></span>
+    <span class="ok">{{ form.vars.ok }}</span>
+    <span class="ko">{{ form.vars.ko }}</span>
+{% endblock %}
