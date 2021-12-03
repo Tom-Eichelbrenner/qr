@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="flex-container">
+    <aside class="aside">
+        <figure>
+            <img src="img/banniere.jpg" alt="visuel événement" />
+        </figure>
+    </aside>
+    <main class="main-step step-confirmation">
+        <section class="content">
+            <p>Monsieur John Doe,</p>
+            <p>
+                <strong>Nous avons le plaisir de vous confirmer votre participation à la
+                <br>CONVENTION – LE&nbsp;CONSERVATEUR&nbsp;2022
+                <br>le mardi 18 Janvier 2022.</strong>
+            </p>
+            <div class="QR">
+                QRCODE
+            </div>
+            <!-- -- si plénière / plénière 2eme partie -- -->
+                <p>
+                    Nous vous accueillerons <strong>à partir de 12h30 au Théâtre Marigny</strong>,
+                    <br>Carré Marigny – 75008 Paris
+                    <br>Accueil-café  -  Service Bagages
+                </p>
+                <!-- -- si hotel_user == Oui -- -->
+                    <article>
+                        <h4>À l'issue de la convention</h4>
+                        <!-- -- si hotel == Intercontinental  -- -->
+                            <p>
+                                <strong>Votre hébergement est prévu à l’<span>Hôtel Intercontinental</span></strong>. Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé.
+                            </p>
+                            <!-- -- si transfert pleniere -> intercontental  -- -->
+                                <p>
+                                    Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Intercontinental
+                                </p>
+                                <p class="transfert transfert-ok">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Intercontinental
+                                </p>
+                            <!-- -- sinon  -- -->
+                                <p>
+                                    Vous n'avez pas réservé de transfert du Théâtre Marigny vers l’Hôtel Intercontinental
+                                </p>
+                                <p class="transfert transfert-ko">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Intercontinental
+                                </p>
+                            <!-- -- fin si transfert pleniere -> intercontental  -- -->
+                        <!-- -- si hotel == Intercontinental  -- -->
+                        <!-- -- si hotel == Westin  -- -->
+                            <p>
+                                <strong>Votre hébergement est prévu à l’<span>Hôtel Westin</span></strong>. Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé.
+                            </p>
+                            <!-- -- si transfert pleniere -> Westin  -- -->
+                                <p>
+                                    Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Westin
+                                </p>
+                                <p class="transfert transfert-ok">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Westin
+                                </p>
+                            <!-- -- sinon  -- -->
+                                <p>
+                                    Vous n'avez pas réservé de transfert du Théâtre Marigny vers l’Hôtel Westin
+                                </p>
+                                <p class="transfert transfert-ko">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Westin
+                                </p>
+                            <!-- -- fin si transfert pleniere -> Westin  -- -->
+                        <!-- -- si hotel == Westin  -- -->
+                    </article>
+                <!-- -- si hotel -- -->
+            <!-- -- fin si plénière / plénière 2eme partie -- -->
+
+            <!-- -- si NON plénière ET diner-- -->
+                <p>Nous vous accueillerons à partir de 20h00 à la <strong>Cité de l’Architecture et du Patrimoine</strong><br>1, place du Trocadéro et du 11 Novembre – 75116 Paris</p>
+            <!-- -- si NON plénière ET diner-- -->
+
+            <!-- -- si hôtel ET soirée -- -->
+                <article>
+                    <h4>Soirée de Gala à la Cité de l’Architecture & du Patrimoine :</h4>
+                    <!-- -- si transfert Intercontinental -> diner  -- -->
+                        <p>
+                            Vous avez réservé un transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ok">
+                            Hôtel Intercontinental
+                            <span>
+                                <i class="bi bi-geo-alt"></i>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- sinon  -- -->
+                        <p>
+                            Vous n'avez pas réservé de transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ko">
+                            Hôtel Intercontinental 
+                            <span>
+                                <i class="bi bi-geo-alt"></i>
+                                <i class="bi bi-x-circle-fill"></i>
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- fin si transfert Intercontinental -> diner  -- -->
+                    <!-- -- si transfert Westin -> diner  -- -->
+                        <p>
+                            Vous avez réservé un transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ok">
+                            Hôtel Westin
+                            <span>
+                                <i class="bi bi-geo-alt"></i>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- sinon  -- -->
+                        <p>
+                            Vous n'avez pas réservé de transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ko">
+                            Hôtel Westin 
+                            <span>
+                                <i class="bi bi-geo-alt"></i>
+                                <i class="bi bi-x-circle-fill"></i>
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- fin si transfert Westin -> diner  -- -->
+                </article>
+                <article>
+                    <h4>à l’issue de la Soirée :</h4>
+                    <!-- -- si transfert Diner -> Inter  -- -->
+                    <p>
+                        Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
+                    </p>
+                    <p class="transfert transfert-ok">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <i class="bi bi-geo-alt"></i>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <i class="bi bi-geo-alt"></i>
+                        </span>
+                        Hôtel Intercontinental
+                    </p>
+                    <!-- -- sinon  -- -->
+                    <p>
+                        Vous n’avez pas réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
+                    </p>
+                    <p class="transfert transfert-ko">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <i class="bi bi-geo-alt"></i>
+                            <i class="bi bi-x-circle-fill"></i>
+                            <i class="bi bi-geo-alt"></i>
+                        </span>
+                        Hôtel Intercontinental
+                    </p>
+                    <!-- -- fin si transfert Diner -> Inter  -- -->
+                    <!-- -- si transfert Diner -> Westin  -- -->
+                    <p>
+                        Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Westin.
+                    </p>
+                    <p class="transfert transfert-ok">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <i class="bi bi-geo-alt"></i>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <i class="bi bi-geo-alt"></i>
+                        </span>
+                        Hôtel Westin
+                    </p>
+                    <!-- -- sinon  -- -->
+                    <p>
+                        Vous n’avez pas réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Westin.
+                    </p>
+                    <p class="transfert transfert-ko">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <i class="bi bi-geo-alt"></i>
+                            <i class="bi bi-x-circle-fill"></i>
+                            <i class="bi bi-geo-alt"></i>
+                        </span>
+                        Hôtel Westin
+                    </p>
+                    <!-- -- fin si transfert Diner -> Westin  -- -->
+                </article>
+            <!-- -- fin si hôtel ET soirée -- -->
+            <!-- -- si NON hôtel ET soirée -- -->
+            <article>
+                <h4>à l’issue de la Soirée :</h4>
+                <p>Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile.</p>
+                <!-- -- si transfert Diner -> Westin  -- -->
+                <p>
+                    Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile.
+                </p>
+                <p class="transfert transfert-ok">
+                    Cité de l’Architecture & du Patrimoine
+                    <span>
+                        <i class="bi bi-geo-alt"></i>
+                        <i class="bi bi-check-circle-fill"></i>
+                        <i class="bi bi-geo-alt"></i>
+                    </span>
+                    Domicile
+                </p>
+                <!-- -- sinon  -- -->
+                <p>
+                    Vous n'avez pas demandé à bénéficier de l'antenne taxi à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile
+                </p>
+                <p class="transfert transfert-ko">
+                    Cité de l’Architecture & du Patrimoine
+                    <span>
+                        <i class="bi bi-geo-alt"></i>
+                        <i class="bi bi-x-circle-fill"></i>
+                        <i class="bi bi-geo-alt"></i>
+                    </span>
+                    Domicile
+                </p>
+                <!-- -- fin si transfert Diner -> Westin  -- -->
+            </article>
+            <!-- -- fin si NON hôtel ET soirée -- -->
+
+
+            <h1>Coordonnées et accès des différents sites</h1>
+            <!-- -- si plénière / plénière 2eme partie -- -->
+            <article>
+                <h2>Convention</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="img/marigny.jpg" alt="marigny">
+                    </figure>
+                    <div class="content">
+                        <h3>Théâtre Marigny</h3>
+                        <p>Carré Marigny 75008 Paris</p>
+                        <a href="https://goo.gl/maps/oxBBZk2qATT7ZfY56" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m1.svg" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m9.svg" alt="metro">
+                        Franklin D. Roosevelt
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m13.svg" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b42.svg" alt="bus">
+                        <img class="big" src="img/acces/b73.svg" alt="bus">
+                        Champs-Elysées Clémenceau
+                    </li>
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b32.svg" alt="bus">
+                        <img class="big" src="img/acces/b80.svg" alt="bus">
+                        Rond Point des Champs Elysées
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking INDIGO du Rond Point des Champs Elysées<br><a href="https://goo.gl/maps/AfPgNuyugYadLBj67" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin si plénière / plénière 2eme partie -- -->
+            <!-- -- si diner -- -->
+            <article>
+                <h2>Soirée</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="img/cite.jpg" alt="Cité de l'architecture">
+                    </figure>
+                    <div class="content">
+                        <h3>Cité de l'architecture & du patrimoine</h3>
+                        <p>1 place du Trocadéro et du 11 Novembre 75116 Paris</p>
+                        <a href="https://goo.gl/maps/QYQxzM853FZyPdBt8" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m6.svg" alt="metro">
+                        Station Trocadéro
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m9.svg" alt="metro">
+                        Station Iéna / Trocadéro
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m13.svg" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b22.svg" alt="bus">
+                        <img class="big" src="img/acces/b30.svg" alt="bus">
+                        <img class="big" src="img/acces/b32.svg" alt="bus">
+                        <img class="big" src="img/acces/b63.svg" alt="bus">
+                        Station Trocadéro
+                    </li>
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b82.svg" alt="bus">
+                        Station Iéna
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/rer.svg" alt="bus">
+                        <img src="img/acces/rerC.png" alt="bus">
+                        Station Champ de Mars – Tour Eiffel
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking Kléber-Trocadéro <a href="https://goo.gl/maps/fCn7emUHckAreFmQ9" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin diner -- -->
+            <!-- -- si hotel == westin -- -->
+            <article>
+                <h2>Hôtel</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="img/westin.jpg" alt="Hôtel Westin">
+                    </figure>
+                    <div class="content">
+                        <h3>Hôtel Westin</h3>
+                        <p>3, rue de Castiglione 75001 Paris</p>
+                        <a href="https://goo.gl/maps/iKBwJZFMWXa73t1Z7" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m1.svg" alt="metro">
+                        <img src="img/acces/m8.svg" alt="metro">
+                        <img src="img/acces/m12.svg" alt="metro">
+                        Station Concorde
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m1.svg" alt="metro">
+                        <img src="img/acces/m7.svg" alt="metro">
+                        Station Palais Royal
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b72.svg" alt="bus">
+                        Station Castiglione
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/rer.svg" alt="bus">
+                        <img src="img/acces/rerA.svg" alt="bus">
+                        Station Auber
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking Indigo Vendôme <a href="https://goo.gl/maps/8927WNYGtMPpqryv6" target="_blank">Visiter le site</a>
+                    </li>
+                    <li>Parking Indigo Marché St-Honoré <a href="https://goo.gl/maps/fCn7emUHckAreFmQ9" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin si hotel == westin -- -->
+            <!-- -- si hotel == intercontinental -- -->
+            <article>
+                <h2>Hôtel</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="img/intercontinental.jpg" alt="Hôtel Westin">
+                    </figure>
+                    <div class="content">
+                        <h3>Hôtel Intercontinental Paris Le Grand</h3>
+                        <p>2, rue Scribe 75009 Paris</p>
+                        <a href="https://goo.gl/maps/fpsLU1rFzhtzUKq68" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m3.svg" alt="metro">
+                        <img src="img/acces/m7.svg" alt="metro">
+                        <img src="img/acces/m8.svg" alt="metro">
+                        Stations Opéra 
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m3.svg" alt="metro">
+                        <img src="img/acces/m7.svg" alt="metro">
+                        Havre-Caumartin 
+                    </li>
+                    <li>
+                        <img src="img/acces/m.svg" alt="metro">
+                        <img src="img/acces/m7.svg" alt="metro">
+                        Chaussée d’Antin La Fayette
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b42.svg" alt="bus">
+                        <img class="big" src="img/acces/b52.svg" alt="bus">
+                        Station Capucines-Caumartin
+                    </li>
+                    <li>
+                        <img src="img/acces/b.svg" alt="bus">
+                        <img class="big" src="img/acces/b20.svg" alt="bus">
+                        <img class="big" src="img/acces/b29.svg" alt="bus">
+                        <img class="big" src="img/acces/b95.svg" alt="bus">
+                        <img class="big" src="img/acces/bn15.svg" alt="bus">
+                        <img class="big" src="img/acces/bn16.svg" alt="bus">
+                        Station Opéra
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="img/acces/rer.svg" alt="bus">
+                        <img src="img/acces/rerA.svg" alt="bus">
+                        Station Auber
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>
+                        Parking Edouard VII <a href="https://goo.gl/maps/rCJs6ZhMi7zWoYSz8" target="_blank">Visiter le site</a>
+                    </li>
+                    <li>
+                        Parking Vendôme <a href="https://goo.gl/maps/J4Z7RtL3ZkPHJQdr6" target="_blank">Visiter le site</a>
+                    </li>
+                    <li>
+                        Place Vendôme <a href="https://goo.gl/maps/vjcrbJpvgWm8ZB6P7" target="_blank">Visiter le site</a>
+                    </li>
+                </ul>
+            </article>
+            <!-- -- fin si hotel == intercontinental -- -->
+           
+            <p class="text-center">
+                <small>Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
+            </p>
+        </section>
+    </main>
+</body>
+</html>
+

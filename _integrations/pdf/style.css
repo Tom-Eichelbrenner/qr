@@ -1,0 +1,307 @@
+@font-face {
+    font-family: 'DM Sans';
+    src: url("fonts/dm_sans/dmsans-regular.ttf");
+    font-weight:400;
+}
+@font-face {
+    font-family: 'DM Sans';
+    src: url("fonts/dm_sans/dmsans-medium.ttf");
+    font-weight:500;
+}
+@font-face {
+    font-family: 'DM Sans';
+    src: url("fonts/dm_sans/dmsans-bold.ttf");
+    font-weight:700;
+}
+@font-face {
+    font-family: "Bebas Neue";
+    src: url("fonts/bebas_neue/bebasneue-regular.ttf");
+    font-weight:400;
+}
+*, *:after, *:before {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+body, html{
+    height:100%;
+    margin:0;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    margin: 0;
+    font-weight: normal;
+    font-size: 1.6rem;
+    line-height: 2.56rem;
+    font-family: 'DM Sans', sans-serif;
+    color: #666;
+}
+p, h1, h2, h3, h4, ul, a, figcaption, input, textarea {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+img {
+    max-width: 100%;
+    vertical-align: bottom;
+    height: auto;
+}
+a{
+    color: inherit;
+    display: inline-block;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    transition: color 0.3s, opacity 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
+    cursor: pointer;
+}
+a:focus {
+    outline: 0;
+}
+span, li, div {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+figure {
+    margin: 0;
+}
+/********* Global *************/
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-weight: 400;
+    font-size: 3rem;
+    line-height: 3rem;
+    color: #3a3a3a;
+    margin: 0 0 47px;
+    letter-spacing: 0.12rem;
+}
+h1 i {
+    color: #d19947;
+    font-size: 9rem;
+    margin-right: 16px;
+    vertical-align: sub;
+    margin-left: -28px;
+}
+h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    color: #3a3a3a;
+    font-weight: normal;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    letter-spacing: 0.1rem;
+    margin: 19px 0;
+}
+h2:after {
+    display: inline-block;
+    content: '';
+    background: #ebe6e6;
+    height: 1px;
+    width: 100%;
+    margin-left: 28px;
+}
+h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.1rem;
+    line-height: 2.52rem;
+    letter-spacing: 0.08rem;
+    color: #454545;
+    font-weight: normal;
+}
+h4 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 2.24rem;
+    color: #95928e;
+    margin: 0;
+    text-transform: uppercase;
+}
+h4 ~ p {
+    margin: 10px 0 24px;
+}
+h5 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.83rem;
+    color: #3a3a3a;
+    text-transform: uppercase;
+    margin: 32px 0 12px;
+}
+h6 {
+    color: #95928e;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.6rem;
+    margin: 39px 0 8px;
+}
+p {
+    margin: 29px 0;
+}
+small {
+    color: #9c9c9c;
+    font-size: 1.4rem;
+    line-height: 2.24rem;
+}
+small a {
+    color: #d19947;
+    text-decoration: underline;
+}
+small a:hover {
+    opacity: 0.8;
+}
+strong {
+    font-weight: 700;
+}
+strong span {
+    color: #d19947;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+.button {
+    padding: 20px 45px;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 4px;
+}
+.button i {
+    vertical-align: baseline;
+    margin-right: 5px;
+}
+.button-primary {
+    background: #d19947;
+    color: white;
+    border: 1px solid #d19947;
+}
+.button-primary:hover {
+    box-shadow: 0px 10px 20px rgba(102, 77, 42, 0.26);
+}
+.button-secondary {
+    background: white;
+    color: #d19947;
+    border: 1px solid #d19947;
+}
+.button-secondary:hover {
+    background: #d19947;
+    color: white;
+}
+.button-thirdary {
+    color: #d19947;
+    padding: 0;
+}
+.button-thirdary:hover {
+    color: #3a3a3a;
+}
+/*********** Sections *************/
+.aside img {
+    width: 100%;
+}
+.main-step {
+    padding: 50px 5%;
+}
+.subtitle {
+    color: #c3c1bf;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+}
+.form-validation {
+    border-top: 2px solid #ebe6e6;
+    margin-top: 22px;
+    padding-top: 37px;
+}
+.transfert {
+    font-weight: bold;
+    margin: -16px 0 0 0;
+    line-height: 1.2;
+}
+.transfert i[class*=bi-check-circle-fill], .transfert i[class*=bi-x-circle-fill] {
+    width: 70px;
+    background-repeat: no-repeat;
+    background-position: left bottom 6px;
+    background-size: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: 2.4rem;
+}
+.transfert i[class*=bi-check-circle-fill]:before, .transfert i[class*=bi-x-circle-fill]:before {
+    background: white;
+}
+.transfert i[class*=bi-check-circle-fill] {
+    background-image: url(img/icons/fleche_or.svg);
+}
+.transfert i[class*=bi-x-circle-fill] {
+    background-image: url(img/icons/fleche_gris.svg);
+}
+.transfert.transfert-ok {
+    color: #d19947;
+}
+.transfert.transfert-ko {
+    color: #9c9c9c;
+}
+.transfert i[class*=bi-geo-alt] {
+    margin: 0 6px;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.flex figure {
+    flex-basis: 59%;
+}
+.flex .content {
+    flex-basis: 38%;
+    padding-bottom: 31px;
+}
+.flex .content h3 {
+    color: #d19947;
+    margin: 0;
+}
+.flex .content p {
+    margin: 5px 0 15px;
+}
+.flex .content a {
+    text-decoration: none;
+    font-weight: bold;
+}
+.flex .content a i {
+    margin-right: 5px;
+}
+.acces img {
+    width: 19px;
+    vertical-align: middle;
+}
+.acces img:last-of-type {
+    margin-right: 3px;
+}
+.acces img.big {
+    width: 30px;
+}
+/*** Spés ****/
+.step-confirmation h1 {
+    margin-bottom: 0;
+}
+.step-confirmation article {
+    margin: 68px 0;
+}
+.step-localisation article {
+    margin: 77px 0;
+}
+.step-localisation article a {
+    color: #d19947;
+    display: block;
+}
