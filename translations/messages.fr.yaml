@@ -1,3 +1,8 @@
+user:
+  civility:
+    1: Monsieur
+    2: Madame
+
 mail_voeux:
   plénière:
     plénière1: >

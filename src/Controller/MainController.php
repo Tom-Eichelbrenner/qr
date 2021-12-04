@@ -33,8 +33,8 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index", methods={"GET"})
-     *
+     * @Route("/je-participe/{token}", name="index", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @return Response
      */
@@ -45,7 +45,6 @@ class MainController extends AbstractController
 
     /**
      * @Route("/error", name="error", methods={"GET"})
-     *
      *
      * @return Response
      */
@@ -64,7 +63,8 @@ class MainController extends AbstractController
 
 
     /**
-     * @Route("/je-participe/{token}", name="participation_1_get", methods={"GET"})
+     * @Route("/je-participe/1/{token}", name="participation_1_get", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param $token
      *
@@ -85,7 +85,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/je-participe/{token}", name="participation_1_post", methods={"POST"})
+     * @Route("/je-participe/1/{token}", name="participation_1_post", methods={"POST"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      * @param                  $token
      * @param Request          $request
@@ -186,6 +186,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param                  $token
      * @param SendinBlueClient $client
@@ -224,9 +225,20 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/localisation/{token}", name="localisation", methods={"GET"})
+     * @isGranted("view", statusCode="403", message="Accès non autorisé")
+     * @return Response
+     */
+    public function localisation($token)
+    {
+        return $this->render('localisation.html.twig');
+    }
+
+    /**
      * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
-     * @param                  $token
+     *
+     * @param $token
      *
      * @return Response
      */
@@ -239,29 +251,31 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/inscrit/{id}", name="registered", methods={"GET"})
+     * @Route("/checkin/{token}", name="checkin", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
-     * @param $id
+     * @param $token
      *
      * @return Response
      */
-    public function registered($id): Response
+    public function registered($token): Response
     {
         return $this->render('inscrit.html.twig', [
-            'id' => $id
+            'id' => $token
         ]);
     }
 
 
     /**
-     * @Route("/download/{token}", name="pdf", methods={"GET"})
+     * @Route("/contremarque/{token}", name="countermark", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param            $token
      * @param PDFCreator $creator
      *
      * @return BinaryFileResponse
      */
-    public function download($token, PDFCreator $creator): BinaryFileResponse
+    public function countermark($token, PDFCreator $creator): BinaryFileResponse
     {
         $user = $this->getUser();
         $uniqueId = uniqid();
@@ -275,6 +289,7 @@ class MainController extends AbstractController
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             "participation" . $uniqueId . ".pdf"
         );
+        $file->deleteFileAfterSend(true);
         return $file;
     }
 }

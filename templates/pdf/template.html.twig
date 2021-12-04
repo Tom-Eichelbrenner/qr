@@ -1,7 +1,673 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="{{ web_path }}/pdf_style.css" rel="stylesheet">
+</head>
+<body class="flex-container">
+    <aside class="aside">
+        <figure>
+            <img src="{{ web_path }}/img/banniere.jpg" alt="visuel événement" />
+        </figure>
+    </aside>
+    <main class="main-step step-confirmation">
+        <section class="content">
+            <p>{{ "user.civility.#{app.user.civility}" | trans() }} {{ app.user.firstName }} {{ app.user.lastName }}</p>
+            <p>
+                <strong>Nous avons le plaisir de vous confirmer votre participation à la
+                <br>CONVENTION – LE&nbsp;CONSERVATEUR&nbsp;2022
+                <br>le mardi 18 Janvier 2022.</strong>
+            </p>
+            <div class="QR">
+                <img src="{{ qr_code_data_uri(absolute_url(path('checkin', {'token' : app.user.token })))}}">
+            </div>
+            <!-- -- si plénière / plénière 2eme partie -- -->
+            {% if app.user.pleniere1 or app.user.pleniere2 %}
+                <p>
+                    Nous vous accueillerons <strong>à partir de 12h30 au Théâtre Marigny</strong>,
+                    <br>Carré Marigny – 75008 Paris
+                    <br>Accueil-café  -  Service Bagages
+                </p>
+                <!-- -- si hotel_user == Oui -- -->
+                {% if app.user.hotelUser %}
+                    <article>
+                        <h4>À l'issue de la convention</h4>
+                        {% if app.user.hotelName == "Intercontinental" %}
+                        <!-- -- si hotel == Intercontinental  -- -->
+                            <p>
+                                <strong>Votre hébergement est prévu à l’<span>Hôtel Intercontinental</span></strong>. Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé.
+                            </p>
+                            {% if app.user.transfertPleniereInter %}
+                            <!-- -- si transfert pleniere -> intercontental  -- -->
+                                <p>
+                                    Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Intercontinental
+                                </p>
+                                <p class="transfert transfert-ok">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </span>
+                                    Hôtel Intercontinental
+                                </p>
+                            <!-- -- sinon  -- -->
+                            {% else %}
+                                <p>
+                                    Vous n'avez pas réservé de transfert du Théâtre Marigny vers l’Hôtel Intercontinental
+                                </p>
+                                <p class="transfert transfert-ko">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </span>
+                                    Hôtel Intercontinental
+                                </p>
+                            <!-- -- fin si transfert pleniere -> intercontental  -- -->
+                            {% endif %}
+                        <!-- -- fin si hotel == Intercontinental  -- -->
+                        {% endif %}
+                        <!-- -- si hotel == Westin  -- -->
+                        {% if app.user.hotelName == "Westin" %}
+                            <p>
+                                <strong>Votre hébergement est prévu à l’<span>Hôtel Westin</span></strong>. Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé.
+                            </p>
+                            {% if app.user.transfertPLeniereWestin %}
+                            <!-- -- si transfert pleniere -> Westin  -- -->
+                                <p>
+                                    Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Westin
+                                </p>
+                                <p class="transfert transfert-ok">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </span>
+                                    Hôtel Westin
+                                </p>
+                            {% else %}
+                            <!-- -- sinon  -- -->
+                                <p>
+                                    Vous n'avez pas réservé de transfert du Théâtre Marigny vers l’Hôtel Westin
+                                </p>
+                                <p class="transfert transfert-ko">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                    </span>
+                                    Hôtel Westin
+                                </p>
+                            <!-- -- fin si transfert pleniere -> Westin  -- -->
+                            {% endif %}
+                        <!-- -- si hotel == Westin  -- -->
+                        {% endif %}
+                    </article>
+                <!-- -- fin si hotel -- -->
+                {% endif %}
+            <!-- -- fin si plénière / plénière 2eme partie -- -->
+            {% endif %}
 
-{% block body %}
-    <h1>Prénom : {{ data.firstName }}</h1>
-    <h1>Nom : {{ data.lastName }}</h1>
-    <h1>Téléphone : {{ data.phone }}</h1>
-{% endblock %}
+            <!-- -- si NON plénière ET diner-- -->
+            {% if not app.user.pleniere1 and not app.user.pleniere2 and app.user.dinnerUser %}
+                <p>Nous vous accueillerons à partir de 20h00 à la <strong>Cité de l’Architecture et du Patrimoine</strong><br>1, place du Trocadéro et du 11 Novembre – 75116 Paris</p>
+            <!-- -- si NON plénière ET diner-- -->
+            {% endif %}
+
+            <!-- -- si hôtel ET soirée -- -->
+            {% if app.user.hotelUser and app.user.dinnerUser %}
+                <article>
+                    <h4>Soirée de Gala à la Cité de l’Architecture & du Patrimoine :</h4>
+                    <!-- -- si transfert Intercontinental -> diner  -- -->
+                    {% if app.user.transfertInterDinner %}
+                        <p>
+                            Vous avez réservé un transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ok">
+                            Hôtel Intercontinental
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    {% else %}
+                    <!-- -- sinon  -- -->
+                        <p>
+                            Vous n'avez pas réservé de transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ko">
+                            Hôtel Intercontinental 
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- fin si transfert Intercontinental -> diner  -- -->
+                    {% endif %}
+                    <!-- -- si transfert Westin -> diner  -- -->
+                    {% if app.user.transfertWestinDinner %}
+                        <p>
+                            Vous avez réservé un transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ok">
+                            Hôtel Westin
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- sinon  -- -->
+                    {% else %}
+                        <p>
+                            Vous n'avez pas réservé de transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                        </p>
+                        <p class="transfert transfert-ko">
+                            Hôtel Westin 
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                            </span>
+                            Cité de l’Architecture & du Patrimoine
+                        </p>
+                    <!-- -- fin si transfert Westin -> diner  -- -->
+                    {% endif %}
+                </article>
+                <article>
+                    <h4>à l’issue de la Soirée :</h4>
+                    <!-- -- si transfert Diner -> Inter  -- -->
+                    {% if app.user.transfertInterDinner %}
+                    <p>
+                        Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
+                    </p>
+                    <p class="transfert transfert-ok">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                        </span>
+                        Hôtel Intercontinental
+                    </p>
+                    <!-- -- sinon  -- -->
+                    {% else %}
+                    <p>
+                        Vous n’avez pas réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
+                    </p>
+                    <p class="transfert transfert-ko">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                        </span>
+                        Hôtel Intercontinental
+                    </p>
+                    <!-- -- fin si transfert Diner -> Inter  -- -->
+                    {% endif %}
+                    <!-- -- si transfert Diner -> Westin  -- -->
+                    {% if app.user.transfertDinnerWestin %}
+                    <p>
+                        Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Westin.
+                    </p>
+                    <p class="transfert transfert-ok">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                        </span>
+                        Hôtel Westin
+                    </p>
+                    <!-- -- sinon  -- -->
+                    {% else %}
+                    <p>
+                        Vous n’avez pas réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Westin.
+                    </p>
+                    <p class="transfert transfert-ko">
+                        Cité de l’Architecture & du Patrimoine
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            </svg>
+                        </span>
+                        Hôtel Westin
+                    </p>
+                    <!-- -- fin si transfert Diner -> Westin  -- -->
+                    {% endif %}
+                </article>
+            <!-- -- fin si hôtel ET soirée -- -->
+            {% endif %}
+            <!-- -- si NON hôtel ET soirée -- -->
+            {% if not app.user.hotelUser and app.user.dinner %}
+            <article>
+                <h4>à l’issue de la Soirée :</h4>
+                <p>Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile.</p>
+                <!-- -- si transfert Diner -> Westin  -- -->
+                {% if app.user.transfertDinnerWestin %}
+                <p>
+                    Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile.
+                </p>
+                <p class="transfert transfert-ok">
+                    Cité de l’Architecture & du Patrimoine
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </span>
+                    Domicile
+                </p>
+                <!-- -- sinon  -- -->
+                {% else %}
+                <p>
+                    Vous n'avez pas demandé à bénéficier de l'antenne taxi à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile
+                </p>
+                <p class="transfert transfert-ko">
+                    Cité de l’Architecture & du Patrimoine
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </span>
+                    Domicile
+                </p>
+                <!-- -- fin si transfert Diner -> Westin  -- -->
+                {% endif %}
+            </article>
+            <!-- -- fin si NON hôtel ET soirée -- -->
+            {% endif %}
+
+
+            <h1>Coordonnées et accès des différents sites</h1>
+            <!-- -- si plénière / plénière 2eme partie -- -->
+            {% if app.user.pleniere1 or app.user.pleniere2 %}
+            <article>
+                <h2>Convention</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="{{ web_path }}/img/marigny.jpg" alt="marigny">
+                    </figure>
+                    <div class="content">
+                        <h3>Théâtre Marigny</h3>
+                        <p>Carré Marigny 75008 Paris</p>
+                        <a href="https://goo.gl/maps/oxBBZk2qATT7ZfY56" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+                        </svg> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m1.svg" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m9.svg" alt="metro">
+                        Franklin D. Roosevelt
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m13.svg" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b42.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b73.svg" alt="bus">
+                        Champs-Elysées Clémenceau
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b32.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b80.svg" alt="bus">
+                        Rond Point des Champs Elysées
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking INDIGO du Rond Point des Champs Elysées<br><a href="https://goo.gl/maps/AfPgNuyugYadLBj67" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin si plénière / plénière 2eme partie -- -->
+            {% endif %}
+            <!-- -- si diner -- -->
+            {% if app.user.dinnerUser %}
+            <article>
+                <h2>Soirée</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="{{ web_path }}/img/cite.jpg" alt="Cité de l'architecture">
+                    </figure>
+                    <div class="content">
+                        <h3>Cité de l'architecture & du patrimoine</h3>
+                        <p>1 place du Trocadéro et du 11 Novembre 75116 Paris</p>
+                        <a href="https://goo.gl/maps/QYQxzM853FZyPdBt8" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+                            </svg> Voir le plan
+                        </a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m6.svg" alt="metro">
+                        Station Trocadéro
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m9.svg" alt="metro">
+                        Station Iéna / Trocadéro
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m13.svg" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b22.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b30.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b32.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b63.svg" alt="bus">
+                        Station Trocadéro
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b82.svg" alt="bus">
+                        Station Iéna
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/rer.svg" alt="bus">
+                        <img src="{{ web_path }}/img/acces/rerC.png" alt="bus">
+                        Station Champ de Mars – Tour Eiffel
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking Kléber-Trocadéro <a href="https://goo.gl/maps/fCn7emUHckAreFmQ9" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin diner -- -->
+            {% endif %}
+            <!-- -- si hotel == westin -- -->
+            {% if app.user.hotelName == "Westin" %}
+            <article>
+                <h2>Hôtel</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="{{ web_path }}/img/westin.jpg" alt="Hôtel Westin">
+                    </figure>
+                    <div class="content">
+                        <h3>Hôtel Westin</h3>
+                        <p>3, rue de Castiglione 75001 Paris</p>
+                        <a href="https://goo.gl/maps/iKBwJZFMWXa73t1Z7" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+                            </svg> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m1.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m8.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m12.svg" alt="metro">
+                        Station Concorde
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m1.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m7.svg" alt="metro">
+                        Station Palais Royal
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b72.svg" alt="bus">
+                        Station Castiglione
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/rer.svg" alt="bus">
+                        <img src="{{ web_path }}/img/acces/rerA.svg" alt="bus">
+                        Station Auber
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking Indigo Vendôme <a href="https://goo.gl/maps/8927WNYGtMPpqryv6" target="_blank">Visiter le site</a>
+                    </li>
+                    <li>Parking Indigo Marché St-Honoré <a href="https://goo.gl/maps/fCn7emUHckAreFmQ9" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin si hotel == westin -- -->
+            {% endif %}
+            <!-- -- si hotel == intercontinental -- -->
+            {% if app.user.hotelName == "Intercontinental" %}
+            <article>
+                <h2>Hôtel</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="{{ web_path }}/img/intercontinental.jpg" alt="Hôtel Westin">
+                    </figure>
+                    <div class="content">
+                        <h3>Hôtel Intercontinental Paris Le Grand</h3>
+                        <p>2, rue Scribe 75009 Paris</p>
+                        <a href="https://goo.gl/maps/fpsLU1rFzhtzUKq68" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+                            </svg> Voir le plan
+                        </a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m3.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m7.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m8.svg" alt="metro">
+                        Stations Opéra 
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m3.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m7.svg" alt="metro">
+                        Havre-Caumartin 
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/m.svg" alt="metro">
+                        <img src="{{ web_path }}/img/acces/m7.svg" alt="metro">
+                        Chaussée d’Antin La Fayette
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b42.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b52.svg" alt="bus">
+                        Station Capucines-Caumartin
+                    </li>
+                    <li>
+                        <img src="{{ web_path }}/img/acces/b.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b20.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b29.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/b95.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/bn15.svg" alt="bus">
+                        <img class="big" src="{{ web_path }}/img/acces/bn16.svg" alt="bus">
+                        Station Opéra
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ web_path }}/img/acces/rer.svg" alt="bus">
+                        <img src="{{ web_path }}/img/acces/rerA.svg" alt="bus">
+                        Station Auber
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>
+                        Parking Edouard VII <a href="https://goo.gl/maps/rCJs6ZhMi7zWoYSz8" target="_blank">Visiter le site</a>
+                    </li>
+                    <li>
+                        Parking Vendôme <a href="https://goo.gl/maps/J4Z7RtL3ZkPHJQdr6" target="_blank">Visiter le site</a>
+                    </li>
+                    <li>
+                        Place Vendôme <a href="https://goo.gl/maps/vjcrbJpvgWm8ZB6P7" target="_blank">Visiter le site</a>
+                    </li>
+                </ul>
+            </article>
+            <!-- -- fin si hotel == intercontinental -- -->
+            {% endif %}
+           
+            <p class="text-center">
+                <small>Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
+            </p>
+        </section>
+    </main>
+</body>
+</html>

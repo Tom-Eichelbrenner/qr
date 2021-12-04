@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block custom_checkbox_widget %}
-    <input type="checkbox" id="{{ form.vars.id }}" value="{{ form.vars.value }}">
+    <input type="checkbox" id="{{ form.vars.id }}" value="{{ form.vars.value }}" {% for attr , value in form.vars.attr %} {{attr}}="{{ value }}"{% endfor %}>
     <span class="switch"></span>
     <span class="ok">
         {% if form.vars.ok_html == true %}{{ form.vars.ok | raw }}{% else %}{{ form.vars.ok}}{% endif %}
@@ -50,4 +50,10 @@
     {% if form.vars.ko_html == true %}{{ form.vars.ko | raw }}{% else %}{{ form.vars.ko}}{% endif %}
         {{ form_help(form) }}
     </span>
+{% endblock %}
+
+{% block submit_row %}
+    <div class="text-right form-validation">
+        {{ form_widget(form)}}
+    </div>
 {% endblock %}

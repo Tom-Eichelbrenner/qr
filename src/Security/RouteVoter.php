@@ -13,13 +13,29 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class RouteVoter extends Voter
 {
-    const VIEW = 'view';
+    public const VIEW = 'view';
 
-    const ROUTES = [
-        "participation_1_post" => "participation_1_get",
-        "participation_2_get" => "participation_1_post",
-        "participation_2_post" => "participation_2_get",
-        "confirmation" => "participation_2_post",
+    public const ROUTES = [
+        "participation_1_get" => [
+            "index",
+            "confirmation"
+        ],
+        "participation_1_post" => [
+            "participation_1_get"
+        ],
+        "participation_2_get" => [
+            "participation_1_post"
+        ],
+        "participation_2_post" => [
+            "participation_2_get"
+        ],
+        "confirmation" => [
+            "participation_2_post",
+            "localisation"
+        ],
+        'countermark' => [
+            'confirmation'
+        ]
     ];
 
 
@@ -47,7 +63,7 @@ class RouteVoter extends Voter
      */
     protected function supports(string $attribute, $subject): bool
     {
-        return (in_array($this->request->attributes->get('_route'), array_keys(self::ROUTES)));
+        return true;
     }
 
     /**
@@ -66,7 +82,15 @@ class RouteVoter extends Voter
 
         $routename = $this->request->attributes->get('_route');
 
-        $url = $this->router->generate(self::ROUTES[$routename], ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
-        return $url === $referer;
+        if ($routename === 'index' || $routename === "localisation") {
+            return true;
+        }
+
+        $urls = [];
+
+        foreach (self::ROUTES[$routename] as $allowedRouteName) {
+            $urls[] = $this->router->generate($allowedRouteName, ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+        return in_array($referer, $urls);
     }
 }

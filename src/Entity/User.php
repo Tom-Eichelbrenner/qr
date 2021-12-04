@@ -620,7 +620,7 @@ class User implements UserInterface
         $fullName = "{$this->getFirstName()} {$this->getLastName()}";
 
         if ($withCivility) {
-            $fullName = "{$this->getCivilityAsString()} $fullName";
+            $fullName = "{$this->getCivilityToString()} $fullName";
         }
 
         return $fullName ?? "";
@@ -629,9 +629,9 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getCivilityAsString(): string
+    public function getCivilityToString(): string
     {
-        return array_flip(self::CIVILITY)[$this->getCivility()];
+        return self::CIVILITY[$this->getCivility()];
     }
 
     /**

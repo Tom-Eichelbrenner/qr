@@ -2,11 +2,8 @@
 {% block title %}
     Convention Le Conservateur 2022
 {% endblock %}
-{% block stylesheets %}
-{% endblock %}
 
 {% block body %}
-    {% include 'header.html.twig' %}
     <main class="main-step step-form step-form2">
         <nav class="form-nav">
             <a href="#" class="inactive"><span>1</span>Informations personnelles</a>
@@ -63,9 +60,7 @@
                 {{ form_row(form.dietbool) }}
                 {{ form_row(form.diet) }}
             {% endif %}
-            <p class="text-right form-validation">
-                {{ form_row(form.submit) }}
-            </p>
+            {{ form_row(form.submit) }}
             <p class="text-right">
                 <small>Pour toute information, veuillez contacter notre équipe organisation <a
                             href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>

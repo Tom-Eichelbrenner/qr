@@ -16,7 +16,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AccessDeniedListener implements EventSubscriberInterface
 {
-
     /**
      * @var RouterInterface
      */
@@ -48,9 +47,12 @@ class AccessDeniedListener implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event)
     {
+        if (! $event->isMainRequest()) {
+            return;
+        }
         $exception = $event->getThrowable();
         $message = $event->getThrowable()->getMessage();
-        if ($exception instanceof AccessDeniedException || $exception instanceof NotFoundHttpException || $exception instanceof UnauthorizedHttpException || $exception instanceof HttpException) {
+        if ($exception instanceof AccessDeniedException || $exception instanceof UnauthorizedHttpException) {
             $url = $this->router->generate('error');
             $response = new RedirectResponse($url);
             $response->headers->set('Location', $url);
