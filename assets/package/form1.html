@@ -29,31 +29,47 @@
             <p class="subtitle">Etape 1/2</p>
             <h1>Informations personnelles</h1>
             <form action="form2.html">
-                <p class="form-cols">
-                    <label for="civilite"><span>Civilité*</span>
-                        <select id="civilite">
-                            <option value="monsieur">Monsieur</option>
-                            <option value="madame">Madame</option>
-                        </select>
-                    </label>
-                </p>
-                <p class="form-cols">
-                    <label for="nom"><span>Nom*</span>
-                        <input type="text" id="nom" name="nom" disabled required>
-                    </label>
-                    <label for="prenom"><span>Prénom*</span>
-                        <input type="text" id="prenom" name="prenom" disabled required>
-                    </label>
-                </p>
-                <p class="form-cols">
-                    <label for="mail"><span>Email*</span>
-                        <input type="email" id="mail" name="mail" disabled required>
-                    </label>
-                    <label for="phone"><span>Téléphone mobile*</span>
-                        <input type="tel" id="phone" name="phone" required>
-                        <small>Ce numéro sera utilisé uniquement pour vous envoyer des informations sur l’événement et en cas de besoin</small>
-                    </label>
-                </p>
+                <div class="form-cols">
+                    <div>
+                        <label for="civilite"><span>Civilité*</span>
+                            <select id="civilite">
+                                <option value="monsieur">Monsieur</option>
+                                <option value="madame">Madame</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-cols">
+                    <div>
+                        <label for="nom"><span>Nom*</span>
+                            <input type="text" id="nom" name="nom" disabled required>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="error" for="prenom"><span>Prénom*</span>
+                            <input type="text" id="prenom" name="prenom" disabled required>
+                        </label>
+                        <ul class="error-list">
+                            <li>Erreur</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-cols">
+                    <div>
+                        <label for="mail"><span>Email*</span>
+                            <input type="email" id="mail" name="mail" disabled required>
+                        </label>
+                    </div>
+                    <div>
+                        <label for="phone" class="error"><span>Téléphone mobile*</span>
+                            <input type="tel" id="phone" name="phone" required>
+                            <small>Ce numéro sera utilisé uniquement pour vous envoyer des informations sur l’événement et en cas de besoin</small>
+                        </label>
+                        <ul class="error-list">
+                            <li>Erreur</li>
+                        </ul>
+                    </div>
+                </div>
                 <label class="check" for="image">
                     <input type="checkbox" id="image" name="image" checked>
                     <span class="switch"></span>

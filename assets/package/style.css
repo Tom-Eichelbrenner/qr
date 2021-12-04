@@ -180,7 +180,7 @@ strong span {
 /****** FORM **********/
 form {
   margin-top: 52px; }
-form p {
+form p, form .form-cols {
   margin: 22px 0; }
 form h6 + p {
   margin: 8px 0; }
@@ -218,16 +218,22 @@ label small {
   border-color: #D19947; }
 [type=text]:focus-visible, [type=email]:focus-visible, [type=tel]:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 0; }
-[type=text].error, [type=email].error, [type=tel].error, select.error, textarea.error {
-  background-color: #FEF1F2;
-  border-color: #EB5757;
-  background-image: url(img/icons/error.svg); }
 [type=text]:disabled, [type=email]:disabled, [type=tel]:disabled, select:disabled, textarea:disabled {
   background-color: rgba(224, 220, 215, 0.15);
   border-color: #E0DCD7;
   background-image: url(img/icons/lock.svg); }
 [type=text]:disabled:hover, [type=email]:disabled:hover, [type=tel]:disabled:hover, select:disabled:hover, textarea:disabled:hover {
   box-shadow: 0px 0 0; }
+
+.error {
+  color: #C43441; }
+.error [type=text], .error [type=email], .error [type=tel], .error select, .error textarea {
+  background-color: #FEF1F2;
+  border-color: #EB5757;
+  background-image: url(img/icons/error.svg); }
+.error + .error-list {
+  color: #C43441;
+  font-size: 1.2rem; }
 
 .hidden {
   display: none; }
@@ -303,7 +309,7 @@ select {
 .form-cols {
   display: flex;
   justify-content: space-between; }
-.form-cols label {
+.form-cols > * {
   flex-basis: 46%; }
 
 .check-options {

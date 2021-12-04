@@ -212,7 +212,7 @@ strong{
 /****** FORM **********/ 
 form{
     margin-top:52px;
-    p{
+    p, .form-cols{
         margin:22px 0;
     }
     h6{
@@ -260,11 +260,7 @@ label{
     &:focus-visible{
         outline:0;
     }
-    &.error{
-        background-color: #FEF1F2;
-        border-color: #EB5757;
-        background-image:url(img/icons/error.svg);
-    }
+    
     &:disabled{
         background-color: rgba(224, 220, 215, 0.15);
         border-color: #E0DCD7;
@@ -272,6 +268,18 @@ label{
         &:hover{
             box-shadow: 0px 0 0;
         }
+    }
+}
+.error{
+    color:#C43441;
+    [type=text],[type=email],[type=tel], select, textarea{
+        background-color: #FEF1F2;
+        border-color: #EB5757;
+        background-image:url(img/icons/error.svg);
+    }
+    &+.error-list{
+        color:#C43441;
+        font-size:1.2rem;
     }
 }
 .hidden{
@@ -363,7 +371,7 @@ select{
 .form-cols{
     display:flex;
     justify-content: space-between;
-    label{
+    &>*{
         flex-basis:46%;
     }
 }
