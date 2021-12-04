@@ -95,19 +95,9 @@ h2 {
     line-height: 2.75rem;
     color: #3a3a3a;
     font-weight: normal;
-    display: flex;
-    white-space: nowrap;
     align-items: center;
     letter-spacing: 0.1rem;
     margin: 19px 0;
-}
-h2:after {
-    display: inline-block;
-    content: '';
-    background: #ebe6e6;
-    height: 1px;
-    width: 100%;
-    margin-left: 28px;
 }
 h3 {
     font-family: 'Bebas Neue', cursive;
@@ -255,16 +245,16 @@ strong span {
 .transfert svg:not(:nth-of-type(2)) {
     margin: 0 6px;
 }
-.flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+.flex{
+    overflow:hidden;
 }
 .flex figure {
-    flex-basis: 59%;
+    width: 59%;
+    float:left;
 }
 .flex .content {
-    flex-basis: 38%;
+    width: 38%;
+    float:right;
     padding-bottom: 31px;
 }
 .flex .content h3 {
