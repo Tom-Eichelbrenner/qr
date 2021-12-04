@@ -271,6 +271,12 @@ strong span {
 .flex .content a i {
     margin-right: 5px;
 }
+ul a:before{
+    content:' - ';
+}
+ul a, .content a{
+    color:#d19947;
+}
 .acces img {
     width: 19px;
     vertical-align: middle;
