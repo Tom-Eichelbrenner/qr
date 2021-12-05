@@ -109,7 +109,11 @@ class MainController extends AbstractController
         $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $client->updateContact($user);
+            try {
+                $result = $client->updateContact($user);
+            } catch (\Throwable $e) {
+                $result = null;
+            }
             if ($result instanceof User) {
                 return $this->redirectToRoute('participation_2_get', ['token' => $token]);
             }
@@ -168,13 +172,12 @@ class MainController extends AbstractController
                 $user = $this->getUser();
                 $client->updateContact($user);
                 try {
-                    // $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                    // $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
-                } catch (LoaderError | RuntimeError | SyntaxError $e) {
-                    dump("Erreur : $e");
+                    $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                    $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                    return $this->redirectToRoute('confirmation', ['token' => $token]);
+                } catch (\Throwable $e) {
+                    // do nothing
                 }
-
-                //return $this->redirectToRoute('confirmation', ['token' => $token]);
             }
         }
         $form->addError(new FormError('Une erreur est survenue, veuillez réessayer'));
