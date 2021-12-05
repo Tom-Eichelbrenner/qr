@@ -11,10 +11,11 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomCheckboxType extends AbstractType
+class CustomCheckboxType extends CustomAbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
         $resolver->setRequired([
             'ok',
             'ko',
@@ -33,6 +34,8 @@ class CustomCheckboxType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        parent::buildView($view, $form, $options);
+
         $classes = explode(' ', $view->vars['label_attr']['class'] ?? '');
 
         if ($view->vars['value'] === null) {

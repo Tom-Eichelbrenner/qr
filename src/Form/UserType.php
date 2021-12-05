@@ -190,10 +190,14 @@ class UserType extends AbstractType
                         'ok' => $this->getTranslation('form_part_2.transfert.taxi.label.ok'),
                         'ko' => $this->getTranslation('form_part_2.transfert.taxi.label.ko'),
                         'help' => $this->getTranslation('form_part_2.transfert.taxi.label.help'),
-                        'false_values' => [0, '0', 'false']
-                    ])->add('taxiAdress', null, [
+                        'false_values' => [0, '0', 'false'],
+                        'container_attr' => [
+                            'class' => 'check-options'
+                        ]
+                    ])->add('taxiAdress', CustomTextType::class, [
                         'label' => $this->getTranslation('form_part_2.transfert.taxi_adress.label'),
-                        'label_attr' => [
+                        'required' => false,
+                        'container_attr' => [
                             'class' => 'options'
                         ],
                     ]);
@@ -205,7 +209,8 @@ class UserType extends AbstractType
                         'empty_data' => false,
                         'ok' => $this->getTranslation('form_part_2.dinner.label.ok'),
                         'ko' => $this->getTranslation('form_part_2.dinner.label.ko'),
-                        'false_values' => [0, '0', 'false']
+                        'false_values' => [0, '0', 'false'],
+                        'empty_data' => false,
                     ])
                     ->add('dietbool', CustomCheckboxType::class, [
                         'required' => false,
@@ -215,11 +220,17 @@ class UserType extends AbstractType
                         'ko' => $this->getTranslation('form_part_2.diet.label.ko'),
                         'false_values' => [0, '0', 'false'],
                         'mapped' => false,
+                        'container_attr' => [
+                            'class' => 'check-options'
+                        ]
                     ])
-                    ->add('diet', null, [
+                    ->add('diet', CustomTextType::class, [
                         'required' => false,
                         'label' => $this->getTranslation('form_part_2.diet.label.message'),
-                        'label_attr' => ['class' => 'options']
+                        'label_attr' => ['class' => 'options'],
+                        'container_attr' => [
+                            'class' => 'options'
+                        ]
                     ]);
             }
             $builder
@@ -240,7 +251,7 @@ class UserType extends AbstractType
                 $data = $form->getData();
 
                 /**
-                 * Ensure that assocaited data is set to false if no hotel checked
+                 * Ensure that associated data is set to false if no hotel checked
                  */
                 if ($data->getHotelUser() == false) {
                     $data->setTransfertWestinDinner(false);
@@ -249,9 +260,9 @@ class UserType extends AbstractType
                     $data->setTransfertPleniereInter(false);
                     $data->setTransfertDinnerWestin(false);
                     $data->setTransfertDinnerInter(false);
-                    if ($data->getDinnerUser() == false) {
-                        $data->setDiet("null");
-                    }
+                }
+                if ($data->getDinnerUser() == false) {
+                    $data->setDiet("null");
                 }
                 $event->setData($data);
             });
@@ -291,15 +302,14 @@ class UserType extends AbstractType
                 'transfertDinnerInter',
                 'transfertTaxi',
                 'dinnerUser',
-                'hotelUser'
+                'dietbool'
             ];
 
             foreach ($checkboxInputs as $checkboxInput) {
                 if ($form->has($checkboxInput) && ! isset($data[$checkboxInput])) {
-                    $data[$checkboxInput] = false;
+                    $data[$checkboxInput] = 0;
                 }
             }
-
 
             $event->setData($data);
         });

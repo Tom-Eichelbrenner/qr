@@ -15,17 +15,17 @@
             <p class="subtitle">Etape 1/2</p>
             <h1>Informations personnelles</h1>
             {{ form_start(form) }}
-            <p class="form-cols">
+            <div class="form-cols">
                 {{ form_row(form.civility) }}
-            </p>
-            <p class="form-cols">
+            </div>
+            <div class="form-cols">
                 {{ form_row(form.firstName)}}
                 {{ form_row(form.lastName)}}
-            </p>
-            <p class="form-cols">
+            </div>
+            <div class="form-cols">
                 {{ form_row(form.email) }}
                 {{form_row(form.phone)}}
-            </p>
+            </div>
             {{ form_row(form.imageRight) }}
             <p><small>* Champs obligatoires</small></p>
             {{ form_row(form.submit)}}

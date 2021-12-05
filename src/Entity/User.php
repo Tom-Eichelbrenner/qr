@@ -52,8 +52,8 @@ class User implements UserInterface
      * @var array - static attributes that should not be updated
      */
     public const STATIC_ATTRIBUTES = [
-        'hotelUSer',
-        'dinnerUser',
+        'hotel',
+        'dinner',
     ];
     /**
      * Id in sendmail
@@ -655,6 +655,9 @@ class User implements UserInterface
      */
     public function getDiet(): ?string
     {
+        if ($this->diet == "null") {
+            return null;
+        }
         return $this->diet;
     }
 

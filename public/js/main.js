@@ -1,23 +1,21 @@
 window.addEventListener('DOMContentLoaded', function () {
   console.log('loaded');
-  var optionsInput = document.querySelectorAll('.check-options');
+  var optionsInput = document.querySelectorAll('label.check-options');
 
   if (optionsInput.length > 0) {
     optionsInput.forEach(function (el, index) {
   
       optionsInput[index].addEventListener('change', function (e) {
         // find next label with options class and register event listener to hide/show it whent check/uncheck
-        var label = e.target;
+        var container = e.target;
         var input = e.target;
         var option;
 
-        console.log(input);
-        while (label.tagName !== 'LABEL') {
-          label = label.parentNode;
+        while (container.tagName !== 'DIV') {
+          container = container.parentNode;
         }
-        console.log(input);
         
-        optionLabel = label.nextElementSibling;
+        optionLabel = container.nextElementSibling.querySelector('label');
         
         if (input.checked)  {
           optionLabel.classList.remove('hidden');
