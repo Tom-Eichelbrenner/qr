@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\User;
+use App\Exception\FormRegisteredException;
 use App\Form\UserType;
 use App\Service\PDFCreator;
 use App\Service\SendinBlueClient;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -53,7 +55,7 @@ class MainController extends AbstractController
             $confirmationRoute = $this->generateUrl("confirmation", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
             if ($confirmationRoute !== $request->headers->get('referer')) {
-                throw new AccessDeniedException("Form yet regisetered");
+                throw new FormRegisteredException($this->getUser());
             }
         }
 
@@ -65,7 +67,7 @@ class MainController extends AbstractController
      *
      * @return Response
      */
-    public function error(): Response
+    public function error(SessionInterface $session): Response
     {
         if ($this->get('session')->get('message')) {
             $message = $this->get('session')->get('message');
@@ -74,7 +76,24 @@ class MainController extends AbstractController
             $message = 'Une erreur est survenue';
         }
         return $this->render('error.html.twig', [
-            'message' => $message
+            'message' => $message ?? null,
+            'user' => $user ?? null
+        ]);
+    }
+
+    /**
+     * @Route("/error/{token}", name="error_form_submitted", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function errorFormSubmitted(SessionInterface $session): Response
+    {
+        $user = $session->get('user');
+        if (! $user) {
+            $this->redirectToRoute('error');
+        }
+        return $this->render('error.html.twig', [
+            'user' => $user ?? null
         ]);
     }
 

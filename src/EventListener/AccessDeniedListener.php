@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use App\Exception\FormRegisteredException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -52,7 +53,13 @@ class AccessDeniedListener implements EventSubscriberInterface
         }
         $exception = $event->getThrowable();
         $message = $event->getThrowable()->getMessage();
-        if ($exception instanceof AccessDeniedException || $exception instanceof UnauthorizedHttpException) {
+        if ($exception instanceof FormRegisteredException) {
+            $user = $exception->getUser();
+            $url = $this->router->generate('error_form_submitted', ['token' => $user->getToken()]);
+            $response = new RedirectResponse($url);
+            $this->session->set('user', $exception->getUser());
+            $event->setResponse($response);
+        } elseif ($exception instanceof AccessDeniedException || $exception instanceof UnauthorizedHttpException || $exception instanceof NotFoundHttpException) {
             $url = $this->router->generate('error');
             $response = new RedirectResponse($url);
             $response->headers->set('Location', $url);
