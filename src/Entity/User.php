@@ -15,15 +15,15 @@ class User implements UserInterface
     ];
 
     public const CIVILITY = [
-        1 => 'M.',
-        2 => 'Mme',
+        1 => 'Monsieur',
+        2 => 'Madame',
     ];
 
     public const ATTRIBUTES = [
         "PRENOM" => "firstName",
         "NOM" => "lastName",
         "CIVILITE" => "civility",
-        "SMS" => "phone",
+        "SMS" => "sendinBluePhone",
         "PARTICIPATION" => "participation",
         "DATE_PARTICIPATION" => "dateParticipation",
         "DROIT_IMAGE" => "imageRight",
@@ -48,6 +48,10 @@ class User implements UserInterface
         "DINER_USER" => "dinnerUser"
     ];
 
+    public const HOTEL_WESTIN = 1;
+
+    public const HOTEL_INTERCONTINENTAL = 2;
+
     /**
      * @var array - static attributes that should not be updated
      */
@@ -55,6 +59,32 @@ class User implements UserInterface
         'hotel',
         'dinner',
     ];
+
+    public const FORM_GROUP_1 = [
+        "civility",
+        "sendinBluePhone",
+        "imageRight"
+    ];
+
+    public const FORM_GROUP_2 = [
+        "hotelName",
+        "diet",
+        "transfertWestinDinner",
+        "transfertInterDinner",
+        "transfertPleniereWestin",
+        "transfertPleniereInter",
+        "transfertDinnerWestin",
+        "transfertDinnerInter",
+        "transfertTaxi",
+        "taxiAdress",
+        "hotelUser",
+        "dinnerUser"
+    ];
+
+    public const FORM_GROUP_3 = [
+        "participation"
+    ];
+
     /**
      * Id in sendmail
      *
@@ -74,49 +104,49 @@ class User implements UserInterface
      * @var bool
      * @Assert\Type("bool")
      */
-    private $participation;
+    private $participation = null;
 
     /**
      * @var bool
      * @Assert\Type("bool", groups={"group_1"})
      */
-    private $image_right;
+    private $image_right = true;
 
     /**
      * @var bool
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $hotel;
+    private $hotel = false;
 
     /**
      * @var bool
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $hotel_user;
+    private $hotel_user = null;
 
     /**
      * @var bool
      * @Assert\Type("bool")
      */
-    private $pleniere_1;
+    private $pleniere_1 = false;
 
     /**
      * @var bool
      * @Assert\Type("bool")
      */
-    private $pleniere_2;
+    private $pleniere_2 = false;
 
     /**
      * @var bool
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $dinner;
+    private $dinner = false;
 
     /**
      * @var bool
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $dinner_user;
+    private $dinner_user = null;
 
     /**
      * @var DateTime
@@ -143,42 +173,73 @@ class User implements UserInterface
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_westin_dinner;
+    private $transfert_westin_dinner = true;
     /**
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_inter_dinner;
+    private $transfert_inter_dinner = true;
     /**
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_pleniere_westin;
+    private $transfert_pleniere_westin = true;
     /**
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_pleniere_inter;
+    private $transfert_pleniere_inter = true;
     /**
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_dinner_westin;
+    private $transfert_dinner_westin = true;
     /**
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_dinner_inter;
+    private $transfert_dinner_inter = true;
     /**
      * @var boolean
      * @Assert\Type("bool", groups={"group_2"})
      */
-    private $transfert_taxi;
+    private $transfert_taxi = true;
+
+    /**
+     * @var string
+     */
+    private $hotel_name;
+    /**
+     * @var string
+     * @Assert\NotBlank(groups={"group_1"})
+     */
+    private $first_name;
+
+    /**
+     * @var string
+     * @Assert\NotBlank(groups={"group_1"})
+     */
+    private $last_name;
+
+    /**
+     * @var string
+     *
+     *
+     * @Assert\Regex("/^0\d{9}$/", message="Le numéro de téléphone doit comprendre 10 chiffrres commençant par 0", groups={"group_1"})
+     */
+    private $phone;
+
+    /**
+     * @var string|null
+     *
+     */
+    private $diet;
+
 
     /**
      * @return bool
      */
-    public function getTransfertWestinDinner(): ?bool
+    public function getTransfertWestinDinner(): bool
     {
         return $this->transfert_westin_dinner;
     }
@@ -186,7 +247,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_westin_dinner
      */
-    public function setTransfertWestinDinner(?bool $transfert_westin_dinner = null): void
+    public function setTransfertWestinDinner(bool $transfert_westin_dinner = true): void
     {
         $this->transfert_westin_dinner = $transfert_westin_dinner;
     }
@@ -194,7 +255,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getTransfertInterDinner(): ?bool
+    public function getTransfertInterDinner(): bool
     {
         return $this->transfert_inter_dinner;
     }
@@ -202,7 +263,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_inter_dinner
      */
-    public function setTransfertInterDinner(?bool $transfert_inter_dinner = null): void
+    public function setTransfertInterDinner(bool $transfert_inter_dinner = true): void
     {
         $this->transfert_inter_dinner = $transfert_inter_dinner;
     }
@@ -210,7 +271,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getTransfertPleniereWestin(): ?bool
+    public function getTransfertPleniereWestin(): bool
     {
         return $this->transfert_pleniere_westin;
     }
@@ -218,7 +279,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_pleniere_westin
      */
-    public function setTransfertPleniereWestin(?bool $transfert_pleniere_westin = null): void
+    public function setTransfertPleniereWestin(bool $transfert_pleniere_westin = true): void
     {
         $this->transfert_pleniere_westin = $transfert_pleniere_westin;
     }
@@ -226,7 +287,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getTransfertPleniereInter(): ?bool
+    public function getTransfertPleniereInter(): bool
     {
         return $this->transfert_pleniere_inter;
     }
@@ -234,7 +295,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_pleniere_inter
      */
-    public function setTransfertPleniereInter(?bool $transfert_pleniere_inter = null): void
+    public function setTransfertPleniereInter(bool $transfert_pleniere_inter = true): void
     {
         $this->transfert_pleniere_inter = $transfert_pleniere_inter;
     }
@@ -242,7 +303,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getTransfertDinnerWestin(): ?bool
+    public function getTransfertDinnerWestin(): bool
     {
         return $this->transfert_dinner_westin;
     }
@@ -250,7 +311,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_dinner_westin
      */
-    public function setTransfertDinnerWestin(?bool $transfert_dinner_westin = null): void
+    public function setTransfertDinnerWestin(bool $transfert_dinner_westin = true): void
     {
         $this->transfert_dinner_westin = $transfert_dinner_westin;
     }
@@ -258,7 +319,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getTransfertDinnerInter(): ?bool
+    public function getTransfertDinnerInter(): bool
     {
         return $this->transfert_dinner_inter;
     }
@@ -266,7 +327,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_dinner_inter
      */
-    public function setTransfertDinnerInter(?bool $transfert_dinner_inter = null): void
+    public function setTransfertDinnerInter(bool $transfert_dinner_inter = true): void
     {
         $this->transfert_dinner_inter = $transfert_dinner_inter;
     }
@@ -274,7 +335,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getTransfertTaxi(): ?bool
+    public function getTransfertTaxi(): bool
     {
         return $this->transfert_taxi;
     }
@@ -282,7 +343,7 @@ class User implements UserInterface
     /**
      * @param bool $transfert_taxi
      */
-    public function setTransfertTaxi(?bool $transfert_taxi = null): void
+    public function setTransfertTaxi(bool $transfert_taxi = true): void
     {
         $this->transfert_taxi = $transfert_taxi;
     }
@@ -325,37 +386,6 @@ class User implements UserInterface
     }
 
     /**
-     * @var string
-     */
-    private $hotel_name;
-    /**
-     * @var string
-     * @Assert\NotBlank(groups={"group_1"})
-     */
-    private $first_name;
-
-    /**
-     * @var string
-     * @Assert\NotBlank(groups={"group_1"})
-     */
-    private $last_name;
-
-    /**
-     * @var string
-     *
-     *
-     * @Assert\Regex("/^\d{11,}$/", message="Le numéro de téléphone doit comprendre le code international suivi du numéro sans le 0 initial", groups={"group_1"})
-     */
-    private $phone;
-
-    /**
-     * @var string|null
-     *
-     */
-    private $diet;
-
-
-    /**
      * @param string $token
      */
     public function setToken(string $token)
@@ -366,7 +396,7 @@ class User implements UserInterface
     /**
      * @return string|null
      */
-    public function getToken(): ?string
+    public function getToken(): string
     {
         return $this->token;
     }
@@ -390,7 +420,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getImageRight(): ?bool
+    public function getImageRight(): bool
     {
         return $this->image_right;
     }
@@ -398,8 +428,11 @@ class User implements UserInterface
     /**
      * @param bool $image_right
      */
-    public function setImageRight(?bool $image_right = null): void
+    public function setImageRight(bool $image_right = true): void
     {
+        if ($image_right) {
+            $image_right = true;
+        }
         $this->image_right = $image_right;
     }
 
@@ -414,7 +447,7 @@ class User implements UserInterface
     /**
      * @param bool $hotel
      */
-    public function setHotel(?bool $hotel = null): void
+    public function setHotel(bool $hotel = false): void
     {
         $this->hotel = $hotel;
     }
@@ -422,7 +455,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getHotelUser(): ?bool
+    public function getHotelUser(): bool
     {
         return $this->hotel_user;
     }
@@ -430,7 +463,7 @@ class User implements UserInterface
     /**
      * @param bool $hotel
      */
-    public function setHotelUser(?bool $hotel_user = null): void
+    public function setHotelUser(bool $hotel_user = true): void
     {
         $this->hotel_user = $hotel_user;
     }
@@ -446,7 +479,7 @@ class User implements UserInterface
     /**
      * @param bool $pleniere_1
      */
-    public function setPleniere1(?bool $pleniere_1 = null): void
+    public function setPleniere1(bool $pleniere_1 = false): void
     {
         $this->pleniere_1 = $pleniere_1;
     }
@@ -454,7 +487,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getPleniere2(): ?bool
+    public function getPleniere2(): bool
     {
         return $this->pleniere_2;
     }
@@ -462,7 +495,7 @@ class User implements UserInterface
     /**
      * @param bool $pleniere_2
      */
-    public function setPleniere2(?bool $pleniere_2 = null): void
+    public function setPleniere2(bool $pleniere_2 = false): void
     {
         $this->pleniere_2 = $pleniere_2;
     }
@@ -470,7 +503,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getDinner(): ?bool
+    public function getDinner(): bool
     {
         return $this->dinner;
     }
@@ -478,7 +511,7 @@ class User implements UserInterface
     /**
      * @param bool $dinner
      */
-    public function setDinner(?bool $dinner = null): void
+    public function setDinner(bool $dinner = false): void
     {
         $this->dinner = $dinner;
     }
@@ -486,7 +519,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function getDinnerUser(): ?bool
+    public function getDinnerUser(): bool
     {
         return $this->dinner_user;
     }
@@ -494,7 +527,7 @@ class User implements UserInterface
     /**
      * @param bool $dinner
      */
-    public function setDinnerUser(?bool $dinner_user = null): void
+    public function setDinnerUser(bool $dinner_user = true): void
     {
         $this->dinner_user = $dinner_user;
     }
@@ -565,7 +598,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getCivility(): ?string
+    public function getCivility(): string
     {
         return $this->civility;
     }
@@ -581,7 +614,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->first_name;
     }
@@ -589,7 +622,7 @@ class User implements UserInterface
     /**
      * @param string|null $first_name
      */
-    public function setFirstName(?string $first_name = null): void
+    public function setFirstName(string $first_name = ""): void
     {
         $this->first_name = $first_name;
     }
@@ -597,7 +630,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->last_name;
     }
@@ -605,7 +638,7 @@ class User implements UserInterface
     /**
      * @param string|null $last_name
      */
-    public function setLastName(?string $last_name = null): void
+    public function setLastName(string $last_name = ""): void
     {
         $this->last_name = $last_name;
     }
@@ -645,9 +678,33 @@ class User implements UserInterface
     /**
      * @param string|null $phone
      */
-    public function setPhone(?string $phone = null): void
+    public function setPhone(string $phone = ""): void
     {
         $this->phone = $phone;
+    }
+
+    /**
+     * Get Phone formatted for sendinblue adding +33
+     *
+     * @return string
+     */
+    public function getSendinBluePhone(): string
+    {
+        if (preg_match("/^33\d+/", $this->phone)) {
+            return $this->phone;
+        } elseif (preg_match("/0\d+/", $this->phone)) {
+            $phone = substr($this->phone, 1); // remove leading 0
+        }
+        return "33{$phone}"; // add french international code
+    }
+
+    public function setSendinBluePhone(string $phone): self
+    {
+        $phone = preg_replace("/^33(\d{9})$/", "0$1", $phone);
+
+        $this->phone = $phone;
+
+        return $this;
     }
 
     /**
@@ -655,9 +712,6 @@ class User implements UserInterface
      */
     public function getDiet(): ?string
     {
-        if ($this->diet == "null") {
-            return null;
-        }
         return $this->diet;
     }
 
@@ -672,7 +726,7 @@ class User implements UserInterface
     /**
      * @return string|null
      */
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -680,7 +734,7 @@ class User implements UserInterface
     /**
      * @param string $email
      */
-    public function setEmail(?string $email = null): void
+    public function setEmail(string $email = ""): void
     {
         $this->email = $email;
     }
@@ -688,7 +742,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getUserIdentifier(): ?string
+    public function getUserIdentifier(): string
     {
         return $this->getToken();
     }

@@ -14,4 +14,5 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
     Endroid\QrCodeBundle\EndroidQrCodeBundle::class => ['all' => true],
+    Fidry\PsyshBundle\PsyshBundle::class => ['dev' => true, 'test' => true],
 ];

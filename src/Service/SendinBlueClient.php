@@ -108,7 +108,7 @@ class SendinBlueClient
      * @return User
      *
      */
-    public function updateContact(User $user): ?User
+    public function updateContact(User $user, ?array $fieldsToUpdate = null): ?User
     {
         $apiInstance = new Sendinblue\Client\Api\ContactsApi(
             new Client(),
@@ -117,7 +117,7 @@ class SendinBlueClient
         $identifier = $user->getEmail();
         $updateContact = new UpdateContact();
 
-        $updateContact['attributes'] = $this->createContactFromUser($user, null, true);
+        $updateContact['attributes'] = $this->createContactFromUser($user, $fieldsToUpdate, true);
         try {
             $apiInstance->updateContact($identifier, $updateContact);
             $this->sendinBlueLogger->info("Request sent  for {$user->getToken()}:" . json_encode($updateContact['attributes']));
@@ -185,10 +185,14 @@ class SendinBlueClient
         $attributes = User::ATTRIBUTES;
         foreach ($attributes as $key => $value) {
             $method = 'set' . ucfirst($value);
-            if ($method === "setDateParticipation" || $method === "setCheck1" || $method === "setCheck2") {
+            if (isset($contact['attributes'][$key]) && ($method === "setDateParticipation" || $method === "setCheck1" || $method === "setCheck2")) {
                 $user->$method(new DateTime($contact['attributes'][$key] ?? null));
             } else {
-                $user->$method($contact['attributes'][$key] ?? null);
+                if (isset($contact['attributes'][$key])) {
+                    $user->$method($contact['attributes'][$key] ?? null);
+                } else {
+                    $user->$method();
+                }
             }
         }
         return $user;
@@ -223,7 +227,11 @@ class SendinBlueClient
         foreach ($attributes as $key => $value) {
             $method = 'get' . ucfirst($value);
             if ($method === "getDateParticipation" || $method === "getCheck1" || $method === "getCheck2") {
-                $contact[$key] = $user->$method()->format('Y-m-d');
+                if ($user->$method() instanceof \DateTime) {
+                    $contact[$key] = $user->$method()->format('Y-m-d');
+                } else {
+                    $contact[$key] = null;
+                }
             } else {
                 $contact[$key] = $user->$method();
             }

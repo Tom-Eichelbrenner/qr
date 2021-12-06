@@ -12,11 +12,6 @@
         <section class="content">
             <p class="subtitle">Etape 2/2</p>
             <h1>Hébergement & transferts</h1>
-            {% if app.user.hotelName == 2 %}
-                {% trans %} form_part_2.hebergement.inter {% endtrans %}
-            {% else %}
-                {% trans %} form_part_2.hebergement.westin {% endtrans %}
-            {% endif %}
             {{ form_start(form) }}
             {% if app.user.hotel %}
                 <h4>Hébergement</h4>

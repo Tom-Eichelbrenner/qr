@@ -122,7 +122,7 @@
             <!-- -- fin diner -- -->
             {% endif %}
             <!-- -- si hotel == westin -- -->
-            {% if app.user.hotelName == "Westin" %}
+            {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
             <article>
                 <h2>Hôtel</h2>
                 <div class="flex">
@@ -177,7 +177,7 @@
             {% endif %}
             <!-- -- fin si hotel == westin -- -->
             <!-- -- si hotel == intercontinental -- -->
-            {% if app.user.hotelName == "Intercontinental" %}
+            {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
             <article>
                 <h2>Hôtel</h2>
                 <div class="flex">

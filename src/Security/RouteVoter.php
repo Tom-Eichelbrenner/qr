@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 class RouteVoter extends Voter
 {
@@ -34,6 +35,9 @@ class RouteVoter extends Voter
             "localisation"
         ],
         'countermark' => [
+            'confirmation'
+        ],
+        "localisation" => [
             'confirmation'
         ]
     ];
@@ -78,6 +82,11 @@ class RouteVoter extends Voter
     {
         /** @var User $user */
         $user = $token->getUser();
+
+        if ($user->getParticipation() === false) {
+            return false;
+        }
+
         $referer = $this->request->headers->get('referer');
 
         $routename = $this->request->attributes->get('_route');

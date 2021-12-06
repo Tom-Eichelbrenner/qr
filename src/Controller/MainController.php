@@ -11,11 +11,12 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -34,12 +35,28 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/{token}", name="index", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé test")
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        /** if participation is yet to true, check referer */
+        if ($user->getParticipation()) {
+            // check referer
+            $confirmationRoute = $this->generateUrl("confirmation", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            if ($confirmationRoute !== $request->headers->get('referer')) {
+                throw new AccessDeniedException("Form yet regisetered");
+            }
+        }
+
         return $this->render('index.html.twig');
     }
 
@@ -110,7 +127,7 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $result = $client->updateContact($user);
+                $result = $client->updateContact($user, User::FORM_GROUP_1);
             } catch (\Throwable $e) {
                 $result = null;
             }
@@ -166,14 +183,14 @@ class MainController extends AbstractController
         $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $client->updateContact($user);
+            $result = $client->updateContact($user, User::FORM_GROUP_2);
             if ($result instanceof User) {
                 /** @var User $user */
                 $user = $this->getUser();
                 $client->updateContact($user);
                 try {
-                    $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                    $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                    // $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                    // $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                     return $this->redirectToRoute('confirmation', ['token' => $token]);
                 } catch (\Throwable $e) {
                     // do nothing
