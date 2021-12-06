@@ -78,7 +78,8 @@ class User implements UserInterface
         "transfertTaxi",
         "taxiAdress",
         "hotelUser",
-        "dinnerUser"
+        "dinnerUser",
+        "participation"
     ];
 
     public const FORM_GROUP_3 = [

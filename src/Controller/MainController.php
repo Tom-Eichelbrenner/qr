@@ -183,14 +183,14 @@ class MainController extends AbstractController
         $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setParticipation(true);
             $result = $client->updateContact($user, User::FORM_GROUP_2);
             if ($result instanceof User) {
                 /** @var User $user */
                 $user = $this->getUser();
-                $client->updateContact($user);
                 try {
-                    // $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                    // $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                    $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                    $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                     return $this->redirectToRoute('confirmation', ['token' => $token]);
                 } catch (\Throwable $e) {
                     // do nothing
