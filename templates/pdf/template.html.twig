@@ -256,7 +256,7 @@
                     <h4>à l’issue de la Soirée :</h4>
                     <!-- -- si transfert Diner -> Inter  -- -->
                     {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
-                        {% if app.user.transfertInterDinner %}
+                        {% if app.user.transfertDinnerInter %}
                         <p>
                             Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
                         </p>

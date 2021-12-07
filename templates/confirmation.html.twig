@@ -112,7 +112,7 @@
                     <h4>Soirée de Gala à la Cité de l’Architecture & du Patrimoine :</h4>
                     {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
                         <!-- -- si transfert Intercontinental -> diner  -- -->
-                        {% if app.user.transfertPleniereInter %}
+                        {% if app.user.transfertInterDinner %}
                             <p>
                                 Vous avez réservé un transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
                             </p>
@@ -144,7 +144,7 @@
                     {% endif %}
                     <!-- -- si transfert Westin -> diner  -- -->
                     {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
-                        {% if app.user.transfertPleniereWestin %}
+                        {% if app.user.transfertWestinDinner %}
                             <p>
                                 Vous avez réservé un transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
                             </p>
