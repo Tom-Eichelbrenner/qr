@@ -416,6 +416,21 @@ class User implements UserInterface
     public function setParticipation(?bool $participation = null): void
     {
         $this->participation = $participation;
+
+        if ($participation === false) {
+            $this->setHotelUser(false);
+            $this->setDinnerUser(false);
+            $this->setImageRight(false);
+            $this->setTransfertPleniereInter(false);
+            $this->setTransfertPleniereWestin(false);
+            $this->setTransfertInterDinner(false);
+            $this->setTransfertWestinDinner(false);
+            $this->setTransfertDinnerInter(false);
+            $this->setTransfertDinnerWestin(false);
+            $this->setTaxiAdress(null);
+            $this->setTaxiAdress(null);
+            $this->setDiet(null);
+        }
     }
 
     /**

@@ -225,7 +225,6 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param                  $token
      * @param SendinBlueClient $client
@@ -237,16 +236,19 @@ class MainController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        if ($user->getParticipation() != false) {
-            $user->setParticipation(false);
-            $client->updateContact($user);
-            try {
-                $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
-            } catch (LoaderError | RuntimeError | SyntaxError $e) {
-                dump("Erreur : $e");
-            }
+        if ($user->getParticipation() !== null) {
+            throw new FormRegisteredException($this->getUser());
         }
+
+        $user->setParticipation(false);
+        $client->updateContact($user);
+        try {
+            $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+            $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
+        } catch (LoaderError | RuntimeError | SyntaxError $e) {
+            dump("Erreur : $e");
+        }
+
         return $this->render('je-ne-participe-pas.html.twig', [
             'token' => $token
         ]);
