@@ -1,7 +1,7 @@
 user:
   civility:
-    1: Monsieur
-    2: Madame
+    1: Madame
+    2: Monsieur
 
 mail_voeux:
   plénière:

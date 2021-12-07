@@ -15,8 +15,8 @@ class User implements UserInterface
     ];
 
     public const CIVILITY = [
-        1 => 'Monsieur',
-        2 => 'Madame',
+        1 => 'Madame',
+        2 => 'Monsieur',
     ];
 
     public const ATTRIBUTES = [
@@ -699,7 +699,7 @@ class User implements UserInterface
         return "33{$phone}"; // add french international code
     }
 
-    public function setSendinBluePhone(string $phone): self
+    public function setSendinBluePhone(string $phone = ""): self
     {
         $phone = preg_replace("/^33(\d{9})$/", "0$1", $phone);
 

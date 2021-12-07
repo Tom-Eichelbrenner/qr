@@ -24,29 +24,33 @@
                 {{ form_row(form.hotelUser) }}
             {% endif %}
             {% if app.user.hotel %}
-                <h4>Transferts</h4>
-                <p>Vous avez la possibilité de réserver votre place sur les transferts proposés :</p>
-                {% if app.user.hotelName == 1 %}
-                    {{ form_row(form.transfertPleniereWestin) }}
-                    {% if app.user.dinner %}
-                        {{ form_row(form.transfertWestinDinner) }}
-                        {{ form_row(form.transfertDinnerWestin) }}
+                <div id="transferts-container">
+                    <h4>Transferts</h4>
+                    <p>Vous avez la possibilité de réserver votre place sur les transferts proposés :</p>
+                    {% if app.user.hotelName == 1 %}
+                        {{ form_row(form.transfertPleniereWestin) }}
+                        {% if app.user.dinner %}
+                            {{ form_row(form.transfertWestinDinner) }}
+                            {{ form_row(form.transfertDinnerWestin) }}
+                        {% endif %}
                     {% endif %}
-                {% endif %}
 
-                {% if app.user.hotelName == 2 %}
-                    {{ form_row(form.transfertPleniereInter) }}
-                    {% if app.user.dinner %}
-                        {{ form_row(form.transfertInterDinner) }}
-                        {{ form_row(form.transfertDinnerInter) }}
+                    {% if app.user.hotelName == 2 %}
+                        {{ form_row(form.transfertPleniereInter) }}
+                        {% if app.user.dinner %}
+                            {{ form_row(form.transfertInterDinner) }}
+                            {{ form_row(form.transfertDinnerInter) }}
+                        {% endif %}
                     {% endif %}
-                {% endif %}
+                </div>
             {% endif %}
-            {% if not app.user.hotel and app.user.dinner %}
-                <h4>Taxi</h4>
-                <p>{% trans %} form_part_2.transfert.taxi.default {% endtrans %}</p>
-                {{ form_row(form.transfertTaxi) }}
-                {{ form_row(form.taxiAdress) }}
+            {% if app.user.dinner %}
+                <div id="taxi-container" class="{% if app.user.hotelUser in [true, null] %}hidden {% endif %}">
+                    <h4>Taxi</h4>
+                    <p>{% trans %} form_part_2.transfert.taxi.default {% endtrans %}</p>
+                    {{ form_row(form.transfertTaxi) }}
+                    {{ form_row(form.taxiAdress) }}
+                </div>
             {% endif %}
             {% if app.user.dinner %}
                 <h4>Dîner</h4>

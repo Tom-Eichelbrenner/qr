@@ -106,7 +106,7 @@ class UserType extends AbstractType
                     'false_values' => [0, '0', 'false']
                 ]);
 
-                if ($user->getHotelName() === "1") {
+                if ($user->getHotelName() == User::HOTEL_WESTIN) {
                     $builder
                         ->add('transfertPleniereWestin', CustomCheckboxType::class, [
                             'required' => false,
@@ -140,7 +140,7 @@ class UserType extends AbstractType
                             ]);
                     }
                 }
-                if ($user->getHotelName() === "2") {
+                if ($user->getHotelName() == User::HOTEL_INTERCONTINENTAL) {
                     $builder
                         ->add('transfertPleniereInter', CustomCheckboxType::class, [
                             'required' => false,
@@ -181,7 +181,7 @@ class UserType extends AbstractType
                     }
                 }
             }
-            if (!$user->getHotel() && $user->getDinner()) {
+            if ($user->getDinner()) {
                 $builder
                     ->add('transfertTaxi', CustomCheckboxType::class, [
                         'required' => false,
@@ -265,6 +265,37 @@ class UserType extends AbstractType
                     $data->setDiet("null");
                 }
                 $event->setData($data);
+            });
+
+            /**
+             * Clean transfert values based on hotel
+             */
+            $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                /**
+                 * @var User $user
+                 */
+                $user = $event->getData();
+
+                if ($user->getHotelName() == User::HOTEL_INTERCONTINENTAL) {
+                    $user->setTransfertDinnerWestin(false);
+                    $user->setTransfertPleniereWestin(false);
+                    $user->setTransfertWestinDinner(false);
+                }
+
+                if ($user->getHotelName() == User::HOTEL_WESTIN) {
+                    $user->setTransfertDinnerInter(false);
+                    $user->setTransfertPleniereInter(false);
+                    $user->setTransfertInterDinner(false);
+                }
+
+                if ($user->getTransfertTaxi()) {
+                    $user->setTransfertDinnerInter(false);
+                    $user->setTransfertPleniereInter(false);
+                    $user->setTransfertInterDinner(false);
+                    $user->setTransfertDinnerWestin(false);
+                    $user->setTransfertPleniereWestin(false);
+                    $user->setTransfertWestinDinner(false);
+                }
             });
         }
 
