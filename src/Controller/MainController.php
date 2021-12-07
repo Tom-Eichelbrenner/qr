@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\User;
+use App\Exception\FormRegisteredException;
 use App\Form\UserType;
 use App\Service\PDFCreator;
 use App\Service\SendinBlueClient;
@@ -11,11 +12,13 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -33,23 +36,38 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index", methods={"GET"})
-     *
+     * @Route("/je-participe/{token}", name="index", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé test")
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        /** if participation is yet to true, check referer */
+        if ($user->getParticipation()) {
+            // check referer
+            $confirmationRoute = $this->generateUrl("confirmation", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            if ($confirmationRoute !== $request->headers->get('referer')) {
+                throw new FormRegisteredException($this->getUser());
+            }
+        }
+
         return $this->render('index.html.twig');
     }
 
     /**
      * @Route("/error", name="error", methods={"GET"})
      *
-     *
      * @return Response
      */
-    public function error(): Response
+    public function error(SessionInterface $session): Response
     {
         if ($this->get('session')->get('message')) {
             $message = $this->get('session')->get('message');
@@ -58,13 +76,31 @@ class MainController extends AbstractController
             $message = 'Une erreur est survenue';
         }
         return $this->render('error.html.twig', [
-            'message' => $message
+            'message' => $message ?? null,
+            'user' => $user ?? null
+        ]);
+    }
+
+    /**
+     * @Route("/error/{token}", name="error_form_submitted", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function errorFormSubmitted(SessionInterface $session): Response
+    {
+        $user = $session->get('user');
+        if (! $user) {
+            $this->redirectToRoute('error');
+        }
+        return $this->render('error.html.twig', [
+            'user' => $user ?? null
         ]);
     }
 
 
     /**
-     * @Route("/je-participe/{token}", name="participation_1_get", methods={"GET"})
+     * @Route("/je-participe/1/{token}", name="participation_1_get", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param $token
      *
@@ -85,7 +121,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/je-participe/{token}", name="participation_1_post", methods={"POST"})
+     * @Route("/je-participe/1/{token}", name="participation_1_post", methods={"POST"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      * @param                  $token
      * @param Request          $request
@@ -109,7 +145,11 @@ class MainController extends AbstractController
         $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $client->updateContact($user);
+            try {
+                $result = $client->updateContact($user, User::FORM_GROUP_1);
+            } catch (\Throwable $e) {
+                $result = null;
+            }
             if ($result instanceof User) {
                 return $this->redirectToRoute('participation_2_get', ['token' => $token]);
             }
@@ -161,23 +201,22 @@ class MainController extends AbstractController
         $data = $request->request->all('user') ?? [];
         $form->submit($data, false);
 
-        if ($form->isSubmitted()) {
-            $result = $client->updateContact($user);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setParticipation(true);
+            $result = $client->updateContact($user, User::FORM_GROUP_2);
             if ($result instanceof User) {
                 /** @var User $user */
                 $user = $this->getUser();
-                $client->updateContact($user);
                 try {
                     $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
                     $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
-                } catch (LoaderError | RuntimeError | SyntaxError $e) {
-                    dump("Erreur : $e");
+                    return $this->redirectToRoute('confirmation', ['token' => $token]);
+                } catch (\Throwable $e) {
+                    // do nothing
                 }
-
-                return $this->redirectToRoute('confirmation', ['token' => $token]);
             }
-            $form->addError(new FormError('Une erreur est survenue, veuillez réessayer'));
         }
+        $form->addError(new FormError('Une erreur est survenue, veuillez réessayer'));
         return $this->render('form_2.twig', [
             'token' => $token,
             'form' => $form->createView(),
@@ -186,6 +225,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param                  $token
      * @param SendinBlueClient $client
@@ -224,9 +264,20 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/localisation/{token}", name="localisation", methods={"GET"})
+     * @isGranted("view", statusCode="403", message="Accès non autorisé")
+     * @return Response
+     */
+    public function localisation($token)
+    {
+        return $this->render('localisation.html.twig');
+    }
+
+    /**
      * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
      * @IsGranted("view", statusCode=403, message="Accès non autorisé")
-     * @param                  $token
+     *
+     * @param $token
      *
      * @return Response
      */
@@ -239,29 +290,31 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/inscrit/{id}", name="registered", methods={"GET"})
+     * @Route("/checkin/{token}", name="checkin", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
-     * @param $id
+     * @param $token
      *
      * @return Response
      */
-    public function registered($id): Response
+    public function registered($token): Response
     {
         return $this->render('inscrit.html.twig', [
-            'id' => $id
+            'id' => $token
         ]);
     }
 
 
     /**
-     * @Route("/download/{token}", name="pdf", methods={"GET"})
+     * @Route("/contremarque/{token}", name="countermark", methods={"GET"})
+     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
      *
      * @param            $token
      * @param PDFCreator $creator
      *
      * @return BinaryFileResponse
      */
-    public function download($token, PDFCreator $creator): BinaryFileResponse
+    public function countermark($token, PDFCreator $creator): BinaryFileResponse
     {
         $user = $this->getUser();
         $uniqueId = uniqid();
@@ -275,6 +328,7 @@ class MainController extends AbstractController
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             "participation" . $uniqueId . ".pdf"
         );
+        $file->deleteFileAfterSend(true);
         return $file;
     }
 }

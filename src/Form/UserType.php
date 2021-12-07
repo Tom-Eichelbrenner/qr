@@ -110,9 +110,6 @@ class UserType extends AbstractType
                     $builder
                         ->add('transfertPleniereWestin', CustomCheckboxType::class, [
                             'required' => false,
-                            'attr' => [
-                                'class' => 'switch-custom',
-                            ],
                             'empty_data' => false,
                             'ok' => $this->getTranslation('form_part_2.transfert.pleniere_westin.label.ok'),
                             'ko' => $this->getTranslation('form_part_2.transfert.pleniere_westin.label.ko'),
@@ -124,9 +121,6 @@ class UserType extends AbstractType
                         $builder
                             ->add('transfertWestinDinner', CustomCheckboxType::class, [
                                 'required' => false,
-                                'attr' => [
-                                    'class' => 'switch-custom',
-                                ],
                                 'empty_data' => false,
                                 'ok' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ok'),
                                 'ko' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ko'),
@@ -136,9 +130,6 @@ class UserType extends AbstractType
                             ])
                             ->add('transfertDinnerWestin', CustomCheckboxType::class, [
                                 'required' => false,
-                                'attr' => [
-                                    'class' => 'switch-custom',
-                                ],
                                 'empty_data' => false,
                                 'ok' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ok'),
                                 'ko' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ko'),
@@ -153,9 +144,6 @@ class UserType extends AbstractType
                     $builder
                         ->add('transfertPleniereInter', CustomCheckboxType::class, [
                             'required' => false,
-                            'attr' => [
-                                'class' => 'switch-custom',
-                            ],
                             'empty_data' => false,
                             'ok' => $this->getTranslation('form_part_2.transfert.pleniere_inter.label.ok'),
                             'ko' => $this->getTranslation('form_part_2.transfert.pleniere_inter.label.ko'),
@@ -197,36 +185,32 @@ class UserType extends AbstractType
                 $builder
                     ->add('transfertTaxi', CustomCheckboxType::class, [
                         'required' => false,
-                        'attr' => [
-                            'class' => 'switch-custom',
-                        ],
                         'empty_data' => false,
+                        'label_attr' => ['class' => 'check-options'],
                         'ok' => $this->getTranslation('form_part_2.transfert.taxi.label.ok'),
                         'ko' => $this->getTranslation('form_part_2.transfert.taxi.label.ko'),
                         'help' => $this->getTranslation('form_part_2.transfert.taxi.label.help'),
-                        'false_values' => [0, '0', 'false']
+                        'false_values' => [0, '0', 'false'],
+                        'container_attr' => [
+                            'class' => 'check-options'
+                        ]
+                    ])->add('taxiAdress', CustomTextType::class, [
+                        'label' => $this->getTranslation('form_part_2.transfert.taxi_adress.label'),
+                        'required' => false,
+                        'container_attr' => [
+                            'class' => 'options'
+                        ],
                     ]);
-                if ($user->getTransfertTaxi()) {
-                    $builder
-                        ->add('taxiAdress', null, [
-                            'label' => $this->getTranslation('form_part_2.transfert.taxi_adress.label'),
-                            'attr' => [
-                                'class' => 'options'
-                            ],
-                        ]);
-                }
             }
             if ($user->getDinner()) {
                 $builder
                     ->add('dinnerUser', CustomCheckboxType::class, [
                         'required' => false,
-                        'attr' => [
-                            'class' => 'switch-custom',
-                        ],
                         'empty_data' => false,
                         'ok' => $this->getTranslation('form_part_2.dinner.label.ok'),
                         'ko' => $this->getTranslation('form_part_2.dinner.label.ko'),
-                        'false_values' => [0, '0', 'false']
+                        'false_values' => [0, '0', 'false'],
+                        'empty_data' => false,
                     ])
                     ->add('dietbool', CustomCheckboxType::class, [
                         'required' => false,
@@ -236,11 +220,17 @@ class UserType extends AbstractType
                         'ko' => $this->getTranslation('form_part_2.diet.label.ko'),
                         'false_values' => [0, '0', 'false'],
                         'mapped' => false,
+                        'container_attr' => [
+                            'class' => 'check-options'
+                        ]
                     ])
-                    ->add('diet', null, [
+                    ->add('diet', CustomTextType::class, [
                         'required' => false,
                         'label' => $this->getTranslation('form_part_2.diet.label.message'),
-                        'label_attr' => ['class' => 'options']
+                        'label_attr' => ['class' => 'options'],
+                        'container_attr' => [
+                            'class' => 'options'
+                        ]
                     ]);
             }
             $builder
@@ -261,7 +251,7 @@ class UserType extends AbstractType
                 $data = $form->getData();
 
                 /**
-                 * Ensure that assocaited data is set to false if no hotel checked
+                 * Ensure that associated data is set to false if no hotel checked
                  */
                 if ($data->getHotelUser() == false) {
                     $data->setTransfertWestinDinner(false);
@@ -270,15 +260,15 @@ class UserType extends AbstractType
                     $data->setTransfertPleniereInter(false);
                     $data->setTransfertDinnerWestin(false);
                     $data->setTransfertDinnerInter(false);
-                    if ($data->getDinnerUser() == false) {
-                        $data->setDiet("null");
-                    }
+                }
+                if ($data->getDinnerUser() == false) {
+                    $data->setDiet("null");
                 }
                 $event->setData($data);
             });
         }
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             /**
              * @var User
              */
@@ -286,8 +276,11 @@ class UserType extends AbstractType
             $form = $event->getForm();
 
             if ($form->has('diet')) {
-                dump($data->getDiet());
-                $form->get('booldiet')->setData($data->getDiet() ?? null);
+                $form->get('dietbool')->setData($data->getDiet() ? true : false);
+            }
+
+            if ($form->has('taxiAdress')) {
+                $form->get('transfertTaxi')->setData($data->getTaxiAdress() ? true : false);
             }
         });
 
@@ -309,15 +302,14 @@ class UserType extends AbstractType
                 'transfertDinnerInter',
                 'transfertTaxi',
                 'dinnerUser',
-                'hotelUser'
+                'dietbool'
             ];
 
             foreach ($checkboxInputs as $checkboxInput) {
                 if ($form->has($checkboxInput) && ! isset($data[$checkboxInput])) {
-                    $data[$checkboxInput] = false;
+                    $data[$checkboxInput] = 0;
                 }
             }
-
 
             $event->setData($data);
         });

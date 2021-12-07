@@ -10,14 +10,17 @@ security:
             id: 'App\Security\UserProvider'
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|img|js)/
             security: false
+        error:
+            pattern: ^/error
+            security: false
+            lazy: true
         main:
             custom_authenticators:
                 - 'App\Security\SendinBlueAuthenticator'
             lazy: true
             provider: users_provider
-
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 

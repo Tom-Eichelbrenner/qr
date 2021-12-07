@@ -8,10 +8,8 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-
 class PDFCreator
 {
-
     /**
      * @var Environment
      */
@@ -31,6 +29,7 @@ class PDFCreator
     public function __construct(Environment $twig, Pdf $snappy, string $projectDir)
     {
         $this->twig = $twig;
+        $snappy->setTimeout(60);
         $this->snappy = $snappy;
         $this->projectDir = $projectDir;
     }
@@ -52,19 +51,20 @@ class PDFCreator
      */
     public function generatePdf($template, $data, $filename): FileTo64
     {
-        if (!is_dir("$this->projectDir/var/files")){
+        if (! is_dir("$this->projectDir/var/files")) {
             mkdir("$this->projectDir/var/files");
         }
         $filename = "$this->projectDir/var/files/$filename";
         if (!$this->pdfTemplateExists($template)) {
             throw new LoaderError('Le template n\'existe pas');
         }
-        $html = $this->twig->render($template,
+        $html = $this->twig->render(
+            $template,
             [
                 'data' => $data
-            ]);
+            ]
+        );
         $this->snappy->generateFromHtml($html, $filename);
         return new FileTo64($filename);
     }
-
 }

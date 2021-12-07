@@ -10,16 +10,36 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 class RouteVoter extends Voter
 {
-    const VIEW = 'view';
+    public const VIEW = 'view';
 
-    const ROUTES = [
-        "participation_1_post" => "participation_1_get",
-        "participation_2_get" => "participation_1_post",
-        "participation_2_post" => "participation_2_get",
-        "confirmation" => "participation_2_post",
+    public const ROUTES = [
+        "participation_1_get" => [
+            "index",
+            "confirmation"
+        ],
+        "participation_1_post" => [
+            "participation_1_get"
+        ],
+        "participation_2_get" => [
+            "participation_1_post"
+        ],
+        "participation_2_post" => [
+            "participation_2_get"
+        ],
+        "confirmation" => [
+            "participation_2_post",
+            "localisation"
+        ],
+        'countermark' => [
+            'confirmation'
+        ],
+        "localisation" => [
+            'confirmation'
+        ]
     ];
 
 
@@ -47,7 +67,7 @@ class RouteVoter extends Voter
      */
     protected function supports(string $attribute, $subject): bool
     {
-        return (in_array($this->request->attributes->get('_route'), array_keys(self::ROUTES)));
+        return true;
     }
 
     /**
@@ -62,11 +82,24 @@ class RouteVoter extends Voter
     {
         /** @var User $user */
         $user = $token->getUser();
+
+        if ($user->getParticipation() === false) {
+            return false;
+        }
+
         $referer = $this->request->headers->get('referer');
 
         $routename = $this->request->attributes->get('_route');
 
-        $url = $this->router->generate(self::ROUTES[$routename], ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
-        return $url === $referer;
+        if ($routename === 'index' || $routename === "localisation") {
+            return true;
+        }
+
+        $urls = [];
+
+        foreach (self::ROUTES[$routename] as $allowedRouteName) {
+            $urls[] = $this->router->generate($allowedRouteName, ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+        return in_array($referer, $urls);
     }
 }

@@ -1,5 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Main title</h1>
+        <main class="main-step step-invitation">
+        <section class="content">
+            <h1>Invitation</h1>
+            <p>{{ "user.civility.#{app.user.civility}" | trans({}, "messages") | capitalize }} {{ app.user.firstName | capitalize }} {{ app.user.lastName | capitalize }},</p>
+
+                {% if app.user.pleniere1 or app.user.pleniere2 %}
+                <p>Nous avons le plaisir de vous convier à la Convention annuelle Le&nbsp;Conservateur qui se déroulera à Paris, le <strong>mardi 18 Janvier 2022</strong>.</p>
+                    <!-- -- si plénière -- -->
+                    {% if app.user.pleniere1 %}    
+                    <p>Nous vous accueillerons <strong>à partir de 12h30 au Théâtre Marigny</strong><br>Carré Marigny – 75008&nbsp;Paris.<br>La Convention débutera à 14h00 précises.</p>
+                    {% endif %}
+                    <!-- -- fin si plénière -- -->
+                    <!-- -- si plénière 2eme partie -- -->
+                    {% if app.user.pleniere2 %}
+                    <p>Nous vous accueillerons <strong>à partir de 16h30 au Théâtre Marigny</strong>,<br>Carré Marigny – 75008&nbsp;Paris.</p>
+                    <!-- -- fin si plénière 2 -- -->
+                    {% endif %}
+                    <!-- -- si dîner -- -->
+                    {% if app.user.dinner %}
+                    <p>La réunion sera suivie d’une Soirée de Gala à la <strong>Cité de l’Architecture et du Patrimoine</strong><br> 1,&nbsp;place du Trocadéro et du 11 Novembre – 75116&nbsp;Paris.</p>
+                    <!-- -- fin si diner -- -->
+                    {% endif %}
+            <!-- -- fin si plénière -- -->
+            {% endif %}
+            
+            <!-- -- Si NON plénière / plénière 2eme partie ET Oui diner -- -->
+            {% if not app.user.pleniere1 and not app.user.pleniere2 and app.user.dinner %}
+            <p>Nous avons le plaisir de vous convier au dîner de Gala de la Convention annuelle Le Conservateur qui se déroulera à Paris le <strong>mardi 18 Janvier 2022</strong>.</p> 
+            <p>Nous vous accueillerons <strong>à partir de 20h00 à la Cité de l’Architecture et du Patrimoine</strong><br>
+            1, place du Trocadéro et du 11 Novembre – 75116&nbsp;Paris.</p>
+            <!-- -- fin Si NON plénière / plénière 2 ET Oui diner -- -->
+            {% endif %}
+            <p>Veuillez noter qu'un Pass sanitaire valide selon les règles en vigueur au 18 Janvier 2022 vous sera demandé à l'entrée de chaque site.
+            <br><strong>Le port du masque sera obligatoire à l'intérieur.</strong></p>
+            <p>Nous vous remercions de confirmer votre participation <strong>avant le 17 décembre 2021</strong>, en complétant le formulaire :</p>
+            <p class="text-center"><a class="button button-primary" href="{{ path('participation_1_get', {'token' : app.user.token }) }}">Compléter le formulaire</a></p>
+            <p class="text-center">
+                <small>Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
+            </p>
+        </section>
+    </main>
+
 {% endblock %}

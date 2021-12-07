@@ -14,7 +14,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class SendinBlueAuthenticator extends AbstractAuthenticator
 {
-
     private $userProvider;
 
     public function __construct(UserProvider $userProvider)
@@ -40,8 +39,8 @@ class SendinBlueAuthenticator extends AbstractAuthenticator
      */
     public function supports(Request $request): ?bool
     {
-        // check with a regex if the url starts with '/je-participe/'
-        return preg_match('/^\/je-participe\/.*/', $request->getPathInfo()) === 1;
+        $token = $request->attributes->get('token');
+        return $token !== null;
     }
 
     /**
@@ -59,12 +58,11 @@ class SendinBlueAuthenticator extends AbstractAuthenticator
      */
     public function authenticate(Request $request): PassportInterface
     {
-        $url = $request->getUri();
-        if (!preg_match("/.*\/(.*$)/", $url, $capture)) {
+        $token = $request->attributes->get('token');
+        if (!$token) {
             throw new AuthenticationException("Token not found");
         }
 
-        $token = $capture[1];
         if (empty($token)) {
             throw new AuthenticationException('Invalid token');
         }

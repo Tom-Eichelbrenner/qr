@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body %}
-    {% include 'header.html.twig' %}
     <main class="main-step step-form step-form1">
         <nav class="form-nav">
             <a href="#" class="current"><span>1</span>Informations personnelles</a>
@@ -16,22 +15,21 @@
             <p class="subtitle">Etape 1/2</p>
             <h1>Informations personnelles</h1>
             {{ form_start(form) }}
-            <p class="form-cols">
+            <div class="form-cols">
                 {{ form_row(form.civility) }}
-            </p>
-            <p class="form-cols">
+            </div>
+            <div class="form-cols">
                 {{ form_row(form.firstName)}}
                 {{ form_row(form.lastName)}}
-            </p>
-            <p class="form-cols">
+            </div>
+            <div class="form-cols">
                 {{ form_row(form.email) }}
                 {{form_row(form.phone)}}
-            </p>
+            </div>
             {{ form_row(form.imageRight) }}
             <p><small>* Champs obligatoires</small></p>
-            <p class="text-right form-validation">
-                {{ form_end(form)}}
-            </p>
+            {{ form_row(form.submit)}}
+            {{ form_end(form)}}
         </section>
     </main>
 {% endblock %}
