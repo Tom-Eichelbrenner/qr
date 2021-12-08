@@ -243,8 +243,7 @@ class MainController extends AbstractController
         $user->setParticipation(false);
         $client->updateContact($user);
         try {
-            $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-            $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL, [], $file);
+            $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL);
         } catch (LoaderError | RuntimeError | SyntaxError $e) {
             dump("Erreur : $e");
         }
