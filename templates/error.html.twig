@@ -3,9 +3,9 @@
 {% block body %}
     <main class="main-step step-invitation">
         <section class="content">
-    {% if user is defined and user is not null and user.participation == true %}
+    {% if user is defined and user is not null and user.participation is not null %}
         <h1>Votre inscription est enregistrée</h1>
-        <p>{{ "user.civility.#{user.civility}" | trans({}, "messages") | capitalize }} {{ user.firstName | capitalize }} {{ user.lastName | capitalize }}, nous avons déjà pris en compte votre participation. Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr">convention-organisation@convention-le-conservateur.fr
+        <p>{{ "user.civility.#{user.civility}" | trans({}, "messages") | capitalize }} {{ user.firstName | capitalize }} {{ user.lastName | capitalize }}, nous avons déjà pris en compte votre {% if user.participation == true %}participation{% else %}désistement{% endif %}. Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr">convention-organisation@convention-le-conservateur.fr
         </p> 
     {% else %}
     <h1>Erreur</h1>

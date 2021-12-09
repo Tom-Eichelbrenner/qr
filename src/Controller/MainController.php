@@ -37,11 +37,10 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/{token}", name="index", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé test")
      *
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, SendinBlueClient $client): Response
     {
 
         /**
@@ -50,14 +49,20 @@ class MainController extends AbstractController
         $user = $this->getUser();
 
         /** if participation is yet to true, check referer */
-        if ($user->getParticipation()) {
-            // check referer
-            $confirmationRoute = $this->generateUrl("confirmation", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        // if ($user->getParticipation()) {
+        //     $routes = [
+        //     // check referer
+        //         $this->generateUrl("confirmation", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL),
+        //         $this->generateUrl("index", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL),
+        //     ];
 
-            if ($confirmationRoute !== $request->headers->get('referer')) {
-                throw new FormRegisteredException($this->getUser());
-            }
-        }
+        //     if (! in_array($request->headers->get('referer'), $routes)) {
+        //         throw new FormRegisteredException($this->getUser());
+        //     }
+        // }
+        $user->setParticipation(true);
+        $user->setDateParticipation(new \DateTime('now'));
+        $client->updateContact($user, ['participation', 'dateParticipation']);
 
         return $this->render('index.html.twig');
     }
@@ -208,8 +213,8 @@ class MainController extends AbstractController
                 /** @var User $user */
                 $user = $this->getUser();
                 try {
-                    $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                    $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                    // $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                    // $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                     return $this->redirectToRoute('confirmation', ['token' => $token]);
                 } catch (\Throwable $e) {
                     // do nothing

@@ -236,7 +236,6 @@ class SendinBlueClient
                 $contact[$key] = $user->$method();
             }
         }
-        dump($contact);
 
         return $contact;
     }

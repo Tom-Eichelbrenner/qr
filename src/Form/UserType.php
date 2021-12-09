@@ -117,28 +117,28 @@ class UserType extends AbstractType
                             'ko_html' => true,
                             'false_values' => [0, '0', 'false', null]
                         ]);
-                    if ($user->getDinner()) {
-                        $builder
-                            ->add('transfertWestinDinner', CustomCheckboxType::class, [
-                                'required' => false,
-                                'empty_data' => false,
-                                'ok' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ok'),
-                                'ko' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ko'),
-                                'ok_html' => true,
-                                'ko_html' => true,
-                                'false_values' => [0, '0', 'false']
-                            ])
-                            ->add('transfertDinnerWestin', CustomCheckboxType::class, [
-                                'required' => false,
-                                'empty_data' => false,
-                                'ok' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ok'),
-                                'ko' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ko'),
-                                'ok_html' => true,
-                                'ko_html' => true,
-                                'help' => $this->getTranslation('form_part_2.transfert.dinner_westin.help'),
-                                'false_values' => [0, '0', 'false']
-                            ]);
-                    }
+                    // if ($user->getDinner()) {
+                    //     $builder
+                    //         ->add('transfertWestinDinner', CustomCheckboxType::class, [
+                    //             'required' => false,
+                    //             'empty_data' => false,
+                    //             'ok' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ok'),
+                    //             'ko' => $this->getTranslation('form_part_2.transfert.westin_dinner.label.ko'),
+                    //             'ok_html' => true,
+                    //             'ko_html' => true,
+                    //             'false_values' => [0, '0', 'false']
+                    //         ])
+                    //         ->add('transfertDinnerWestin', CustomCheckboxType::class, [
+                    //             'required' => false,
+                    //             'empty_data' => false,
+                    //             'ok' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ok'),
+                    //             'ko' => $this->getTranslation('form_part_2.transfert.dinner_westin.label.ko'),
+                    //             'ok_html' => true,
+                    //             'ko_html' => true,
+                    //             'help' => $this->getTranslation('form_part_2.transfert.dinner_westin.help'),
+                    //             'false_values' => [0, '0', 'false']
+                    //         ]);
+                    // }
                 }
                 if ($user->getHotelName() == User::HOTEL_INTERCONTINENTAL) {
                     $builder
@@ -152,87 +152,87 @@ class UserType extends AbstractType
                             'false_values' => [0, '0', 'false'],
 
                         ]);
-                    if ($user->getDinner()) {
-                        $builder
-                            ->add('transfertInterDinner', CustomCheckboxType::class, [
-                                'required' => false,
-                                'attr' => [
-                                    'class' => 'switch-custom',
-                                ],
-                                'empty_data' => false,
-                                'ok' => $this->getTranslation('form_part_2.transfert.inter_dinner.label.ok'),
-                                'ko' => $this->getTranslation('form_part_2.transfert.inter_dinner.label.ko'),
-                                'ok_html' => true,
-                                'ko_html' => true,
-                                'false_values' => [0, '0', 'false']
-                            ])
-                            ->add('transfertDinnerInter', CustomCheckboxType::class, [
-                                'required' => false,
-                                'attr' => [
-                                    'class' => 'switch-custom',
-                                ],
-                                'empty_data' => false,
-                                'ok' => $this->getTranslation('form_part_2.transfert.dinner_inter.label.ok'),
-                                'ko' => $this->getTranslation('form_part_2.transfert.dinner_inter.label.ko'),
-                                'ok_html' => true,
-                                'ko_html' => true,
-                                'false_values' => [0, '0', 'false']
-                            ]);
-                    }
+                    // if ($user->getDinner()) {
+                    //     $builder
+                    //         ->add('transfertInterDinner', CustomCheckboxType::class, [
+                    //             'required' => false,
+                    //             'attr' => [
+                    //                 'class' => 'switch-custom',
+                    //             ],
+                    //             'empty_data' => false,
+                    //             'ok' => $this->getTranslation('form_part_2.transfert.inter_dinner.label.ok'),
+                    //             'ko' => $this->getTranslation('form_part_2.transfert.inter_dinner.label.ko'),
+                    //             'ok_html' => true,
+                    //             'ko_html' => true,
+                    //             'false_values' => [0, '0', 'false']
+                    //         ])
+                    //         ->add('transfertDinnerInter', CustomCheckboxType::class, [
+                    //             'required' => false,
+                    //             'attr' => [
+                    //                 'class' => 'switch-custom',
+                    //             ],
+                    //             'empty_data' => false,
+                    //             'ok' => $this->getTranslation('form_part_2.transfert.dinner_inter.label.ok'),
+                    //             'ko' => $this->getTranslation('form_part_2.transfert.dinner_inter.label.ko'),
+                    //             'ok_html' => true,
+                    //             'ko_html' => true,
+                    //             'false_values' => [0, '0', 'false']
+                    //         ]);
+                    // }
                 }
             }
-            if ($user->getDinner()) {
-                $builder
-                    ->add('transfertTaxi', CustomCheckboxType::class, [
-                        'required' => false,
-                        'empty_data' => false,
-                        'label_attr' => ['class' => 'check-options'],
-                        'ok' => $this->getTranslation('form_part_2.transfert.taxi.label.ok'),
-                        'ko' => $this->getTranslation('form_part_2.transfert.taxi.label.ko'),
-                        'help' => $this->getTranslation('form_part_2.transfert.taxi.label.help'),
-                        'false_values' => [0, '0', 'false'],
-                        'container_attr' => [
-                            'class' => 'check-options'
-                        ]
-                    ])->add('taxiAdress', CustomTextType::class, [
-                        'label' => $this->getTranslation('form_part_2.transfert.taxi_adress.label'),
-                        'required' => false,
-                        'container_attr' => [
-                            'class' => 'options'
-                        ],
-                    ]);
-            }
-            if ($user->getDinner()) {
-                $builder
-                    ->add('dinnerUser', CustomCheckboxType::class, [
-                        'required' => false,
-                        'empty_data' => false,
-                        'ok' => $this->getTranslation('form_part_2.dinner.label.ok'),
-                        'ko' => $this->getTranslation('form_part_2.dinner.label.ko'),
-                        'false_values' => [0, '0', 'false'],
-                        'empty_data' => false,
-                    ])
-                    ->add('dietbool', CustomCheckboxType::class, [
-                        'required' => false,
-                        'label_attr' => ['class' => 'check-options'],
-                        'empty_data' => false,
-                        'ok' => $this->getTranslation('form_part_2.diet.label.ok'),
-                        'ko' => $this->getTranslation('form_part_2.diet.label.ko'),
-                        'false_values' => [0, '0', 'false'],
-                        'mapped' => false,
-                        'container_attr' => [
-                            'class' => 'check-options'
-                        ]
-                    ])
-                    ->add('diet', CustomTextType::class, [
-                        'required' => false,
-                        'label' => $this->getTranslation('form_part_2.diet.label.message'),
-                        'label_attr' => ['class' => 'options'],
-                        'container_attr' => [
-                            'class' => 'options'
-                        ]
-                    ]);
-            }
+            // if ($user->getDinner()) {
+            //     $builder
+            //         ->add('transfertTaxi', CustomCheckboxType::class, [
+            //             'required' => false,
+            //             'empty_data' => false,
+            //             'label_attr' => ['class' => 'check-options'],
+            //             'ok' => $this->getTranslation('form_part_2.transfert.taxi.label.ok'),
+            //             'ko' => $this->getTranslation('form_part_2.transfert.taxi.label.ko'),
+            //             'help' => $this->getTranslation('form_part_2.transfert.taxi.label.help'),
+            //             'false_values' => [0, '0', 'false'],
+            //             'container_attr' => [
+            //                 'class' => 'check-options'
+            //             ]
+            //         ])->add('taxiAdress', CustomTextType::class, [
+            //             'label' => $this->getTranslation('form_part_2.transfert.taxi_adress.label'),
+            //             'required' => false,
+            //             'container_attr' => [
+            //                 'class' => 'options'
+            //             ],
+            //         ]);
+            // }
+            // if ($user->getDinner()) {
+            //     $builder
+            //         ->add('dinnerUser', CustomCheckboxType::class, [
+            //             'required' => false,
+            //             'empty_data' => false,
+            //             'ok' => $this->getTranslation('form_part_2.dinner.label.ok'),
+            //             'ko' => $this->getTranslation('form_part_2.dinner.label.ko'),
+            //             'false_values' => [0, '0', 'false'],
+            //             'empty_data' => false,
+            //         ])
+            //         ->add('dietbool', CustomCheckboxType::class, [
+            //             'required' => false,
+            //             'label_attr' => ['class' => 'check-options'],
+            //             'empty_data' => false,
+            //             'ok' => $this->getTranslation('form_part_2.diet.label.ok'),
+            //             'ko' => $this->getTranslation('form_part_2.diet.label.ko'),
+            //             'false_values' => [0, '0', 'false'],
+            //             'mapped' => false,
+            //             'container_attr' => [
+            //                 'class' => 'check-options'
+            //             ]
+            //         ])
+            //         ->add('diet', CustomTextType::class, [
+            //             'required' => false,
+            //             'label' => $this->getTranslation('form_part_2.diet.label.message'),
+            //             'label_attr' => ['class' => 'options'],
+            //             'container_attr' => [
+            //                 'class' => 'options'
+            //             ]
+            //         ]);
+            // }
             $builder
                 ->add('submit', SubmitType::class, [
                     'label' => $this->getTranslation('form_part_2.submit.label'),

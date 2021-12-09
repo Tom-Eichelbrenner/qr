@@ -107,7 +107,7 @@
             {% endif %}
 
             <!-- -- si hôtel ET soirée -- -->
-            {% if app.user.hotelUser and app.user.dinnerUser %}
+            {# {% if app.user.hotelUser and app.user.dinnerUser %}
                 <article>
                     <h4>Soirée de Gala à la Cité de l’Architecture & du Patrimoine :</h4>
                     {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
@@ -281,15 +281,15 @@
                     {% endif %}
                 </article>
             <!-- -- fin si NON hôtel ET soirée -- -->
-            {% endif %}
+            {% endif %} #}
 
             <div class="buttons">
                 <p class="text-center">
                     <a href="{{ path('countermark', {'token': app.user.token })}}" target="_blank" class="button button-primary">Télécharger ma fiche de participation</a>
                 </p>
-                <p class="text-center">
+                {# <p class="text-center">
                     <a href="{{ path('participation_1_get', {'token': app.user.token }) }}" class="button button-thirdary"><i class="bi bi-pencil"></i> Modifier ma participation</a>
-                </p>
+                </p> #}
                 <p class="text-center">
                     <a href="{{ path('localisation', {'token': app.user.token }) }}" class="button button-secondary"><i class="bi bi-geo-fill"></i> Accéder aux différents sites</a>
                 </p>

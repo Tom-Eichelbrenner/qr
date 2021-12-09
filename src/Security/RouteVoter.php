@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Exception\FormRegisteredException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
 
 class RouteVoter extends Voter
@@ -84,6 +86,7 @@ class RouteVoter extends Voter
         $user = $token->getUser();
 
         if ($user->getParticipation() === false) {
+            throw new FormRegisteredException($user);
             return false;
         }
 
@@ -100,6 +103,13 @@ class RouteVoter extends Voter
         foreach (self::ROUTES[$routename] as $allowedRouteName) {
             $urls[] = $this->router->generate($allowedRouteName, ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
         }
-        return in_array($referer, $urls);
+
+        $access = in_array($referer, $urls);
+
+        if (! $access) {
+            throw new AccessDeniedException('');
+        }
+
+        return true;
     }
 }

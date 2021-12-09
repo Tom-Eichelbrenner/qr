@@ -19,20 +19,20 @@
                     <!-- -- fin si plénière 2 -- -->
                     {% endif %}
                     <!-- -- si dîner -- -->
-                    {% if app.user.dinner %}
-                    <p>La réunion sera suivie d’une Soirée de Gala à la <strong>Cité de l’Architecture et du Patrimoine</strong><br> 1,&nbsp;place du Trocadéro et du 11 Novembre – 75116&nbsp;Paris.</p>
-                    <!-- -- fin si diner -- -->
-                    {% endif %}
+                    {# {% if app.user.dinner %} #}
+                    {# <p>La réunion sera suivie d’une Soirée de Gala à la <strong>Cité de l’Architecture et du Patrimoine</strong><br> 1,&nbsp;place du Trocadéro et du 11 Novembre – 75116&nbsp;Paris.</p> #}
+                    {# <!-- -- fin si diner -- --> #}
+                    {# {% endif %} #}
             <!-- -- fin si plénière -- -->
             {% endif %}
             
-            <!-- -- Si NON plénière / plénière 2eme partie ET Oui diner -- -->
+            {# <!-- -- Si NON plénière / plénière 2eme partie ET Oui diner -- -->
             {% if not app.user.pleniere1 and not app.user.pleniere2 and app.user.dinner %}
             <p>Nous avons le plaisir de vous convier au dîner de Gala de la Convention annuelle Le Conservateur qui se déroulera à Paris le <strong>mardi 18 Janvier 2022</strong>.</p> 
             <p>Nous vous accueillerons <strong>à partir de 20h00 à la Cité de l’Architecture et du Patrimoine</strong><br>
             1, place du Trocadéro et du 11 Novembre – 75116&nbsp;Paris.</p>
             <!-- -- fin Si NON plénière / plénière 2 ET Oui diner -- -->
-            {% endif %}
+            {% endif %} #}
             <p>Veuillez noter qu'un Pass sanitaire valide selon les règles en vigueur au 18 Janvier 2022 vous sera demandé à l'entrée de chaque site.
             <br><strong>Le port du masque sera obligatoire à l'intérieur.</strong></p>
             <p>Nous vous remercions de confirmer votre participation <strong>avant le 17 décembre 2021</strong>, en complétant le formulaire :</p>
