@@ -201,7 +201,7 @@ strong span {
     width: 100%;
 }
 .main-step {
-    padding: 50px 5%;
+    padding: 50px 0;
 }
 .subtitle {
     color: #c3c1bf;
