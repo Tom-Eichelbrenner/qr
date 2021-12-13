@@ -30,7 +30,7 @@
                     <br>Accueil-café  -  Service Bagages
                 </p>
                 <!-- -- si hotel_user == Oui -- -->
-                {% if app.user.hostel and app.user.hotelUser %}
+                {% if app.user.hotel and app.user.hotelUser %}
                     <article>
                         <h4>À l'issue de la convention</h4>
                         {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
