@@ -79,7 +79,7 @@ h1 {
     font-size: 3rem;
     line-height: 3rem;
     color: #3a3a3a;
-    margin: 0 0 47px;
+    margin: 29px 0px;
     letter-spacing: 0.12rem;
 }
 h1 i {
@@ -112,7 +112,7 @@ h4 {
     font-size: 1.6rem;
     line-height: 2.24rem;
     color: #95928e;
-    margin: 0;
+    margin: 29px 0 0;
     text-transform: uppercase;
 }
 h4 ~ p {
@@ -124,7 +124,7 @@ h5 {
     line-height: 1.83rem;
     color: #3a3a3a;
     text-transform: uppercase;
-    margin: 32px 0 12px;
+    margin: 20px 0 10px;
 }
 h6 {
     color: #95928e;
@@ -134,7 +134,7 @@ h6 {
     margin: 39px 0 8px;
 }
 p {
-    margin: 29px 0;
+    margin: 20px 0;
 }
 small {
     color: #9c9c9c;
@@ -201,7 +201,7 @@ strong span {
     width: 100%;
 }
 .main-step {
-    padding: 50px 5%;
+    padding: 30px 5%;
 }
 .subtitle {
     color: #c3c1bf;
@@ -249,13 +249,22 @@ strong span {
     overflow:hidden;
 }
 .flex figure {
-    width: 59%;
+    width: 33.3%;
     float:left;
 }
 .flex .content {
-    width: 38%;
-    float:right;
+    width: 33.3%;
+    float:left;
     padding-bottom: 31px;
+    padding-left:20px;
+    padding-right:20px;
+}
+.flex .list-acces{
+    width:33.3%;
+    float:right;
+}
+.flex .list-acces h5:first-of-type{
+    margin-top:0;
 }
 .flex .content h3 {
     color: #d19947;
@@ -288,14 +297,8 @@ ul a, .content a{
     width: 30px;
 }
 /*** Spés ****/
-.step-confirmation h1 {
-    margin-bottom: 0;
-}
-.step-confirmation article {
-    margin: 68px 0;
-}
 .step-localisation article {
-    margin: 77px 0;
+    margin: 40px 0;
 }
 .step-localisation article a {
     color: #d19947;
