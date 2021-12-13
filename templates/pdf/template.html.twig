@@ -30,7 +30,7 @@
                     <br>Accueil-café  -  Service Bagages
                 </p>
                 <!-- -- si hotel_user == Oui -- -->
-                {% if app.user.hotelUser %}
+                {% if app.user.hostel and app.user.hotelUser %}
                     <article>
                         <h4>À l'issue de la convention</h4>
                         {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
@@ -146,7 +146,7 @@
             {% endif %}
 
             <!-- -- si NON plénière ET diner-- -->
-            {% if not app.user.pleniere1 and not app.user.pleniere2 and app.user.dinnerUser %}
+            {% if not app.user.pleniere1 and not app.user.pleniere2 and app.user.dinner app.user.dinnerUser %}
                 <p>Nous vous accueillerons à partir de 20h00 à la <strong>Cité de l’Architecture et du Patrimoine</strong><br>1, place du Trocadéro et du 11 Novembre – 75116 Paris</p>
             <!-- -- si NON plénière ET diner-- -->
             {% endif %}
@@ -533,7 +533,7 @@
             </article>
             <!-- -- fin diner -- -->
             {% endif %} #}
-            {% if app.user.hotelUser %}
+            {% if app.user.hotel and app.user.hotelUser %}
                 <!-- -- si hotel == westin -- -->
                 {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
                 <article>

@@ -277,13 +277,17 @@ class UserType extends AbstractType
                 $user = $event->getData();
                 $form = $event->getForm();
 
-                if ($user->getHotelName() == User::HOTEL_INTERCONTINENTAL) {
+                if (! $user->getHotel()) {
+                    $user->setHotelUser(false);
+                }
+
+                if (! $user->getHotel() || $user->getHotelName() == User::HOTEL_INTERCONTINENTAL) {
                     $user->setTransfertDinnerWestin(false);
                     $user->setTransfertPleniereWestin(false);
                     $user->setTransfertWestinDinner(false);
                 }
 
-                if ($user->getHotelName() == User::HOTEL_WESTIN) {
+                if (! $user->getHotel() || $user->getHotelName() == User::HOTEL_WESTIN) {
                     $user->setTransfertDinnerInter(false);
                     $user->setTransfertPleniereInter(false);
                     $user->setTransfertInterDinner(false);
@@ -293,7 +297,7 @@ class UserType extends AbstractType
                     $user->setTransfertTaxi(false);
                 }
 
-                if (! $form->has('dinnerUser')) {
+                if ($user->getDinner() === false || ! $form->has('dinnerUser')) {
                     $user->setDinnerUser(false);
                     $user->setTaxiAdress(null);
                     $user->setTransfertTaxi(false);
