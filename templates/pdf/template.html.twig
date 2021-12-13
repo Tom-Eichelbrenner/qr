@@ -405,12 +405,15 @@
                 </article>
                 <!-- -- fin si NON hôtel ET soirée -- -->
                 {% endif %} #}
+                <p class="text-center">
+                    <small>Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
+                </p>
             </div>
             <div class="QR">
                 <img src="{{ qr_code_data_uri(absolute_url(path('checkin', {'token' : app.user.token })))}}">
             </div>
 
-
+             
             <h1 class="clear">Coordonnées et accès des différents sites</h1>
             <!-- -- si plénière / plénière 2eme partie -- -->
             {% if app.user.pleniere1 or app.user.pleniere2 %}
@@ -683,9 +686,6 @@
                 <!-- -- fin si hotel == intercontinental -- -->
                 {% endif %}
             {% endif %}
-            <p class="text-center">
-                <small>Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
-            </p>
         </section>
     </div>
 </body>
