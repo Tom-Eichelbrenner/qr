@@ -304,6 +304,14 @@ ul a, .content a{
     color: #d19947;
     display: block;
 }
+.left{
+    width:60%;
+    float:left;
+}
 .QR{
     width:250px;
+    float:right;
+}
+.clear{
+    clear:both;
 }
