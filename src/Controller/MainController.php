@@ -192,6 +192,8 @@ class MainController extends AbstractController
 
             if ($form->isValid() && $form->isSubmitted()) {
                 $client->updateContact($user, User::FORM_GROUP_2);
+                $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                 return $this->redirectToRoute("confirmation", ['token' => $token]);
             }
         }
@@ -228,8 +230,8 @@ class MainController extends AbstractController
                 /** @var User $user */
                 $user = $this->getUser();
                 try {
-                    // $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
-                    // $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
+                    $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
+                    $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                     return $this->redirectToRoute('confirmation', ['token' => $token]);
                 } catch (\Throwable $e) {
                     // do nothing
