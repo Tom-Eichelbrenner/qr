@@ -309,9 +309,11 @@ ul a, .content a{
     float:left;
 }
 .QR{
+    padding-top:20px;
     width:250px;
     float:right;
 }
 .clear{
+    margin-top:30px;
     clear:both;
 }
