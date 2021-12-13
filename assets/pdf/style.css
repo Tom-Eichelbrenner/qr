@@ -310,10 +310,10 @@ ul a, .content a{
 }
 .QR{
     padding-top:20px;
-    width:250px;
+    width:300px;
     float:right;
 }
 .clear{
-    margin-top:30px;
+    padding-top:30px;
     clear:both;
 }
