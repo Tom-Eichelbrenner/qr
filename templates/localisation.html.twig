@@ -58,7 +58,7 @@
             </article>
             <!-- -- fin si plénière / plénière 2eme partie -- -->
             {% endif %}
-            {% if app.user.dinnerUser %}
+            {% if app.user.dinner and app.user.dinnerUser %}
             <!-- -- si diner -- -->
             <article>
                 <h2>Soirée</h2>
@@ -121,7 +121,7 @@
             </article>
             <!-- -- fin diner -- -->
             {% endif %}
-            {% if app.user.hotelUser %}
+            {% if app.user.hotel and app.user.hotelUser %}
             <!-- -- si hotel == westin -- -->
                 {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
                 <article>

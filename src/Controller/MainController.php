@@ -174,7 +174,7 @@ class MainController extends AbstractController
      *
      * @return Response
      */
-    public function participation2Get($token, SendinBlueClient $client): Response
+    public function participation2Get($token, SendinBlueClient $client, PDFCreator $creator): Response
     {
         /**
          * @var User $user

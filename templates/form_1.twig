@@ -6,7 +6,7 @@
     <main class="main-step step-form step-form1">
         <nav class="form-nav">
             <a href="#" class="current"><span>1</span>Informations personnelles</a>
-            <a href="#" class="inactive"><span>2</span>Hébergement & transferts</a>
+            {% if app.user.hotelUser == true %}<a href="#" class="current"><span>2</span>Hébergement & transferts</a>{% endif %}
         </nav>
         <section class="content">
             <p class="subtitle">Etape 1/2</p>
