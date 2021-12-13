@@ -112,7 +112,7 @@ h4 {
     font-size: 1.6rem;
     line-height: 2.24rem;
     color: #95928e;
-    margin: 29px 0 0;
+    margin: 19px 0 0;
     text-transform: uppercase;
 }
 h4 ~ p {
@@ -201,7 +201,7 @@ strong span {
     width: 100%;
 }
 .main-step {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 .subtitle {
     color: #c3c1bf;
@@ -298,7 +298,7 @@ ul a, .content a{
 }
 /*** Spés ****/
 .step-localisation article {
-    margin: 40px 0;
+    margin: 20px 0;
 }
 .step-localisation article a {
     color: #d19947;
