@@ -802,4 +802,20 @@ class User implements UserInterface
     {
         return $this->getEmail();
     }
+
+    /**
+     * Manually set the hotel and transferts to false
+     *
+     * @return void
+     */
+    public function dismissHotel()
+    {
+        $this->setHotelUser(false);
+        $this->setTransfertPleniereInter(false);
+        $this->setTransfertPleniereWestin(false);
+        $this->setTransfertInterDinner(false);
+        $this->setTransfertWestinDinner(false);
+        $this->setTransfertDinnerWestin(false);
+        $this->setTransfertDinnerInter(false);
+    }
 }

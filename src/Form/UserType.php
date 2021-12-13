@@ -254,15 +254,15 @@ class UserType extends AbstractType
                  * Ensure that associated data is set to false if no hotel checked
                  */
                 if ($data->getHotelUser() == false) {
-                    $data->setTransfertWestinDinner(false);
-                    $data->setTransfertInterDinner(false);
                     $data->setTransfertPleniereWestin(false);
                     $data->setTransfertPleniereInter(false);
+                    $data->setTransfertWestinDinner(false);
+                    $data->setTransfertInterDinner(false);
                     $data->setTransfertDinnerWestin(false);
                     $data->setTransfertDinnerInter(false);
                 }
                 if ($data->getDinnerUser() == false) {
-                    $data->setDiet("null");
+                    $data->setDiet(null);
                 }
                 $event->setData($data);
             });
@@ -275,6 +275,7 @@ class UserType extends AbstractType
                  * @var User $user
                  */
                 $user = $event->getData();
+                $form = $event->getForm();
 
                 if ($user->getHotelName() == User::HOTEL_INTERCONTINENTAL) {
                     $user->setTransfertDinnerWestin(false);
@@ -287,7 +288,16 @@ class UserType extends AbstractType
                     $user->setTransfertPleniereInter(false);
                     $user->setTransfertInterDinner(false);
                 }
+                if (! $form->has('taxi')) {
+                    $user->setTaxiAdress(null);
+                    $user->setTransfertTaxi(false);
+                }
 
+                if (! $form->has('dinnerUser')) {
+                    $user->setDinnerUser(false);
+                    $user->setTaxiAdress(null);
+                    $user->setTransfertTaxi(false);
+                }
                 if ($user->getTransfertTaxi()) {
                     $user->setTransfertDinnerInter(false);
                     $user->setTransfertPleniereInter(false);

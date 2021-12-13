@@ -27,25 +27,36 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  document.querySelector("#user_hotelUser")
-    .addEventListener('change', function (e) {
+  var hotelUser = document.querySelector("#user_hotelUser");
+
+  if (hotelUser) {
+    hotelUser.addEventListener('change', function (e) {
       var checked = e.target.checked
       var transfertsContainer = document.querySelector("#transferts-container");
       var taxiContainer = document.querySelector("#taxi-container");
       var inputs;
 
       if (checked === true) {
-        transfertsContainer.classList.remove('hidden');
-        taxiContainer.classList.add('hidden');
-        inputs = taxiContainer.querySelectorAll('input');
+        if (transfertsContainer) {
+          transfertsContainer.classList.remove('hidden');
+        }
+
+        if (taxiContainer) {
+          taxiContainer.classList.add('hidden');
+          inputs = taxiContainer.querySelectorAll('input');
+        }
         
       } else {
-        taxiContainer.classList.remove('hidden');
-        transfertsContainer.classList.add('hidden');
-        inputs = transfertsContainer.querySelectorAll('input');
+        if (taxiContainer) {
+          taxiContainer.classList.remove('hidden');
+        }
+        if (transfertsContainer) {
+          transfertsContainer.classList.add('hidden');
+          inputs = transfertsContainer.querySelectorAll('input');
+        }
       }
 
-      if (inputs.length > 0) {
+      if (inputs !== undefined && inputs.length > 0) {
         console.log(inputs);
         inputs.forEach(function (index, el) {
           if (inputs[el].getAttribute('type') === 'checkbox') {
@@ -56,4 +67,5 @@ window.addEventListener('DOMContentLoaded', function () {
         });
       }
     });
+  }
 });

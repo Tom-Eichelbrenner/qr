@@ -174,13 +174,28 @@ class MainController extends AbstractController
      *
      * @return Response
      */
-    public function participation2Get($token): Response
+    public function participation2Get($token, SendinBlueClient $client): Response
     {
+        /**
+         * @var User $user
+         */
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user, [
             'step' => UserType::STEP2,
             'action' => $this->generateUrl('participation_2_post', ['token' => $token]),
+            'csrf_protection' => $user->getHotel() ?? false
         ]);
+
+        if (! $user->getHotel()) {
+            // if no hotel redirect to confirmation and pass step2.
+            $form->submit(false);
+
+            if ($form->isValid() && $form->isSubmitted()) {
+                $client->updateContact($user, User::FORM_GROUP_2);
+                return $this->redirectToRoute("confirmation", ['token' => $token]);
+            }
+        }
+
         return $this->render('form_2.twig', [
             'token' => $token,
             'form' => $form->createView(),

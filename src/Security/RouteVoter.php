@@ -33,6 +33,8 @@ class RouteVoter extends Voter
             "participation_2_get"
         ],
         "confirmation" => [
+            "participation_1_post",
+            "participation_2_get", // in case of empty form
             "participation_2_post",
             "localisation"
         ],
