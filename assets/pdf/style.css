@@ -201,7 +201,7 @@ strong span {
     width: 100%;
 }
 .main-step {
-    padding: 30px 5%;
+    padding: 50px 5%;
 }
 .subtitle {
     color: #c3c1bf;
@@ -314,6 +314,6 @@ ul a, .content a{
     float:right;
 }
 .clear{
-    padding-top:30px;
+    padding-top:50px;
     clear:both;
 }
