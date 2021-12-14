@@ -37,32 +37,21 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/{token}", name="index", methods={"GET"})
+     * @IsGranted("fill_form", statusCode=403, message="Accès non autorisé")
      *
      * @return Response
      */
     public function index(Request $request, SendinBlueClient $client): Response
     {
-
         /**
          * @var User $user
          */
         $user = $this->getUser();
-
-        /** if participation is yet to true, check referer */
-        // if ($user->getParticipation()) {
-        //     $routes = [
-        //     // check referer
-        //         $this->generateUrl("confirmation", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL),
-        //         $this->generateUrl("index", ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL),
-        //     ];
-
-        //     if (! in_array($request->headers->get('referer'), $routes)) {
-        //         throw new FormRegisteredException($this->getUser());
-        //     }
-        // }
-        $user->setParticipation(true);
-        $user->setDateParticipation(new \DateTime('now'));
-        $client->updateContact($user, ['participation', 'dateParticipation']);
+        if ($user->getParticipation() === null) {
+            $user->setParticipation(true);
+            $user->setDateParticipation(new \DateTime('now'));
+            $client->updateContact($user, ['participation', 'dateParticipation']);
+        }
 
         return $this->render('index.html.twig');
     }
@@ -105,7 +94,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/1/{token}", name="participation_1_get", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("fill_form", statusCode=403, message="Accès non autorisé")
      *
      * @param $token
      *
@@ -127,7 +116,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/1/{token}", name="participation_1_post", methods={"POST"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("fill_form", statusCode=403, message="Accès non autorisé")
      * @param                  $token
      * @param Request          $request
      * @param SendinBlueClient $client
@@ -168,7 +157,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/2/{token}", name="participation_2_get", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("fill_form", statusCode=403, message="Accès non autorisé")
      *
      * @param         $token
      *
@@ -191,7 +180,8 @@ class MainController extends AbstractController
             $form->submit(false);
 
             if ($form->isValid() && $form->isSubmitted()) {
-                $client->updateContact($user, User::FORM_GROUP_2);
+                $user->setIsFormCompleted(true);
+                $client->updateContact($user, [...User::FORM_GROUP_2, 'isFormCompleted']);
                 $file = $creator->generatePdf("pdf/template.html.twig", $user, "pdf/participation" . uniqid() . ".pdf");
                 $client->sendTransactionnalEmail($user, $client::TEMPLATE_CONFIRMATION, [], $file);
                 return $this->redirectToRoute("confirmation", ['token' => $token]);
@@ -206,7 +196,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/2/{token}", name="participation_2_post", methods={"POST"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("fill_form", statusCode=403, message="Accès non autorisé")
      *
      */
     public function participation2Post($token, Request $request, SendinBlueClient $client, PDFCreator $creator): Response
@@ -225,7 +215,8 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setParticipation(true);
-            $result = $client->updateContact($user, User::FORM_GROUP_2);
+            $user->setIsFormCompleted(true);
+            $result = $client->updateContact($user, [...User::FORM_GROUP_2, 'isFormCompleted']);
             if ($result instanceof User) {
                 /** @var User $user */
                 $user = $this->getUser();
@@ -247,6 +238,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-ne-participe-pas/{token}", name="withdrawal", methods={"GET"})
+     * @IsGranted("withdraw", statusCode=403, message="Accès non autorisé")
      *
      * @param                  $token
      * @param SendinBlueClient $client
@@ -257,17 +249,18 @@ class MainController extends AbstractController
     public function withdrawal($token, SendinBlueClient $client, PDFCreator $creator): Response
     {
         /** @var User $user */
-        $user = $this->getUser();
-        if ($user->getParticipation() !== null) {
-            throw new FormRegisteredException($this->getUser());
-        }
 
-        $user->setParticipation(false);
-        $client->updateContact($user);
-        try {
-            $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL);
-        } catch (LoaderError | RuntimeError | SyntaxError $e) {
-            dump("Erreur : $e");
+        $user = $this->getUser();
+
+        if ($user->getParticipation() === null) {
+            $user->setParticipation(false);
+            $user->setIsFormCompleted(true);
+            $client->updateContact($user);
+            try {
+                $client->sendTransactionnalEmail($user, $client::TEMPLATE_WITHDRAWAL);
+            } catch (LoaderError | RuntimeError | SyntaxError $e) {
+                dump("Erreur : $e");
+            }
         }
 
         return $this->render('je-ne-participe-pas.html.twig', [
@@ -276,19 +269,19 @@ class MainController extends AbstractController
     }
 
 
-    /**
-     * @Route("/règles-sanitaires", name="healthRules", methods={"GET"})
-     *
-     * @return Response
-     */
-    public function healthRules(): Response
-    {
-        return $this->render('règles-sanitaires.html.twig');
-    }
+    // /**
+    //  * @Route("/règles-sanitaires", name="healthRules", methods={"GET"})
+    //  *
+    //  * @return Response
+    //  */
+    // public function healthRules(): Response
+    // {
+    //     return $this->render('règles-sanitaires.html.twig');
+    // }
 
     /**
      * @Route("/localisation/{token}", name="localisation", methods={"GET"})
-     * @isGranted("view", statusCode="403", message="Accès non autorisé")
+     * @isGranted("confirmation", statusCode="403", message="Accès non autorisé")
      * @return Response
      */
     public function localisation($token)
@@ -298,7 +291,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/je-participe/confirmation/{token}", name="confirmation", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("confirmation", statusCode=403, message="Accès non autorisé")
      *
      * @param $token
      *
@@ -330,7 +323,7 @@ class MainController extends AbstractController
 
     /**
      * @Route("/contremarque/{token}", name="countermark", methods={"GET"})
-     * @IsGranted("view", statusCode=403, message="Accès non autorisé")
+     * @IsGranted("confirmation", statusCode=403, message="Accès non autorisé")
      *
      * @param            $token
      * @param PDFCreator $creator

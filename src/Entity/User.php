@@ -23,7 +23,7 @@ class User implements UserInterface
         "PRENOM" => "firstName",
         "NOM" => "lastName",
         "CIVILITE" => "civility",
-        "SMS" => "sendinBluePhone",
+        "TEL" => "sendinBluePhone",
         "PARTICIPATION" => "participation",
         "DATE_PARTICIPATION" => "dateParticipation",
         "DROIT_IMAGE" => "imageRight",
@@ -45,7 +45,8 @@ class User implements UserInterface
         "TRANSFERT_TAXI" => "transfertTaxi",
         "TAXI_ADRESSE" => "taxiAdress",
         "HOTEL_USER" => "hotelUser",
-        "DINER_USER" => "dinnerUser"
+        "DINER_USER" => "dinnerUser",
+        "USER_OK" => "isFormCompleted"
     ];
 
     public const HOTEL_WESTIN = 1;
@@ -235,6 +236,11 @@ class User implements UserInterface
      *
      */
     private $diet;
+
+    /**
+     * @var bool
+     */
+    private $isFormCompleted = false;
 
 
     /**
@@ -753,6 +759,18 @@ class User implements UserInterface
     public function setEmail(string $email = ""): void
     {
         $this->email = $email;
+    }
+
+    public function getIsFormCompleted(): bool
+    {
+        return $this->isFormCompleted;
+    }
+
+    public function setIsFormCompleted(?bool $isFormCompleted = false)
+    {
+        $this->isFormCompleted = $isFormCompleted;
+
+        return $this;
     }
 
     /**
