@@ -6,7 +6,7 @@ user:
 mail_voeux:
   plénière:
     plénière1: >
-      Nous vous accueillerons à partir de 12h30 au Théâtre Marigny,
+      Nous vous accueillerons à partir de 12h00 au Théâtre Marigny,
       Carré Marigny 75008 PARIS. La convention débutera à 14h00 précises.
     plénière2: >
       Nous vous accueillerons à partir de 16h30 au Théâtre Marigny,
@@ -25,7 +25,7 @@ page_participation:
     default: >
       Nous avons le plaisir de vous convier à la Convention annuelle Le Conservateur qui se déroulera à Paris, le mardi 18 Janvier 2022.
     plénière1: >
-      Nous vous accueillerons à partir de 12h30 au Théâtre Marigny, Carré Marigny – 75008 Paris. La Convention débutera à 14h00 précises.
+      Nous vous accueillerons à partir de 12h00 au Théâtre Marigny, Carré Marigny – 75008 Paris. La Convention débutera à 14h00 précises.
     plénière2: >
       Nous vous accueillerons à partir de 16h30 au Théâtre Marigny, Carré Marigny – 75008 Paris
     diner: >
@@ -93,7 +93,7 @@ page_confirmation:
   plénière:
     message:
       plénière1:
-        Nous vous accueillerons à partir de 12h30 au Théâtre Marigny,
+        Nous vous accueillerons à partir de 12h00 au Théâtre Marigny,
         Carré Marigny – 75008 Paris
         Service Bagages
       plénière2:
