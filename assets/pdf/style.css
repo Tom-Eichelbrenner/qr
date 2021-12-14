@@ -36,7 +36,7 @@ body {
     margin: 0;
     font-weight: normal;
     font-size: 1.6rem;
-    line-height: 2.56rem;
+    line-height: 2rem;
     font-family: 'DM Sans', sans-serif;
     color: #666;
 }
@@ -76,8 +76,8 @@ figure {
 h1 {
     font-family: 'Bebas Neue', cursive;
     font-weight: 400;
-    font-size: 3rem;
-    line-height: 3rem;
+    font-size: 2.8rem;
+    line-height: 2.8rem;
     color: #3a3a3a;
     margin: 19px 0px 10px;
     letter-spacing: 0.12rem;
@@ -91,8 +91,8 @@ h1 i {
 }
 h2 {
     font-family: 'Bebas Neue', cursive;
-    font-size: 2.5rem;
-    line-height: 2.75rem;
+    font-size: 2.3rem;
+    line-height: 2.5rem;
     color: #3a3a3a;
     font-weight: normal;
     align-items: center;
@@ -101,8 +101,8 @@ h2 {
 }
 h3 {
     font-family: 'Bebas Neue', cursive;
-    font-size: 2.1rem;
-    line-height: 2.52rem;
+    font-size: 2rem;
+    line-height: 2.3rem;
     letter-spacing: 0.08rem;
     color: #454545;
     font-weight: normal;
@@ -215,7 +215,7 @@ strong span {
 }
 .transfert {
     font-weight: bold;
-    margin: -16px 0 0 0;
+    margin: -11px 0 0 0;
     line-height: 1.2;
 }
 .transfert svg:nth-of-type(2) {
