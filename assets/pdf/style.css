@@ -249,18 +249,18 @@ strong span {
     overflow:hidden;
 }
 .flex figure {
-    width: 33.3%;
+    width: 30%;
     float:left;
 }
 .flex .content {
-    width: 33.3%;
+    width: 30%;
     float:left;
     padding-bottom: 31px;
     padding-left:20px;
     padding-right:20px;
 }
 .flex .list-acces{
-    width:33.3%;
+    width:40%;
     float:right;
 }
 .flex .list-acces h5:first-of-type{
@@ -310,10 +310,10 @@ ul a, .content a{
 }
 .QR{
     padding-top:20px;
-    width:300px;
+    width:200px;
     float:right;
 }
 .clear{
-    padding-top:30px;
+    padding-top:15px;
     clear:both;
 }

@@ -6,7 +6,7 @@ user:
 mail_voeux:
   plénière:
     plénière1: >
-      Un accueil café est prévu à partir de 12h30 au Théâtre Marigny,
+      Nous vous accueillerons à partir de 12h30 au Théâtre Marigny,
       Carré Marigny 75008 PARIS. La convention débutera à 14h00 précises.
     plénière2: >
       Nous vous accueillerons à partir de 16h30 au Théâtre Marigny,
@@ -48,7 +48,7 @@ page_formulaire:
       westin:
         message:
           "Votre hébergement est: Hôtel WESTIN
-           Vous avez la possibilité de réserver votre place sur les transferts proposés:"
+           Vous avez la possibilité de réserver votre place sur le transfert proposé :"
         plénière:
           "18h30 : du Théâtre Marigny vers l’hôtel Westin :
            Bouton radio : oui / non, obligatoire"
@@ -61,7 +61,7 @@ page_formulaire:
       intercontinental:
         message:
           "Votre hébergement est: Hôtel INTERCONTINENTAL
-           Vous avez la possibilité de réserver votre place sur les transferts proposés:"
+           Vous avez la possibilité de réserver votre place sur le transfert proposé :"
         plénière:
           "18h30 : du Théâtre Marigny vers l’hôtel Intercontinental :
            Bouton radio : oui / non, obligatoire"
@@ -95,11 +95,11 @@ page_confirmation:
       plénière1:
         Nous vous accueillerons à partir de 12h30 au Théâtre Marigny,
         Carré Marigny – 75008 Paris
-        Accueil-café  -  Service Bagages
+        Service Bagages
       plénière2:
         Nous vous accueillerons à partir de 16h30 au Théâtre Marigny,
         Carré Marigny – 75008 Paris
-        Accueil-café  -  Service Bagages
+        Service Bagages
     hotel:
       message:
         "A l’issue de la Convention:
@@ -211,8 +211,8 @@ form_part_1:
 
 form_part_2:
   hebergement:
-    inter: <p>Votre hébergement est prévu à <strong><span>l’hôtel INTERCONTINENTAL</span></strong>.</p>
-    westin: <p>Votre hébergement est prévu à <strong><span>l’hôtel WESTIN</span></strong>.</p>
+    inter: <p>À l'issue de la convention, votre hébergement est prévu à <strong><span>l’hôtel INTERCONTINENTAL</span></strong>.</p>
+    westin: <p>À l'issue de la convention, votre hébergement est prévu à <strong><span>l’hôtel WESTIN</span></strong>.</p>
   hotel:
     label:
       ok: "Je confirme souhaiter bénéficier de cette réservation hôtelière."
