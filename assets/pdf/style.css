@@ -35,8 +35,8 @@ html {
 body {
     margin: 0;
     font-weight: normal;
-    font-size: 1.6rem;
-    line-height: 2.1rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
     font-family: 'DM Sans', sans-serif;
     color: #666;
 }
@@ -76,23 +76,16 @@ figure {
 h1 {
     font-family: 'Bebas Neue', cursive;
     font-weight: 400;
-    font-size: 2.8rem;
-    line-height: 2.8rem;
+    font-size: 2.6rem;
+    line-height: 2.6rem;
     color: #3a3a3a;
     margin: 19px 0px 10px;
     letter-spacing: 0.12rem;
 }
-h1 i {
-    color: #d19947;
-    font-size: 9rem;
-    margin-right: 16px;
-    vertical-align: sub;
-    margin-left: -28px;
-}
 h2 {
     font-family: 'Bebas Neue', cursive;
-    font-size: 2.3rem;
-    line-height: 2.5rem;
+    font-size: 2.1rem;
+    line-height: 2.3rem;
     color: #3a3a3a;
     font-weight: normal;
     align-items: center;
@@ -101,16 +94,16 @@ h2 {
 }
 h3 {
     font-family: 'Bebas Neue', cursive;
-    font-size: 2rem;
-    line-height: 2.3rem;
+    font-size: 1.8rem;
+    line-height: 2.1rem;
     letter-spacing: 0.08rem;
     color: #454545;
     font-weight: normal;
 }
 h4 {
     font-weight: 700;
-    font-size: 1.6rem;
-    line-height: 2.24rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
     color: #95928e;
     margin: 10px 0 0;
     text-transform: uppercase;
@@ -119,9 +112,9 @@ h4 ~ p {
     margin: 10px 0 10px;
 }
 h5 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    line-height: 1.83rem;
+    line-height: 1.6rem;
     color: #3a3a3a;
     text-transform: uppercase;
     margin: 10px 0 5px;
@@ -130,7 +123,7 @@ h6 {
     color: #95928e;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin: 39px 0 8px;
 }
 p {
@@ -201,7 +194,7 @@ strong span {
     width: 100%;
 }
 .main-step {
-    padding: 10px 0;
+    padding: 10px 30px;
 }
 .subtitle {
     color: #c3c1bf;
@@ -287,14 +280,14 @@ ul a, .content a{
     color:#d19947;
 }
 .acces img {
-    width: 19px;
+    width: 15px;
     vertical-align: middle;
 }
 .acces img:last-of-type {
     margin-right: 3px;
 }
 .acces img.big {
-    width: 30px;
+    width: 25px;
 }
 /*** Spés ****/
 .step-localisation article {
