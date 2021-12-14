@@ -97,7 +97,7 @@ h2 {
     font-weight: normal;
     align-items: center;
     letter-spacing: 0.1rem;
-    margin: 19px 0;
+    margin: 15px 0 5px;
 }
 h3 {
     font-family: 'Bebas Neue', cursive;
@@ -124,7 +124,7 @@ h5 {
     line-height: 1.83rem;
     color: #3a3a3a;
     text-transform: uppercase;
-    margin: 20px 0 10px;
+    margin: 10px 0 5px;
 }
 h6 {
     color: #95928e;
@@ -134,7 +134,7 @@ h6 {
     margin: 39px 0 8px;
 }
 p {
-    margin: 17px 0;
+    margin: 12px 0;
 }
 small {
     color: #9c9c9c;
@@ -253,14 +253,14 @@ strong span {
     float:left;
 }
 .flex .content {
-    width: 30%;
+    width: 25%;
     float:left;
     padding-bottom: 31px;
     padding-left:20px;
     padding-right:20px;
 }
 .flex .list-acces{
-    width:40%;
+    width:45%;
     float:right;
 }
 .flex .list-acces h5:first-of-type{
@@ -314,6 +314,6 @@ ul a, .content a{
     float:right;
 }
 .clear{
-    padding-top:15px;
+    padding-top:5px;
     clear:both;
 }
