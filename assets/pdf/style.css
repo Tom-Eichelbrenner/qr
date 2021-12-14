@@ -36,7 +36,7 @@ body {
     margin: 0;
     font-weight: normal;
     font-size: 1.6rem;
-    line-height: 2rem;
+    line-height: 2.1rem;
     font-family: 'DM Sans', sans-serif;
     color: #666;
 }
@@ -215,7 +215,7 @@ strong span {
 }
 .transfert {
     font-weight: bold;
-    margin: -11px 0 0 0;
+    margin: -8px 0 0 0;
     line-height: 1.2;
 }
 .transfert svg:nth-of-type(2) {
@@ -310,7 +310,7 @@ ul a, .content a{
 }
 .QR{
     padding-top:20px;
-    width:200px;
+    width:170px;
     float:right;
 }
 .clear{
