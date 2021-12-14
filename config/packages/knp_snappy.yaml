@@ -6,6 +6,12 @@ knp_snappy:
             - { name: 'encoding', value: 'UTF-8' }
             - { name: 'page-size', value: 'A4' }
             - { name: 'enable-local-file-access', value: true}
+            - { name: 'margin-top' , value: 0}
+            - { name: 'margin-right', value: 0, }
+            - { name: 'margin-bottom', value : 0, }
+            - { name: 'margin-left', value : 0, }
+            - { name: 'disable-smart-shrinking', value: true }
+
     image:
         enabled:    true
         binary:     '%env(WKHTMLTOIMAGE_PATH)%'
