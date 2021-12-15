@@ -1,0 +1,5 @@
+services:
+
+  test.App\Service\SendinBlueClient:
+    alias: 'App\Service\SendinBlueClient'
+    public: true

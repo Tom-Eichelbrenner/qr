@@ -1,0 +1,9 @@
+{% block aside %}
+<aside class="aside">
+    <picture>
+        <source srcset="{{ asset('img/gauche_mobile.jpg') }}" media="(max-width: 550px)">
+        <source srcset="{{ asset('img/gauche_tablette.jpg') }}" media="(max-width: 980px)">
+        <img src="{{ asset('img/gauche.jpg') }}" alt="visuel événement" />
+    </picture>
+</aside>
+{% endblock %}

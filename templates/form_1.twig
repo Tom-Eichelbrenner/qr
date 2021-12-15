@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <main class="main-step step-form step-form1">
+        <nav class="form-nav">
+            <a href="#" class="current"><span>1</span>Informations personnelles</a>
+            {% if app.user.hotel == true %}<a href="#" class="inactive"><span>2</span>Hébergement & transfert</a>{% endif %}
+        </nav>
+        <section class="content">
+            <p class="subtitle">Etape 1/2</p>
+            <h1>Informations personnelles</h1>
+            {{ form_start(form) }}
+            <div class="form-cols">
+                {{ form_row(form.civility) }}
+            </div>
+            <div class="form-cols">
+                {{ form_row(form.firstName)}}
+                {{ form_row(form.lastName)}}
+            </div>
+            <div class="form-cols">
+                {{ form_row(form.email) }}
+                {{form_row(form.phone)}}
+            </div>
+            {{ form_row(form.imageRight) }}
+            <p><small>* Champs obligatoires</small></p>
+            {{ form_row(form.submit)}}
+            {{ form_end(form)}}
+        </section>
+    </main>
+{% endblock %}

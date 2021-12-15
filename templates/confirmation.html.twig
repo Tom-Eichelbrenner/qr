@@ -1,0 +1,302 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main-step step-confirmation">
+        <section class="content">
+            <h1><i class="bi bi-check"></i>Confirmation</h1>
+            <p>{{ "user.civility.#{app.user.civility}" | trans() | capitalize }} {{ app.user.firstName }} {{ app.user.lastName }},</p>
+            <p>
+                <strong>Nous avons le plaisir de vous confirmer votre participation à la
+                <br>CONVENTION – LE&nbsp;CONSERVATEUR&nbsp;2022
+                <br>le mardi 18 Janvier 2022.</strong>
+            </p>
+            {% if app.user.pleniere1 or app.user.pleniere2 %}
+            <!-- -- si plénière / plénière 2eme partie -- -->
+                <p>
+                    Nous vous accueillerons <strong>à partir de 12h00 au Théâtre Marigny</strong>,
+                    <br>Carré Marigny – 75008 Paris
+                    <br>Service Bagages
+                </p>
+                {% if app.user.hotel and app.user.hotelUser %}
+                <!-- -- si hotel_user == Oui -- -->
+                    <article>
+                        <h4>À l'issue de la convention</h4>
+                        <!-- -- si hotel == Intercontinental  -- -->
+                        {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
+                            <p>
+                                <strong>Votre hébergement est prévu à l’<span>Hôtel Intercontinental</span></strong>. Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé.
+                            </p>
+                            <!-- -- si transfert pleniere -> intercontental  -- -->
+                            {% if app.user.transfertPleniereInter %}
+                                <p>
+                                    Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Intercontinental
+                                </p>
+                                <p class="transfert transfert-ok">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Intercontinental
+                                </p>
+                            <!-- -- sinon  -- -->
+                            {% else %}
+                                <p>
+                                    Vous n'avez pas réservé de transfert du Théâtre Marigny vers l’Hôtel Intercontinental
+                                </p>
+                                <p class="transfert transfert-ko">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Intercontinental
+                                </p>
+                            {% endif %}
+                            <!-- -- fin si transfert pleniere -> intercontental  -- -->
+                        <!-- -- fin si hotel == Intercontinental  -- -->
+                        {% elseif app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
+                        <!-- -- si hotel == Westin  -- -->
+                            <p>
+                                <strong>Votre hébergement est prévu à l’<span>Hôtel Westin</span></strong>. Après avoir effectué les formalités de check-in auprès de la réception, vous aurez accès à votre chambre où votre bagage aura préalablement été déposé.
+                            </p>
+                            <!-- -- si transfert pleniere -> Westin  -- -->
+                            {% if app.user.transfertPleniereWestin %}
+                                <p>
+                                    Vous avez réservé un transfert du Théâtre Marigny vers l’Hôtel Westin
+                                </p>
+                                <p class="transfert transfert-ok">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Westin
+                                </p>
+                            <!-- -- sinon  -- -->
+                            {% else %}
+                                <p>
+                                    Vous n'avez pas réservé de transfert du Théâtre Marigny vers l’Hôtel Westin
+                                </p>
+                                <p class="transfert transfert-ko">
+                                    Théâtre Marigny 
+                                    <span>
+                                        <i class="bi bi-geo-alt"></i>
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+                                    Hôtel Westin
+                                </p>
+                            <!-- -- fin si transfert pleniere -> Westin  -- -->
+                            {% endif %}
+                        <!-- -- si hotel == Westin  -- -->
+                        {% endif %}
+                    </article>
+                <!-- -- si hotel -- -->
+                {% endif %}
+            <!-- -- fin si plénière / plénière 2eme partie -- -->
+            {% endif %}
+
+            <!-- -- si NON plénière ET diner-- -->
+            {% if not app.user.pleniere1 and not app.user.pleniere2 and app.user.dinnerUser %}
+                <p>Nous vous accueillerons à partir de 20h00 à la <strong>Cité de l’Architecture et du Patrimoine</strong><br>1, place du Trocadéro et du 11 Novembre – 75116 Paris</p>
+            <!-- fin si NON plénière ET diner-- -->
+            {% endif %}
+
+            <!-- -- si hôtel ET soirée -- -->
+            {# {% if app.user.hotelUser and app.user.dinnerUser %}
+                <article>
+                    <h4>Soirée de Gala à la Cité de l’Architecture & du Patrimoine :</h4>
+                    {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
+                        <!-- -- si transfert Intercontinental -> diner  -- -->
+                        {% if app.user.transfertInterDinner %}
+                            <p>
+                                Vous avez réservé un transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                            </p>
+                            <p class="transfert transfert-ok">
+                                Hôtel Intercontinental
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Cité de l’Architecture & du Patrimoine
+                            </p>
+                        {% else %}
+                        <!-- -- sinon  -- -->
+                            <p>
+                                Vous n'avez pas réservé de transfert de l’Hôtel Intercontinental vers la Cité de l’Architecture & du Patrimoine
+                            </p>
+                            <p class="transfert transfert-ko">
+                                Hôtel Intercontinental 
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Cité de l’Architecture & du Patrimoine
+                            </p>
+                        <!-- -- fin si transfert Intercontinental -> diner  -- -->
+                        {% endif %}
+                    {% endif %}
+                    <!-- -- si transfert Westin -> diner  -- -->
+                    {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
+                        {% if app.user.transfertWestinDinner %}
+                            <p>
+                                Vous avez réservé un transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                            </p>
+                            <p class="transfert transfert-ok">
+                                Hôtel Westin
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Cité de l’Architecture & du Patrimoine
+                            </p>
+                        <!-- -- sinon  -- -->
+                        {% else %}
+                            <p>
+                                Vous n'avez pas réservé de transfert de l’Hôtel Westin vers la Cité de l’Architecture & du Patrimoine
+                            </p>
+                            <p class="transfert transfert-ko">
+                                Hôtel Westin 
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Cité de l’Architecture & du Patrimoine
+                            </p>
+                        <!-- -- fin si transfert Westin -> diner  -- -->
+                        {% endif %}
+                    {% endif %}
+                </article>
+                <article>
+                    <h4>à l’issue de la Soirée :</h4>
+                    <!-- -- si transfert Diner -> Inter  -- -->
+                    {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
+                        {% if app.user.transfertDinnerInter %}
+                            <p>
+                                Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
+                            </p>
+                            <p class="transfert transfert-ok">
+                                Cité de l’Architecture & du Patrimoine
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Hôtel Intercontinental
+                            </p>
+                        <!-- -- sinon  -- -->
+                        {% else %}
+                            <p>
+                                Vous n’avez pas réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Intercontinental.
+                            </p>
+                            <p class="transfert transfert-ko">
+                                Cité de l’Architecture & du Patrimoine
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Hôtel Intercontinental
+                            </p>
+                        {% endif %}
+                    <!-- -- fin si transfert Diner -> Inter  -- -->
+                    {% endif %}
+                    <!-- -- si transfert Diner -> Westin  -- -->
+                    {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
+                        {% if app.user.transfertDinnerWestin %}
+                            <p>
+                                Vous avez réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Westin.
+                            </p>
+                            <p class="transfert transfert-ok">
+                                Cité de l’Architecture & du Patrimoine
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Hôtel Westin
+                            </p>
+                        <!-- -- sinon  -- -->
+                        {% else %}
+                            <p>
+                                Vous n’avez pas réservé une place dans le dispositif de navettes mis à votre disposition de minuit à 04h00, au départ de la Cité de l’Architecture & du Patrimoine vers votre Hôtel Westin.
+                            </p>
+                            <p class="transfert transfert-ko">
+                                Cité de l’Architecture & du Patrimoine
+                                <span>
+                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    <i class="bi bi-geo-alt"></i>
+                                </span>
+                                Hôtel Westin
+                            </p>
+                        <!-- -- fin si transfert Diner -> Westin  -- -->
+                        {% endif %}
+                    {% endif %}
+                </article>
+            <!-- -- fin si hôtel ET soirée -- -->
+            {% endif %}
+            <!-- -- si NON hôtel ET soirée -- -->
+            {% if not app.user.hotelUser and app.user.dinnerUser %}
+                <article>
+                    <h4>à l’issue de la Soirée :</h4>
+                    <p>Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile.</p>
+                    <!-- -- si transfert Taxi  -- -->
+                    {% if app.user.transfertTaxi %}
+                        <p>
+                            Une antenne taxi est à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile.
+                        </p>
+                        <p class="transfert transfert-ok">
+                            Cité de l’Architecture & du Patrimoine
+                            <span>
+                                <i class="bi bi-geo-alt"></i>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            Domicile
+                        </p>
+                    <!-- -- sinon  -- -->
+                    {% else %}
+                        <p>
+                            Vous n'avez pas demandé à bénéficier de l'antenne taxi à votre disposition pour votre transfert de la Cité de l’Architecture à votre domicile
+                        </p>
+                        <p class="transfert transfert-ko">
+                            Cité de l’Architecture & du Patrimoine
+                            <span>
+                                <i class="bi bi-geo-alt"></i>
+                                <i class="bi bi-x-circle-fill"></i>
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            Domicile
+                        </p>
+                    <!-- -- fin si transfert Diner -> Westin  -- -->
+                    {% endif %}
+                </article>
+            <!-- -- fin si NON hôtel ET soirée -- -->
+            {% endif %} #}
+
+            <div class="buttons">
+                <p class="text-center">
+                    <a href="{{ path('countermark', {'token': app.user.token })}}" target="_blank" class="button button-primary">Télécharger ma fiche de participation</a>
+                </p>
+                {# <p class="text-center">
+                    <a href="{{ path('participation_1_get', {'token': app.user.token }) }}" class="button button-thirdary"><i class="bi bi-pencil"></i> Modifier ma participation</a>
+                </p> #}
+                <p class="text-center">
+                    <a href="{{ path('localisation', {'token': app.user.token }) }}" class="button button-secondary"><i class="bi bi-geo-fill"></i> Accéder aux différents sites</a>
+                </p>
+            </div>
+            <p class="text-center">
+                <small>Pour toute information, veuillez contacter notre équipe organisation <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">convention-organisation@convention-le-conservateur.fr</a></small>
+            </p>
+        </section>
+    </main>
+{% endblock %}

@@ -1,5 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    form_themes: ['form_theme/form.html.twig']
+    globals:
+      web_path: "%kernel.project_dir%/public"
+
+      
 
 when@test:
     twig:

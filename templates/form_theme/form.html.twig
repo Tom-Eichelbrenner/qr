@@ -1,0 +1,70 @@
+{% block custom_submit %}
+    <p class="text-right form-validation">
+        {{ form_widget(form) }}
+    </p>
+{% endblock %}
+
+{% block form_row %}
+    <div {% for attr,value in form.vars.container_attr ?? [] %} {{attr}}="{{ value }}"{% endfor %}>
+        {{ form_label(form)}}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{% block form_errors %}
+    {% if form.vars.errors | length > 0 %}
+        <ul class="error-list">
+        {% for error in form.vars.errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block form_label %}
+    {% set class = form.vars.label_attr.class ?? "" %}
+    {% if not form.vars.valid %}
+        {% set class = class ~ ' error' %}
+    {% endif %}
+    <label for="{{ form.vars.id }}" {% for attr , value in form.vars.label_attr %}
+        {% if attr != "class" %}
+        {{attr}}="{{ value }}" 
+        {% endif %}
+    {% endfor %} class="{{ class }}">{{ form.vars.label }}
+        {{ form_widget(form) }}
+        {{ form_help(form)}}
+        {# {{ form_errors(form)}} #}
+    </label>
+{% endblock %}
+
+{% block form_help %}
+    {% if form.vars.help is defined and form.vars.help is not null %}
+        <small>{{ form.vars.help }}</small>
+    {% endif %}
+{% endblock %}
+
+{% block custom_checkbox_label %}
+    <label for="{{ form.vars.id }}" {% for attr , value in form.vars.label_attr %} {{attr}}="{{ value }}" {% endfor %}>{{ form.vars.label }}
+        {{ form_widget(form) }}
+    </label>
+    {{ form_errors(form)}}
+{% endblock %}
+
+{% block custom_checkbox_widget %}
+    <input type="checkbox" name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" value="{{ form.vars.value }}" {% for attr , value in form.vars.attr %} {{attr}}="{{ value }}"{% endfor %}>
+    <span class="switch"></span>
+    <span class="ok">
+        {% if form.vars.ok_html == true %}{{ form.vars.ok | raw }}{% else %}{{ form.vars.ok}}{% endif %}
+        {{ form_help(form) }}
+    </span>
+    <span class="ko">
+    {% if form.vars.ko_html == true %}{{ form.vars.ko | raw }}{% else %}{{ form.vars.ko}}{% endif %}
+        {{ form_help(form) }}
+    </span>
+{% endblock %}
+
+{% block submit_row %}
+    <div class="text-right form-validation">
+        {{ form_widget(form)}}
+    </div>
+{% endblock %}

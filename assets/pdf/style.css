@@ -1,0 +1,310 @@
+@font-face {
+    font-family: 'DM Sans';
+    src: url("fonts/dm_sans/dmsans-regular.ttf");
+    font-weight:400;
+}
+@font-face {
+    font-family: 'DM Sans';
+    src: url("fonts/dm_sans/dmsans-medium.ttf");
+    font-weight:500;
+}
+@font-face {
+    font-family: 'DM Sans';
+    src: url("fonts/dm_sans/dmsans-bold.ttf");
+    font-weight:700;
+}
+@font-face {
+    font-family: "Bebas Neue";
+    src: url("fonts/bebas_neue/bebasneue-regular.ttf");
+    font-weight:400;
+}
+*, *:after, *:before {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+body, html{
+    height:100%;
+    margin:0;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    margin: 0;
+    font-weight: normal;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    font-family: 'DM Sans', sans-serif;
+    color: #666;
+}
+p, h1, h2, h3, h4, ul, a, figcaption, input, textarea {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+img {
+    max-width: 100%;
+    vertical-align: bottom;
+    height: auto;
+}
+a{
+    color: inherit;
+    display: inline-block;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    transition: color 0.3s, opacity 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
+    cursor: pointer;
+}
+a:focus {
+    outline: 0;
+}
+span, li, div {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+figure {
+    margin: 0;
+}
+/********* Global *************/
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-weight: 400;
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    color: #3a3a3a;
+    margin: 15px 0px 7px;
+}
+h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.1rem;
+    line-height: 2.3rem;
+    color: #3a3a3a;
+    font-weight: normal;
+    align-items: center;
+    margin: 7px 0 3px;
+}
+h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+    color: #454545;
+    font-weight: normal;
+}
+h4 {
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: #95928e;
+    margin: 7px 0 0;
+    text-transform: uppercase;
+}
+h4 ~ p {
+    margin: 7px 0;
+}
+h5 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.6rem;
+    color: #3a3a3a;
+    text-transform: uppercase;
+    margin: 7px 0 3px;
+}
+h6 {
+    color: #95928e;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 20px 0 8px;
+}
+p {
+    margin: 8px 0;
+}
+small {
+    color: #9c9c9c;
+    font-size: 1.1rem;
+    line-height: 1.8rem;
+}
+small a {
+    color: #d19947;
+    text-decoration: underline;
+}
+small a:hover {
+    opacity: 0.8;
+}
+strong {
+    font-weight: 700;
+}
+strong span {
+    color: #d19947;
+}
+.text-center {
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+.button {
+    padding: 20px 45px;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 4px;
+}
+.button i {
+    vertical-align: baseline;
+    margin-right: 5px;
+}
+.button-primary {
+    background: #d19947;
+    color: white;
+    border: 1px solid #d19947;
+}
+.button-primary:hover {
+    box-shadow: 0px 10px 20px rgba(102, 77, 42, 0.26);
+}
+.button-secondary {
+    background: white;
+    color: #d19947;
+    border: 1px solid #d19947;
+}
+.button-secondary:hover {
+    background: #d19947;
+    color: white;
+}
+.button-thirdary {
+    color: #d19947;
+    padding: 0;
+}
+.button-thirdary:hover {
+    color: #3a3a3a;
+}
+/*********** Sections *************/
+.aside img {
+    width: 100%;
+}
+.main-step {
+    padding: 10px 40px;
+    letter-spacing: -0.02rem;
+}
+.subtitle {
+    color: #c3c1bf;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+}
+.form-validation {
+    border-top: 2px solid #ebe6e6;
+    margin-top: 22px;
+    padding-top: 37px;
+}
+.transfert {
+    font-weight: bold;
+    margin: -8px 0 0 0;
+    line-height: 1.2;
+}
+.transfert svg:nth-of-type(2) {
+    width: 70px;
+    background-repeat: no-repeat;
+    background-position: left bottom 2px;
+    background-size: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: 2rem;
+}
+.transfert  svg:nth-of-type(2):before, .transfert  svg:nth-of-type(2):before {
+    background: white;
+}
+.transfert-ok svg:nth-of-type(2) {
+    background-image: url(img/icons/fleche_or.svg);
+}
+.transfert-ko svg:nth-of-type(2){
+    background-image: url(img/icons/fleche_gris.svg);
+}
+.transfert.transfert-ok {
+    color: #d19947;
+}
+.transfert.transfert-ko {
+    color: #9c9c9c;
+}
+.transfert svg:not(:nth-of-type(2)) {
+    margin: 0 6px;
+}
+.flex{
+    overflow:hidden;
+}
+.flex figure {
+    width: 30%;
+    float:left;
+}
+.flex .content {
+    width: 25%;
+    float:left;
+    padding-bottom: 31px;
+    padding-left:20px;
+    padding-right:20px;
+}
+.flex .list-acces{
+    width:45%;
+    float:right;
+}
+.flex .list-acces h5:first-of-type{
+    margin-top:0;
+}
+.flex .content h3 {
+    color: #d19947;
+    margin: 0;
+}
+.flex .content p {
+    margin: 5px 0 15px;
+}
+.flex .content a {
+    text-decoration: none;
+    font-weight: bold;
+}
+.flex .content a i {
+    margin-right: 5px;
+}
+ul a:before{
+    content:' - ';
+}
+ul a, .content a{
+    color:#d19947;
+}
+.acces img {
+    width: 13px;
+    vertical-align: middle;
+}
+.acces img:last-of-type {
+    margin-right: 3px;
+}
+.acces img.big {
+    width: 20px;
+}
+/*** Spés ****/
+.step-localisation article {
+    margin: 20px 0;
+}
+.step-localisation article a {
+    color: #d19947;
+    display: block;
+}
+.left{
+    width:60%;
+    float:left;
+}
+.QR{
+    padding-top:20px;
+    width:130px;
+    float:right;
+}
+.clear{
+    padding-top:5px;
+    clear:both;
+}
