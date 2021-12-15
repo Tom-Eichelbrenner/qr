@@ -1,0 +1,259 @@
+{% extends 'base.html.twig' %}    
+{% block body %}
+    <main class="main-step step-localisation">
+        <section class="content">
+            <a href="{{ path('confirmation', {'token' : app.user.token })}}" class="back">< revenir à la confirmation de réservation</a>
+            <h1>Coordonnées et accès des différents sites</h1>
+            <!-- -- si plénière / plénière 2eme partie -- -->
+            {% if app.user.pleniere1 or app.user.pleniere2 %}
+            <article>
+                <h2>Convention</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="{{ asset('/img/marigny.jpg') }}" alt="marigny">
+                    </figure>
+                    <div class="content">
+                        <h3>Théâtre Marigny</h3>
+                        <p>Carré Marigny 75008 Paris</p>
+                        <a href="https://goo.gl/maps/oxBBZk2qATT7ZfY56" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                        <img src="{{ asset("/img/acces/m1.svg") }}" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                    <li>
+                        <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                        <img src="{{ asset("/img/acces/m9.svg") }}" alt="metro">
+                        Franklin D. Roosevelt
+                    </li>
+                    <li>
+                        <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                        <img src="{{ asset("/img/acces/m13.svg") }}" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b42.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b73.svg") }}" alt="bus">
+                        Champs-Elysées Clémenceau
+                    </li>
+                    <li>
+                        <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b32.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b80.svg") }}" alt="bus">
+                        Rond Point des Champs Elysées
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking INDIGO du Rond Point des Champs Elysées <a href="https://goo.gl/maps/AfPgNuyugYadLBj67" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin si plénière / plénière 2eme partie -- -->
+            {% endif %}
+            {% if app.user.dinner and app.user.dinnerUser %}
+            <!-- -- si diner -- -->
+            <article>
+                <h2>Soirée</h2>
+                <div class="flex">
+                    <figure>
+                        <img src="{{ asset("/img/cite.jpg") }}" alt="Cité de l'architecture">
+                    </figure>
+                    <div class="content">
+                        <h3>Cité de l'architecture & du patrimoine</h3>
+                        <p>1 place du Trocadéro et du 11 Novembre 75116 Paris</p>
+                        <a href="https://goo.gl/maps/QYQxzM853FZyPdBt8" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                    </div>
+                </div>
+                <h5>En métro</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                        <img src="{{ asset("/img/acces/m6.svg") }}" alt="metro">
+                        Station Trocadéro
+                    </li>
+                    <li>
+                        <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                        <img src="{{ asset("/img/acces/m9.svg") }}" alt="metro">
+                        Station Iéna / Trocadéro
+                    </li>
+                    <li>
+                        <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                        <img src="{{ asset("/img/acces/m13.svg") }}" alt="metro">
+                        Champs-Elysées Clémenceau
+                    </li>
+                </ul>
+                <h5>En bus</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b22.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b30.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b32.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b63.svg") }}" alt="bus">
+                        Station Trocadéro
+                    </li>
+                    <li>
+                        <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                        <img class="big" src="{{ asset("/img/acces/b82.svg") }}" alt="bus">
+                        Station Iéna
+                    </li>
+                </ul>
+                <h5>En RER</h5>
+                <ul class="acces">
+                    <li>
+                        <img src="{{ asset("/img/acces/rer.svg") }}" alt="bus">
+                        <img src="{{ asset("/img/acces/rerC.png") }}" alt="bus">
+                        Station Champ de Mars – Tour Eiffel
+                    </li>
+                </ul>
+                <h5>Parking</h5>
+                <ul>
+                    <li>Parking Kléber-Trocadéro <a href="https://goo.gl/maps/fCn7emUHckAreFmQ9" target="_blank">Visiter le site</a></li>
+                </ul>
+            </article>
+            <!-- -- fin diner -- -->
+            {% endif %}
+            {% if app.user.hotel and app.user.hotelUser %}
+            <!-- -- si hotel == westin -- -->
+                {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_WESTIN") %}
+                <article>
+                    <h2>Hôtel</h2>
+                    <div class="flex">
+                        <figure>
+                            <img src="{{ asset("/img/westin.jpg") }}" alt="Hôtel Westin">
+                        </figure>
+                        <div class="content">
+                            <h3>Hôtel Westin</h3>
+                            <p>3, rue de Castiglione 75001 Paris</p>
+                            <a href="https://goo.gl/maps/iKBwJZFMWXa73t1Z7" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                        </div>
+                    </div>
+                    <h5>En métro</h5>
+                    <ul class="acces">
+                        <li>
+                            <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m1.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m8.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m12.svg") }}" alt="metro">
+                            Station Concorde
+                        </li>
+                        <li>
+                            <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m1.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m7.svg") }}" alt="metro">
+                            Station Palais Royal
+                        </li>
+                    </ul>
+                    <h5>En bus</h5>
+                    <ul class="acces">
+                        <li>
+                            <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/b72.svg") }}" alt="bus">
+                            Station Castiglione
+                        </li>
+                    </ul>
+                    <h5>En RER</h5>
+                    <ul class="acces">
+                        <li>
+                            <img src="{{ asset("/img/acces/rer.svg") }}" alt="bus">
+                            <img src="{{ asset("/img/acces/rerA.svg") }}" alt="bus">
+                            Station Auber
+                        </li>
+                    </ul>
+                    <h5>Parking</h5>
+                    <ul>
+                        <li>Parking Indigo Vendôme <a href="https://goo.gl/maps/8927WNYGtMPpqryv6" target="_blank">Visiter le site</a>
+                        </li>
+                        <li>Parking Indigo Marché St-Honoré <a href="https://goo.gl/maps/GZWat3zdSrq7LbHs7" target="_blank">Visiter le site</a></li>
+                    </ul>
+                </article>
+                {% endif %}
+                <!-- -- fin si hotel == westin -- -->
+                <!-- -- si hotel == intercontinental -- -->
+                {% if app.user.hotelName == constant("App\\Entity\\User::HOTEL_INTERCONTINENTAL") %}
+                <article>
+                    <h2>Hôtel</h2>
+                    <div class="flex">
+                        <figure>
+                            <img src="{{ asset("/img/intercontinental.jpg") }}" alt="Hôtel Westin">
+                        </figure>
+                        <div class="content">
+                            <h3>Hôtel Intercontinental Paris Le Grand</h3>
+                            <p>2, rue Scribe 75009 Paris</p>
+                            <a href="https://goo.gl/maps/fpsLU1rFzhtzUKq68" target="_blank"><i class="bi bi-geo"></i> Voir le plan</a>
+                        </div>
+                    </div>
+                    <h5>En métro</h5>
+                    <ul class="acces">
+                        <li>
+                            <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m3.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m7.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m8.svg") }}" alt="metro">
+                            Stations Opéra 
+                        </li>
+                        <li>
+                            <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m3.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m7.svg") }}" alt="metro">
+                            Havre-Caumartin 
+                        </li>
+                        <li>
+                            <img src="{{ asset("/img/acces/m.svg") }}" alt="metro">
+                            <img src="{{ asset("/img/acces/m7.svg") }}" alt="metro">
+                            Chaussée d’Antin La Fayette
+                        </li>
+                    </ul>
+                    <h5>En bus</h5>
+                    <ul class="acces">
+                        <li>
+                            <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/b42.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/b52.svg") }}" alt="bus">
+                            Station Capucines-Caumartin
+                        </li>
+                        <li>
+                            <img src="{{ asset("/img/acces/b.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/b20.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/b29.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/b95.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/bn15.svg") }}" alt="bus">
+                            <img class="big" src="{{ asset("/img/acces/bn16.svg") }}" alt="bus">
+                            Station Opéra
+                        </li>
+                    </ul>
+                    <h5>En RER</h5>
+                    <ul class="acces">
+                        <li>
+                            <img src="{{ asset("/img/acces/rer.svg") }}" alt="bus">
+                            <img src="{{ asset("/img/acces/rerA.svg") }}" alt="bus">
+                            Station Auber
+                        </li>
+                    </ul>
+                    <h5>Parking</h5>
+                    <ul>
+                        <li>
+                            Parking Edouard VII <a href="https://goo.gl/maps/rCJs6ZhMi7zWoYSz8" target="_blank">Visiter le site</a>
+                        </li>
+                        <li>
+                            Parking Vendôme <a href="https://goo.gl/maps/J4Z7RtL3ZkPHJQdr6" target="_blank">Visiter le site</a>
+                        </li>
+                        <li>
+                            Place Vendôme <a href="https://goo.gl/maps/vjcrbJpvgWm8ZB6P7" target="_blank">Visiter le site</a>
+                        </li>
+                    </ul>
+                </article>
+                <!-- -- fin si hotel == intercontinental -- -->
+                {% endif %}
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}

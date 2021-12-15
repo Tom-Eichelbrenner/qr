@@ -15,3 +15,15 @@ monolog:
             type: console
             process_psr_3_messages: false
             channels: ["!event", "!doctrine"]
+        sendinBlue:
+            type: stream
+            path: "%kernel.logs_dir%/sendinBlue_%kernel.environment%.log"
+            level: debug
+            channels: ["sendinblue"]
+            max_files: 10
+            buffer_size: 50
+    channels: ['sendinblue']
+
+
+
+            

@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+  devSendinBlueListId: 6
+  sendinBlueListId: "%env(default:devSendinBlueListId:int:SENDINBLUE_LIST_ID)%"
+  sendinBlueApiKey: "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"
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,4 +28,14 @@ services:
 
     App\Service\SendinBlueClient:
         arguments:
-            - sendinBlueApiKey: "%env(string:SENDINBLUE_API_KEY)%"
+          $sendinBlueApiKey: "%sendinBlueApiKey%"
+          $sendinBlueListId: "%sendinBlueListId%"
+    App\Service\PDFCreator:
+        arguments:
+          $projectDir: "%kernel.project_dir%"
+    # App\EventListener\AccessDeniedListener:
+    #     tags:
+    #       - { name: kernel.event_listener, event: kernel.exception }
+    App\Controller\MainController:
+        arguments:
+          $projectDir: "%kernel.project_dir%"

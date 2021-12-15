@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="main-step step-form step-form2">
+        <nav class="form-nav">
+            <a href="#" class="inactive"><span>1</span>Informations personnelles</a>
+            {% if app.user.hotel == true %}<a href="#" class="current"><span>2</span>Hébergement & transfert</a>{% endif %}
+        </nav>
+        <section class="content">
+            <p class="subtitle">Etape 2/2</p>
+            <h1>Hébergement & transfert</h1>
+            {{ form_start(form) }}
+            {% if app.user.hotel %}
+                <h4>Hébergement</h4>
+                {% if app.user.hotelName == 2 %}
+                    {% trans %} form_part_2.hebergement.inter {% endtrans %}
+                {% endif %}
+                {% if app.user.hotelName == 1 %}
+                    {% trans %} form_part_2.hebergement.westin {% endtrans %}
+                {% endif %}
+                {{ form_row(form.hotelUser) }}
+            {% endif %}
+            {% if app.user.hotel %}
+                <div id="transferts-container">
+                    <h4>Transfert</h4>
+                    <p>Vous avez la possibilité de réserver votre place sur le transfert proposé :</p>
+                    {% if app.user.hotelName == 1 %}
+                        {{ form_row(form.transfertPleniereWestin) }}
+                        {# {% if app.user.dinner %}
+                            {{ form_row(form.transfertWestinDinner) }}
+                            {{ form_row(form.transfertDinnerWestin) }}
+                        {% endif %} #}
+                    {% endif %}
+
+                    {% if app.user.hotelName == 2 %}
+                        {{ form_row(form.transfertPleniereInter) }}
+                        {# {% if app.user.dinner %}
+                            {{ form_row(form.transfertInterDinner) }}
+                            {{ form_row(form.transfertDinnerInter) }}
+                        {% endif %} #}
+                    {% endif %}
+                </div>
+            {% endif %}
+            {# {% if app.user.dinner %}
+                <div id="taxi-container" class="{% if app.user.hotelUser in [true, null] %}hidden {% endif %}">
+                    <h4>Taxi</h4>
+                    <p>{% trans %} form_part_2.transfert.taxi.default {% endtrans %}</p>
+                    {{ form_row(form.transfertTaxi) }}
+                    {{ form_row(form.taxiAdress) }}
+                </div>
+            {% endif %}
+            {% if app.user.dinner %}
+                <h4>Dîner</h4>
+                <p>Un dîner de gala est organisé à la Cité de l'architecture.</p>
+                {{ form_row(form.dinnerUser) }}
+                {{ form_row(form.dietbool) }}
+                {{ form_row(form.diet) }}
+            {% endif %} #}
+            {{ form_row(form.submit) }}
+            <p class="text-right">
+                <small>Pour toute information, veuillez contacter notre équipe organisation 
+                    <a href="mailto:convention-organisation@convention-le-conservateur.fr" target="_blank">
+                        convention-organisation@convention-le-conservateur.fr
+                    </a>
+                </small>
+            </p>
+            {{ form_end(form) }}
+
+        </section>
+    </main>
+{% endblock %}

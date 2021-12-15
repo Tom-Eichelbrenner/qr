@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/home/bm/projects/le-conservateur/le-conservateur-2022/tests" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.495979">
+    <testsuite name="App\Tests\Functional\BasicTest" file="/home/bm/projects/le-conservateur/le-conservateur-2022/tests/Functional/BasicTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.495979">
+      <testcase name="testRootUrl" class="App\Tests\Functional\BasicTest" classname="App.Tests.Functional.BasicTest" file="/home/bm/projects/le-conservateur/le-conservateur-2022/tests/Functional/BasicTest.php" line="15" assertions="1" time="0.495979"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
