@@ -315,6 +315,8 @@ class MainController extends AbstractController
      */
     public function registered($token): Response
     {
+        return $this->redirectToRoute("error");
+
         return $this->render('inscrit.html.twig', [
             'id' => $token
         ]);
