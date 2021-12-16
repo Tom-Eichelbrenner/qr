@@ -3,6 +3,9 @@
 namespace App\EventListener;
 
 use App\Exception\FormRegisteredException;
+use App\Exception\FormUncompletedException;
+use App\Exception\UserParticipateException;
+use App\Exception\UserWithdrawedException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -55,10 +58,19 @@ class AccessDeniedListener implements EventSubscriberInterface
         $message = $event->getThrowable()->getMessage();
         if ($exception instanceof FormRegisteredException) {
             $user = $exception->getUser();
-            $url = $this->router->generate('error_form_submitted', ['token' => $user->getToken()]);
+            $url = $this->router->generate('confirmation', ['token' => $user->getToken()]);
             $response = new RedirectResponse($url);
             $this->session->set('user', $exception->getUser());
-            $event->setResponse($response);
+        } elseif ($exception instanceof UserWithdrawedException) {
+            $user = $exception->getUser();
+            $url = $this->router->generate('withdrawal', ['token' => $user->getToken()]);
+            $response = new RedirectResponse($url);
+            $this->session->set('user', $exception->getUser());
+        } elseif ($exception instanceof FormUncompletedException) {
+            $user = $exception->getUser();
+            $url = $this->router->generate('index', ['token' => $user->getToken()]);
+            $response = new RedirectResponse($url);
+            $this->session->set('user', $exception->getUser());
         } elseif ($exception instanceof AccessDeniedException || $exception instanceof UnauthorizedHttpException || $exception instanceof NotFoundHttpException) {
             $url = $this->router->generate('error');
             $response = new RedirectResponse($url);
@@ -66,6 +78,9 @@ class AccessDeniedListener implements EventSubscriberInterface
             // get the session
             $session = $this->session;
             $session->set('message', $message);
+        }
+
+        if (isset($response) && isset($url)) {
             $event->setResponse($response);
         }
     }
