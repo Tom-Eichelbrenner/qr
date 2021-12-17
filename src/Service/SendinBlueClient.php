@@ -56,6 +56,7 @@ class SendinBlueClient
         $this->sendinBlueListId = $sendinBlueListId;
 
         $this->sendinBlueLogger = $sendinblueLogger;
+        dump($sendinBlueListId);
     }
 
     /**
@@ -76,19 +77,22 @@ class SendinBlueClient
         );
         $listId = $this->sendinBlueListId;
         $modifiedSince = new DateTime("2015-10-20T19:20:30+01:00");
-        $limit = 50;
+        $limit = 500;
         $offset = 0;
 
         try {
             // find all contacts
-            $result = $apiInstance->getContactsFromList($listId, $modifiedSince, $limit, $offset);
-            $result = json_decode($result, true);
-
-
-            // find the contact with the token
-            foreach ($result['contacts'] as $contact) {
-                if ($contact['attributes']['TOKEN_2022'] === $token) {
-                    return $this->createUserFromContact($contact);
+            while ($result = $apiInstance->getContactsFromList($listId, $modifiedSince, $limit, $offset)) {
+                $result = json_decode($result, true);
+                // find the contact with the token
+                if (count($result['contacts']) === 0) {
+                    break;
+                }
+                $offset += count($result['contacts']);
+                foreach ($result['contacts'] as $contact) {
+                    if (($contact['attributes']['TOKEN_2022'] ?? null) === $token) {
+                        return $this->createUserFromContact($contact);
+                    }
                 }
             }
         } catch (ApiException $e) {
