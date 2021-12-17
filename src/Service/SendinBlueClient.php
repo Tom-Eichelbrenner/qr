@@ -56,7 +56,6 @@ class SendinBlueClient
         $this->sendinBlueListId = $sendinBlueListId;
 
         $this->sendinBlueLogger = $sendinblueLogger;
-        dump($sendinBlueListId);
     }
 
     /**
