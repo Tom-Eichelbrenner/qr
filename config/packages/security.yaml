@@ -3,24 +3,47 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\Admin:
+            algorithm: auto
+
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
         users_provider:
             id: 'App\Security\UserProvider'
+        # used to reload user from session & other features (e.g. switch_user)
+        admin_provider:
+            entity:
+                class: App\Entity\Admin
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|img|js)/
             security: false
-        error:
-            pattern: ^/error
-            security: false
-            lazy: true
+#        error:
+#            pattern: ^/error
+#            security: false
+#            lazy: true
+#        admin:
+#            pattern: ^/admin
+#            security: true
+#            provider: admin_provider
+#            lazy: true
+#            form_login:
+#                login_path: /admin/login
+#                check_path: /admin/login
+#            logout:
+#                path: /admin/logout
+#                target: /admin/login
+#        participants:
+#            pattern: ^(\/je-participe|\/je-ne-participe-pas|\/localisation|\/checkin|\/contremarque)
+#            custom_authenticators:
+#                - 'App\Security\SendinBlueAuthenticator'
+#            security: true
+#            lazy: true
+#            provider: users_provider
         main:
-            custom_authenticators:
-                - 'App\Security\SendinBlueAuthenticator'
             lazy: true
-            provider: users_provider
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -30,5 +53,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

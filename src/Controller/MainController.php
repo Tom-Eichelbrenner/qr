@@ -36,6 +36,14 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin(): Response
+    {
+        return $this->render('admin.html.twig');
+    }
+
+    /**
      * @Route("/je-participe/{token}", name="index", methods={"GET"})
      * @IsGranted("fill_form", statusCode=403, message="Accès non autorisé")
      *
@@ -349,4 +357,6 @@ class MainController extends AbstractController
         $file->deleteFileAfterSend(true);
         return $file;
     }
+
+
 }
